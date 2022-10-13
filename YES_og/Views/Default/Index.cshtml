@@ -1,0 +1,49 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            廠牌
+        </th>
+        <th>
+            車型
+        </th>
+        <th>
+            充電規格
+        </th>
+        <th>
+            建立日期
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.brand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.model)
+        </td>
+        <td>
+            
+        </td>
+        <td>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.update_time)
+        </td>
+        
+    </tr>
+}
+
+</table>

@@ -1,0 +1,177 @@
+﻿@model IEnumerable<YES_og.Models.dm_car_list>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>電動車列表</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    @*<a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="table_data_tables.html#" class="dropdown-item">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="table_data_tables.html#" class="dropdown-item">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>*@
+                </div>
+            </div>
+            <div class="ibox-content">
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addCarModal">
+                    新增資料
+                </button>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>廠牌</th>
+                                <th>車型</th>
+                                <th>充電規格</th>
+                                <th>建立日期</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model)
+                            {
+                                <tr>
+                                    <td>@i.brand</td>
+                                    <td>@i.model</td>
+                                    <td>@i.year</td>
+                                    <td>@i.update_time</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<form method="post" id="addCarForm" action="" enctype="multipart/form-data">
+    <div class="modal inmodal fade" id="addCarModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">新增</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">廠牌</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="brand" name="brand">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">車型</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="model" name="model">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">充電規格</label>
+
+                                    @*<div class="col-sm-10">
+                                        <select class="form-control m-b" name="account">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="addCar();">新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+            });
+
+            function Delete(id) {
+                var msg = "您確定要刪除嗎?";
+                if (confirm(msg) == true) {
+                    DeleteData(id, "/Backend/Employees/Delete", "/Backend/Employees/Index");
+                } else {
+                    return false;
+                }
+            }
+
+            function addCar() {
+                if (($('#brand').val()).length <= 0) {
+                    alert("請填入廠牌");
+                    return;
+                }
+
+                if ($('#model').val().length <= 0) {
+                    alert("請填入車型");
+                    return;
+                }
+                var formData = $('#addCarForm').serialize();
+                debugger;
+                $.ajax({
+                    url: "/Car/Create",
+                    type: 'POST',
+                    data: formData,
+                    //data: JSON.stringify(formData),
+                    cache: false,
+                    dataType: 'json',
+                    success: function (data) {
+                        debugger;
+                        if (data.IsSuccess == true) {
+                            swal({
+                                title: 'SUCCESS',
+                                text: '新增成功',
+                                icon: 'success'
+                            }, function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: 'Fail',
+                                text: data.ErrorMessage,
+                                icon: 'error'
+                            });
+                        }
+                    }
+                });
+            }
+        </script>
+    }
+
+
+
+
