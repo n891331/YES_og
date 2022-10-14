@@ -17,7 +17,28 @@ namespace YES_og.Controllers
         // GET: Car
         public ActionResult Index()
         {
-            var carList = _db.dm_car_list.ToList();
+            #region 充電槍選單
+            //AC
+            var selectACList = new List<SelectListItem>();
+            var a = _db.dev100.Where(x => x.spot_ac_dc == "AC").OrderBy(x => x.type_id);
+            foreach (var item in a)
+            {
+                selectACList.Add(new SelectListItem { Text = item.spot_type, Value = item.spot_type });
+            }
+            selectACList.Add(new SelectListItem { Text = "N/A", Value = "N/A" });
+            ViewBag.selectACList = selectACList;
+
+            //DC
+            var selectDCList = new List<SelectListItem>();
+            var d = _db.dev100.Where(x => x.spot_ac_dc == "DC").OrderBy(x => x.type_id);
+            foreach (var item in d)
+            {
+                selectDCList.Add(new SelectListItem { Text = item.spot_type, Value = item.spot_type });
+            }
+            selectDCList.Add(new SelectListItem { Text = "N/A", Value = "N/A" });
+            ViewBag.selectDCList = selectDCList;
+            #endregion 
+            var carList = _db.veh000.ToList();
             return View(carList);
         }
 
@@ -45,20 +66,20 @@ namespace YES_og.Controllers
 
         // POST: Car/Create
         [HttpPost]
-        public ActionResult Create(dm_car_list formData)
+        public ActionResult Create(veh000 formData)
         {
 
             //Step 2:資料庫更改
             if (ModelState.IsValid)
             {
                 //程式給號
-                int car_no = 0;
-                List<dm_car_list> data = _db.dm_car_list.OrderByDescending(o => o.car_no).ToList();
-                car_no = data.Count == 0 ? (car_no + 1) : (data.FirstOrDefault().car_no + 1);
-                formData.car_no = car_no;
+                int veh_id = 0;
+                List<veh000> data = _db.veh000.OrderByDescending(o => o.veh_id).ToList();
+                veh_id = data.Count == 0 ? (veh_id + 1) : (data.FirstOrDefault().veh_id + 1);
+                formData.veh_id = veh_id;
 
-                formData.update_time = DateTime.Now;
-                SaveCreate(_db.dm_car_list, formData);
+                formData.upd_date = DateTime.Now;
+                SaveCreate(_db.veh000, formData);
 
                 var returnData = new {
                     IsSuccess = true
@@ -123,5 +144,6 @@ namespace YES_og.Controllers
                 return View();
             }
         }
+
     }
 }

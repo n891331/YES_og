@@ -12,7 +12,6 @@ namespace YES_og.Controllers
         private DBePowerDataContext _db = new DBePowerDataContext();
         public ActionResult Index()
         {
-            _db.dm_car_list.ToList();
             return View();
         }
 

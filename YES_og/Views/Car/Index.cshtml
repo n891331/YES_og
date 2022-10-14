@@ -1,4 +1,4 @@
-﻿@model IEnumerable<YES_og.Models.dm_car_list>
+﻿@model IEnumerable<YES_og.Models.veh000>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -39,7 +39,9 @@
                             <tr>
                                 <th>廠牌</th>
                                 <th>車型</th>
-                                <th>充電規格</th>
+                                <th>車款類型</th>
+                                <th>AC</th>
+                                <th>DC</th>
                                 <th>建立日期</th>
                             </tr>
                         </thead>
@@ -47,10 +49,21 @@
                             @foreach (var i in Model)
                             {
                                 <tr>
-                                    <td>@i.brand</td>
-                                    <td>@i.model</td>
-                                    <td>@i.year</td>
-                                    <td>@i.update_time</td>
+                                    <td>@i.veh_brand</td>
+                                    <td>@i.veh_model</td>
+                                    <td>
+                                        @if (i.veh_type == "1")
+                                        {
+                                            @:汽車
+                                        }
+                                        else
+                                        {
+                                            @:機車
+                                        }
+                                    </td>
+                                    <td>@i.spot_type_ac</td>
+                                    <td>@i.spot_type_dc</td>
+                                    <td>@i.upd_date</td>
                                 </tr>
                             }
                         </tbody>
@@ -74,34 +87,58 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">廠牌</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="brand" name="brand">
+                                    <label class="col-12 col-form-label">廠牌</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" id="veh_brand" name="veh_brand">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">車型</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="model" name="model">
+                                    <label class="col-12 col-form-label">車型</label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" id="veh_model" name="veh_model">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">充電規格</label>
-
-                                    @*<div class="col-sm-10">
-                                        <select class="form-control m-b" name="account">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
+                                    <label class="col-12 col-form-label">車款類型</label>
+                                    <div class="col-12">
+                                        <select class="form-control" name="veh_type">
+                                            <option value="1">汽車</option>
+                                            <option value="2">機車</option>
                                         </select>
-                                    </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <label class="col-12 col-form-label">是否台灣銷售</label>
+                                    <div class="col-12">
+                                        <select class="form-control m-b" name="tw_sale">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <label class="col-12 col-form-label">AC充電槍類型</label>
+                                    <div class="col-12">
+                                        @Html.DropDownList("spot_type_ac", (IEnumerable<SelectListItem>)ViewBag.selectACList, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <label class="col-12 col-form-label">DC充電槍類型</label>
+                                    <div class="col-12">
+                                        @Html.DropDownList("spot_type_dc", (IEnumerable<SelectListItem>)ViewBag.selectDCList, new { @class = "form-control" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,12 +168,12 @@
             }
 
             function addCar() {
-                if (($('#brand').val()).length <= 0) {
+                if (($('#veh_brand').val()).length <= 0) {
                     alert("請填入廠牌");
                     return;
                 }
 
-                if ($('#model').val().length <= 0) {
+                if ($('#veh_model').val().length <= 0) {
                     alert("請填入車型");
                     return;
                 }
@@ -146,7 +183,6 @@
                     url: "/Car/Create",
                     type: 'POST',
                     data: formData,
-                    //data: JSON.stringify(formData),
                     cache: false,
                     dataType: 'json',
                     success: function (data) {

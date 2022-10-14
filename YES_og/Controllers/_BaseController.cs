@@ -268,11 +268,11 @@ namespace YES_og.Controllers
             }
 
             //set value
-            //if (NullToEmpty) { AddEmptyString(element); }
-            //element.GetType().GetProperty("Poster").SetValue(element, infoItem.Poster);
-            //element.GetType().GetProperty("InitDate").SetValue(element, infoItem.InitDate);
-            //element.GetType().GetProperty("UpdateID").SetValue(element, infoItem.UpdateID);
-            //element.GetType().GetProperty("UpdateDate").SetValue(element, infoItem.UpdateDate);
+            if (NullToEmpty) { AddEmptyString(element); }
+            element.GetType().GetProperty("crt_user").SetValue(element, infoItem.Poster);
+            element.GetType().GetProperty("crt_date").SetValue(element, infoItem.InitDate);
+            element.GetType().GetProperty("udp_user").SetValue(element, infoItem.UpdateID);
+            element.GetType().GetProperty("upd_date").SetValue(element, infoItem.UpdateDate);
             table.InsertOnSubmit(element);
             try
             {

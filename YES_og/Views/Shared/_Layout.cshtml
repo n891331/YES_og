@@ -9,6 +9,7 @@
     <link href="~/assets/Inspinia/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet" />
+    <link href="~/assets/Inspinia/css/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/animate.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/style.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
@@ -54,7 +55,7 @@
                     <li>
                         <a href="basic_gallery.html#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">車樁相隨管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="/Car/Index">案件追蹤管理</a></li>
+                            <li><a href="/Follow/Index">案件追蹤管理</a></li>
                         </ul>
                     </li>
 
@@ -222,6 +223,7 @@
 
     @*@Scripts.Render("~/bundles/bootstrap")*@
     <script src="~/assets/Inspinia/js/jquery-3.1.1.min.js"></script>
+    <script src="~/assets/Inspinia/js/plugins/iCheck/icheck.min.js"></script>
     <script src="~/assets/Inspinia/js/popper.min.js"></script>
     <script src="~/assets/Inspinia/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="~/assets/Inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -257,6 +259,11 @@
                     //}
                 ]
 
+            });
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
             });
 
         });

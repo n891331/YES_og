@@ -4432,11 +4432,12 @@ samp {
   border-bottom: 1px solid #e7eaec;
 }
 body {
-  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #2F4050;
-  font-size: 13px;
-  color: #676a6c;
-  overflow-x: hidden;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #2F4050;
+    /*font-size: 13px;*/
+    font-size: 1rem;
+    color: #676a6c;
+    overflow-x: hidden;
 }
 html,
 body {
@@ -4569,8 +4570,8 @@ video {
   background: #f8fafb;
 }
 .inmodal .modal-header {
-  padding: 30px 15px;
-  text-align: center;
+  /*padding: 30px 15px;
+  text-align: center;*/
   display: block;
 }
 .animated.modal.fade .modal-dialog {
@@ -5014,12 +5015,12 @@ table.table-mail tr td {
   font-size: 24px;
 }
 .ibox-title h5 {
-  display: inline-block;
+    display: inline-block;
   font-size: 14px;
-  margin: 0 0 7px;
-  padding: 0;
-  text-overflow: ellipsis;
-  float: none;
+    margin: 0 0 7px;
+    padding: 0;
+    text-overflow: ellipsis;
+    float: none;
 }
 .ibox-title .label {
   margin-left: 4px;
