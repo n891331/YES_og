@@ -9,10 +9,13 @@
     <link href="~/assets/Inspinia/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet" />
+    <link href="~/assets/Inspinia/css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/assets/Inspinia/css/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/animate.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/style.css" rel="stylesheet" />
     <link href="~/assets/Inspinia/css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+    <link href="~/assets/Inspinia/css/style_m.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -211,7 +214,7 @@
                 @*<div class="float-right">
                         10GB of <strong>250GB</strong> Free.
                     </div>*@
-                <div>
+                <div style="font-size:13px;">
                     <strong>Copyright</strong> 裕電能源股份有限公司 © 2020
                 </div>
             </div>
@@ -224,6 +227,9 @@
     @*@Scripts.Render("~/bundles/bootstrap")*@
     <script src="~/assets/Inspinia/js/jquery-3.1.1.min.js"></script>
     <script src="~/assets/Inspinia/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/assets/Inspinia/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script src="~/assets/Inspinia/js/plugins/clockpicker/clockpicker.js"></script>
+    <script src="~/assets/Inspinia/js/plugins/bs-custom-file/bs-custom-file-input.min.js"></script>
     <script src="~/assets/Inspinia/js/popper.min.js"></script>
     <script src="~/assets/Inspinia/js/plugins/sweetalert/sweetalert.min.js"></script>
     <script src="~/assets/Inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -235,6 +241,7 @@
     <script>
         // Upgrade button class name
         $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
+        $.fn.datepicker.defaults.format = "yyyy/mm/dd";
         $(document).ready(function () {
             $('.dataTables-example').DataTable({
                 pageLength: 25,
@@ -265,6 +272,10 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
+            $('.date').datepicker();
+            bsCustomFileInput.init();
+
+            $('.clockpicker').clockpicker();
 
         });
     </script>
