@@ -125,6 +125,7 @@
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FollowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StationController.cs" />
     <Compile Include="Controllers\_BaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -412,6 +413,8 @@
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Follow\Index.cshtml" />
     <Content Include="Views\Follow\Create.cshtml" />
+    <Content Include="Views\Station\Index.cshtml" />
+    <Content Include="Views\Station\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

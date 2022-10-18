@@ -1,0 +1,509 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>基本資料</h5>
+                @*<div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>*@
+            </div>
+            <div class="ibox-content">
+                <form>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">充電站ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">充電站名稱</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">充電站地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">經度(充電站出入口地址)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">緯度(充電站出入口地址)</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">站點類型</label>
+                        <div class="col-sm-10">
+                            <label class="i-checks mr-2">
+                                <input type="checkbox" value="option1" id="inlineCheckbox1"> 汽車
+                            </label>
+                            <label class="i-checks">
+                                <input type="checkbox" value="option2" id="inlineCheckbox2"> 機車
+                            </label>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">站點狀態</label>
+                        <div class="col-sm-10">
+                            <select class="form-control m-b" name="account">
+                                <option>option 1</option>
+                                <option>option 2</option>
+                                <option>option 3</option>
+                                <option>option 4</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場域類別</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">充電站所在樓層</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">充電站停車格</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    @* 站點營應時間 *@
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">站點營應時間</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="i-checks mr-2">
+                                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 套用全部開始時間
+                                    </label>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週一營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週二營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週三營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週四營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週五營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週六營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週日營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="i-checks mr-2">
+                                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 套用全部結束時間
+                                    </label>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週一營業開始時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週二營業結束時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週三營業結束時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週四營業結束時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週五營業結束時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週六營業結束時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 col-form-label">週日營業結束時間</label>
+                                        <div class="col-12">
+                                            <div class="input-group clockpicker" data-autoclose="true">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">
+                                                    <span class="fa fa-clock-o"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    @* 充電樁 *@
+                    <a class="btn btn-primary mb-3" href="/Station/Create">
+                        新增資料
+                    </a>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>充電樁序號</th>
+                                    <th>型號</th>
+                                    <th>廠牌</th>
+                                    <th>充電樁ID</th>
+                                    <th>設備驗收日期</th>
+                                    <th>設備保固起訖日期</th>
+                                    <th>充電樁所在樓層</th>
+                                    <th>充電樁狀態</th>
+                                    <th>充電槍規格</th>
+                                    <th>充電槍號</th>
+                                    <th>充電槍對應停車格</th>
+                                    <th>充電槍狀態</th>
+                                    <th>費率方案</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">
+                                        <a href="#"><i class="fa fa-minus-circle text-danger"></i></a>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <select class="form-control m-b" name="account">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <div class="input-group date">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group date">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        to
+                                        <div class="input-group date">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <select class="form-control m-b" name="account">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control">
+                                    </td>
+                                    <td>
+                                        <select class="form-control m-b" name="account">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control m-b" name="account">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    @* 匯入 *@
+                    <a class="btn btn-primary mb-3" href="/Station/Create">
+                        選擇手機門號/線路編號(匯入站點)
+                    </a>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>網路類型</th>
+                                    <th>手機門號/線路編號</th>
+                                    <th>IP位置</th>
+                                    <th>SIM卡ID/數據機型號</th>
+                                    <th>電信方案</th>
+                                    <th>電信方案啟用日期</th>
+                                    <th>電信方案結束日期</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">
+                                        <a href="#"><i class="fa fa-minus-circle text-danger"></i></a>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    @* 上傳圖片 *@
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">上傳圖片</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input id="inputGroupFile01" type="file" class="custom-file-input">
+                                    <label class="custom-file-label" for="inputGroupFile01">選擇檔案</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場域端聯絡人員</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場域端聯絡手機</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場域端聯絡人電話/分機</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場域端聯絡人E-Mail</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場域端聯絡人LineID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場域端聯絡人傳真</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">註記1(會在對外APP顯示)</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">註記2(僅在內部系統顯示)</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="text-right">
+                        <a thref="/Station/Index" class="btn btn-white" >取消</a>
+                        <button type="button" class="btn btn-success">新增</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
