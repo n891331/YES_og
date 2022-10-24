@@ -48,21 +48,6 @@ namespace YES_og.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult addCar(string data)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
 
         // POST: Car/Create
         [HttpPost]

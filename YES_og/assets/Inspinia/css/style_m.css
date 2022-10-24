@@ -6,3 +6,25 @@
 body{
     font-size:14px;
 }
+
+.filename {
+    border: 1px solid #e7eaec;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5em;
+}
+
+/*讓"未選擇任何檔案"的字串隱形*/
+input[type=file] {
+    color: #FFF;
+}
+
+.closeBtn {
+    color: #ED5565;
+    cursor: pointer;
+}
+
+.noticeTxt {
+    color: #ED5565;
+}
