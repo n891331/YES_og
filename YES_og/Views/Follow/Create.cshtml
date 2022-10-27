@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var cncId = ViewBag.cncId;
 }
 
 <div class="row">
@@ -16,164 +17,137 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <form>
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "DataForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">案件編號</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="cnc_id" value="@cncId" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">姓名</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="contact_person">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">手機</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="contact_mobile">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">E-mail</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="contact_email">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">車輛品牌</label>
                         <div class="col-sm-10">
-                            <select class="form-control m-b" name="account">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                            </select>
+                            @Html.DropDownList("veh_brand", (IEnumerable<SelectListItem>)ViewBag.selectVehList, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">所在地</label>
                         <div class="col-sm-10">
-                            <select class="form-control m-b" name="account">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                            </select>
+                            <input type="text" class="form-control" name="zip_id" value="334">
+                            @*@Html.DropDownList("", (IEnumerable<SelectListItem>)ViewBag.selectVehList, new { @class = "form-control" })*@
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">詳細地址</label>
+                        <label class="col-sm-2 col-form-label">安裝地址</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="install_address">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">住宅類型</label>
                         <div class="col-sm-10">
-                            <select class="form-control m-b" name="account">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                            </select>
+                            @Html.DropDownList("loc_class", (IEnumerable<SelectListItem>)ViewBag.selectLocList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">方便聯絡時段</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="contact_time">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">購車據點</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="dealer_name">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">購車資訊:業代/訂單編號</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="sales_info">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">申請時間</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="crt_date" value="@DateTime.Now.ToShortDateString()" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">目前進度</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" value="未聯繫" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">車主備註</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="note">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">更新狀態</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("cnc_status", (IEnumerable<SelectListItem>)ViewBag.selectStatusList, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">業務備註</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">狀態</label>
-                        <div class="col-sm-10">
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option1" name="a" checked>
-                                <i></i> 未聯繫
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已連繫
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已確認場勘時間
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已完成場勘
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已報價
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已回簽報價
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已確認施工時間
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已完成施工
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已完成驗收
-                            </label>
-                            <label class="i-checks mr-3">
-                                <input type="radio" value="option2" name="a">
-                                <i></i> 已開立發票
-                            </label>
+                            <input type="text" class="form-control" name="note1">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row ">
                         <label class="col-sm-2 col-form-label">場勘時間</label>
                         <div class="col-sm-10">
+                            @*<input type="datetime-local" class="form-control" name="survey_time">*@
                             <div class="row">
                                 <div class="input-group date col-6">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="surveyDate">
                                 </div>
                                 <div class="input-group clockpicker col-6" data-autoclose="true">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="surveyTime">
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>
@@ -186,7 +160,7 @@
                         <div class="col-sm-10">
                             <div id="aUploadArea">
                                 <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
-                                <span style="word-break: break-all;" class="d-block noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
                                 <div id='aUploadFileList' class="filename"></div>
                             </div>
                         </div>
@@ -196,7 +170,7 @@
                         <div class="col-sm-10">
                             <div id="bUploadArea">
                                 <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
-                                <span style="word-break: break-all;" class="d-block noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
                                 <div id='bUploadFileList' class="filename"></div>
                             </div>
                         </div>
@@ -205,15 +179,16 @@
                     <div class="form-group row ">
                         <label class="col-sm-2 col-form-label">施工時間</label>
                         <div class="col-sm-10">
+                            @*<input type="datetime-local" class="form-control" name="install_time">*@
                             <div class="row">
                                 <div class="input-group date col-6">
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="installDate">
                                 </div>
                                 <div class="input-group clockpicker col-6" data-autoclose="true">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="installTime">
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>
@@ -226,7 +201,7 @@
                         <div class="col-sm-10">
                             <div id="cUploadArea">
                                 <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
-                                <span style="word-break: break-all;" class="d-block noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
                                 <div id='cUploadFileList' class="filename"></div>
                             </div>
                         </div>
@@ -236,7 +211,7 @@
                         <div class="col-sm-10">
                             <div id="dUploadArea">
                                 <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
-                                <span style="word-break: break-all;" class="d-block noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
                                 <div id='dUploadFileList' class="filename"></div>
                             </div>
                         </div>
@@ -244,9 +219,10 @@
                     <div class="hr-line-dashed"></div>
                     <div class="text-right">
                         <a href="/Follow/Index" class="btn btn-white">取消</a>
-                        <button type="button" class="btn btn-success">新增</button>
+                        <button type="button" id="btnSave" class="btn btn-success">新增</button>
                     </div>
-                </form>
+                }
+
             </div>
         </div>
     </div>
@@ -328,6 +304,58 @@
         $.MultiUploadFile("cUploadArea", "cUploadFileList", cUpload);
         var dUpload = [];
         $.MultiUploadFile("dUploadArea", "dUploadFileList", dUpload);
+
+        $('#btnSave').click(function () {
+            debugger;
+            dataFormAjaxPost($('#DataForm'), "/Follow/Create");
+        });
+
+
+        function dataFormAjaxPost($dataForm, url) {
+
+            var formData = new FormData($dataForm[0]);
+
+            //多檔上傳的檔案夾帶
+            for (var i = 0; i < aUpload.length; i++) {
+                formData.append('aUpload', aUpload[i]);
+            }
+            for (var i = 0; i < bUpload.length; i++) {
+                formData.append('bUpload', bUpload[i]);
+            }
+            for (var i = 0; i < cUpload.length; i++) {
+                formData.append('cUpload', cUpload[i]);
+            }
+            for (var i = 0; i < dUpload.length; i++) {
+                formData.append('dUpload', dUpload[i]);
+            }
+
+             $.ajax({
+                    url: url,
+                    data: formData,
+                    type: 'post',
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    //async: false,
+                    datatype: 'JSON',
+                    success: function (data) {
+                        debugger;
+                        if (data.IsSuccess) {
+                            window.location = '@Url.Action("Index", "Follow")';
+                        } else {
+                            if (data.ModelStateErrors != null) {
+                                // show model state error
+                                $dataForm.validate().showErrors(data.ModelStateErrors);
+                                alert('請確認資料輸入無誤！');
+                            } else {
+                                alert('執行失敗！');
+                            }
+                        }
+                    }
+                });
+
+
+        }
     </script>
 }
 

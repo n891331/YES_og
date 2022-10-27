@@ -27,4 +27,68 @@
       <Column Name="upd_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.cnc000" Member="cnc000">
+    <Type Name="cnc000">
+      <Column Name="cnc_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="veh_brand" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="contact_person" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="contact_mobile" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="contact_email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="install_address" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="zip_id" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="loc_class" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="contact_time" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="dealer_name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="sales_info" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="note" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="note1" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="cnc_status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="crt_user" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="crt_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="udp_user" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="upd_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cnc002" Member="cnc002">
+    <Type Name="cnc002">
+      <Column Name="file_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cnc_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="File_name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="File_path" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="cnc_status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="file_status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="crt_user" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="crt_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="udp_user" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="upd_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cnc001" Member="cnc001">
+    <Type Name="cnc001">
+      <Column Name="record_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cnc_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="survey_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="install_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="note1" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="cnc_status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="crt_user" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="crt_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="udp_user" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="upd_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.sts000" Member="sts000">
+    <Type Name="sts000">
+      <Column Name="item_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="prog_id" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="fun_id" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="item_seq" Type="System.String" DbType="VarChar(2) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="item_desc" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="item_lv" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="crt_user" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Column Name="crt_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="udp_user" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="upd_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

@@ -10,10 +10,10 @@
             <div class="ibox-title">
                 <h5>基本資料</h5>
                 @*<div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                </div>*@
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>*@
             </div>
             <div class="ibox-content">
                 <form>
@@ -55,12 +55,14 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">站點類型</label>
                         <div class="col-sm-10">
-                            <label class="i-checks mr-2">
-                                <input type="checkbox" value="option1" id="inlineCheckbox1"> 汽車
-                            </label>
-                            <label class="i-checks">
-                                <input type="checkbox" value="option2" id="inlineCheckbox2"> 機車
-                            </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                <label class="form-check-label" for="inlineCheckbox1">汽車</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                <label class="form-check-label" for="inlineCheckbox2">機車</label>
+                            </div>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -103,165 +105,189 @@
                         <div class="col-sm-10">
                             <div class="row">
                                 <div class="col-6">
-                                    <label class="i-checks mr-2">
-                                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 套用全部開始時間
-                                    </label>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週一營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="startCheckbox">
+                                        <label class="form-check-label" for="startCheckbox">
+                                            套用全部開始時間
+                                        </label>
+                                    </div>
+                                    <div class="input-group clockpicker" data-autoclose="true">
+                                        <input type="text" class="form-control" id="startTime">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-clock-o"></span>
+                                        </span>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div id="startOpen">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週一營業開始時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週二營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週二營業開始時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週三營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週三營業開始時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週四營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週四營業開始時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週五營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週五營業開始時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週六營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週六營業開始時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週日營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週日營業開始時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <label class="i-checks mr-2">
-                                        <input type="checkbox" value="option1" id="inlineCheckbox1"> 套用全部結束時間
-                                    </label>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週一營業開始時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="endCheckbox">
+                                        <label class="form-check-label" for="endCheckbox">
+                                            套用全部結束時間
+                                        </label>
+                                    </div>
+                                    <div class="input-group clockpicker" data-autoclose="true">
+                                        <input type="text" class="form-control" id="endTime">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-clock-o"></span>
+                                        </span>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div id="endClose">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週一營業結束時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週二營業結束時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週二營業結束時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週三營業結束時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週三營業結束時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週四營業結束時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週四營業結束時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週五營業結束時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週五營業結束時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週六營業結束時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週六營業結束時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-12 col-form-label">週日營業結束時間</label>
-                                        <div class="col-12">
-                                            <div class="input-group clockpicker" data-autoclose="true">
-                                                <input type="text" class="form-control">
-                                                <span class="input-group-addon">
-                                                    <span class="fa fa-clock-o"></span>
-                                                </span>
+                                        <div class="form-group row">
+                                            <label class="col-12 col-form-label">週日營業結束時間</label>
+                                            <div class="col-12">
+                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                    <input type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-clock-o"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -427,13 +453,12 @@
 
                     @* 上傳圖片 *@
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">上傳圖片</label>
+                        <label class="col-sm-2 col-form-label">報價單</label>
                         <div class="col-sm-10">
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input id="inputGroupFile01" type="file" class="custom-file-input">
-                                    <label class="custom-file-label" for="inputGroupFile01">選擇檔案</label>
-                                </div>
+                            <div id="rUploadArea">
+                                <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <div id='rUploadFileList' class="filename"></div>
                             </div>
                         </div>
                     </div>
@@ -496,14 +521,44 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="text-right">
-                        <a thref="/Station/Index" class="btn btn-white" >取消</a>
+                        <a href="/Station/Index" class="btn btn-white">取消</a>
                         <button type="button" class="btn btn-success">新增</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-    
 </div>
 
+@section Scripts {
+    <script>
+        //檔案上傳
+        var rUpload = [];
+        $.MultiUploadFile("rUploadArea", "rUploadFileList", rUpload);
+
+        //append 時間
+        $('#startCheckbox').on('change', function (event) {
+            if (this.checked) {
+                var sValue = $("#startTime").val();
+                $("#startOpen input").val(sValue);
+
+            } else {
+                $("#startOpen input").val("");
+                $("#startTime").val("");
+            }
+        });
+
+        $('#endCheckbox').on('change', function (event) {
+            if (this.checked) {
+                var eValue = $("#endTime").val();
+                $("#endClose input").val(eValue);
+
+            } else {
+                $("#endClose input").val("");
+                $("#endTime").val("");
+            }
+        });
+
+        
+    </script>
+}

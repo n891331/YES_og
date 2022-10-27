@@ -1,7 +1,10 @@
-﻿
+﻿@model IEnumerable<YES_og.Models.cnc000>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<YES_og.Models.sts000> sts = ViewBag.sts;
 }
 
 <div class="row">
@@ -33,7 +36,7 @@
                 <a class="btn btn-primary mb-3" href="/Follow/Create">
                     新增資料
                 </a>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sendEmailModal" >
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sendEmailModal">
                     發送
                 </button>
                 <div class="table-responsive">
@@ -52,15 +55,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @*@foreach (var i in Model)
-                                {
-                                    <tr>
-                                        <td>@i.brand</td>
-                                        <td>@i.model</td>
-                                        <td>@i.year</td>
-                                        <td>@i.update_time</td>
-                                    </tr>
-                                }*@
+                            @foreach (var i in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @{
+                                            string cncId = int.Parse(i.cnc_id.ToString()).ToString("000000");
+                                            @cncId
+                                        }
+
+                                    </td>
+                                    <td>@i.contact_person</td>
+                                    <td>@i.contact_mobile</td>
+                                    <td>@i.veh_brand</td>
+                                    <td>
+                                        @sts.FirstOrDefault(x=>x.item_id == i.loc_class).item_desc
+                                    </td>
+                                    <td>@i.zip_id</td>
+                                    <td>@sts.FirstOrDefault(x => x.item_id == i.cnc_status).item_desc</td>
+                                    <td>@i.crt_date</td>
+                                    <td>
+                                        <a class="btn btn-primary mb-3" onclick="location.href='@Url.Action("Edit", "Follow", new { id = i.cnc_id})'">
+                                            編輯
+                                        </a>
+                                        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sendEmailModal">
+                                            發送
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -72,7 +95,7 @@
 
 <!-- Modal -->
 <form method="post" id="sendEmailForm" action="" enctype="multipart/form-data">
-    <div class="modal inmodal fade" id="sendEmailModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal inmodal fade" id="sendEmailModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -120,7 +143,7 @@
                                     <div class="col-sm-10">
                                         <div id="tUploadArea">
                                             <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
-                                            <span style="word-break: break-all;" class="d-block noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                            <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
                                             <div id='tUploadFileList' class="filename"></div>
                                         </div>
                                     </div>
