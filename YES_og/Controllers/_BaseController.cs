@@ -237,7 +237,7 @@ namespace YES_og.Controllers
         }
 
         //NullToEmpty => 是否將Null補空白,預設否
-        public void SaveCreate<T>(System.Data.Linq.Table<T> table, T element, bool NullToEmpty = false) where T : class
+        public void SaveCreate<T>(System.Data.Linq.Table<T> table, T element, bool NullToEmpty = false, Table<T> newTable = null) where T : class
         {
             TimeZoneInfo TPZone = TimeZoneInfo.FindSystemTimeZoneById("Taipei Standard Time");
             DateTime NOWTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TPZone);
@@ -273,6 +273,10 @@ namespace YES_og.Controllers
             element.GetType().GetProperty("crt_date").SetValue(element, infoItem.InitDate);
             element.GetType().GetProperty("udp_user").SetValue(element, infoItem.UpdateID);
             element.GetType().GetProperty("upd_date").SetValue(element, infoItem.UpdateDate);
+            if(newTable != null)
+            {
+                table = newTable;
+            }
             table.InsertOnSubmit(element);
             try
             {
@@ -309,8 +313,8 @@ namespace YES_og.Controllers
 
             //set value
             if (NullToEmpty) { AddEmptyString(element); }
-            element.GetType().GetProperty("UpdateID").SetValue(element, infoItem.UpdateID);
-            element.GetType().GetProperty("UpdateDate").SetValue(element, infoItem.UpdateDate);
+            element.GetType().GetProperty("udp_user").SetValue(element, infoItem.UpdateID);
+            element.GetType().GetProperty("upd_date").SetValue(element, infoItem.UpdateDate);
 
             using (DBePowerDataContext db = new DBePowerDataContext())
             {

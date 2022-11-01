@@ -30,12 +30,6 @@ namespace YES_og.Models
 		
     #region 擴充性方法定義
     partial void OnCreated();
-    partial void Insertveh000(veh000 instance);
-    partial void Updateveh000(veh000 instance);
-    partial void Deleteveh000(veh000 instance);
-    partial void Insertdev100(dev100 instance);
-    partial void Updatedev100(dev100 instance);
-    partial void Deletedev100(dev100 instance);
     partial void Insertcnc000(cnc000 instance);
     partial void Updatecnc000(cnc000 instance);
     partial void Deletecnc000(cnc000 instance);
@@ -45,9 +39,21 @@ namespace YES_og.Models
     partial void Insertcnc001(cnc001 instance);
     partial void Updatecnc001(cnc001 instance);
     partial void Deletecnc001(cnc001 instance);
+    partial void Insertdev000(dev000 instance);
+    partial void Updatedev000(dev000 instance);
+    partial void Deletedev000(dev000 instance);
+    partial void Insertdev100(dev100 instance);
+    partial void Updatedev100(dev100 instance);
+    partial void Deletedev100(dev100 instance);
     partial void Insertsts000(sts000 instance);
     partial void Updatests000(sts000 instance);
     partial void Deletests000(sts000 instance);
+    partial void Insertveh000(veh000 instance);
+    partial void Updateveh000(veh000 instance);
+    partial void Deleteveh000(veh000 instance);
+    partial void Insertzip000(zip000 instance);
+    partial void Updatezip000(zip000 instance);
+    partial void Deletezip000(zip000 instance);
     #endregion
 		
 		public DBePowerDataContext() : 
@@ -80,22 +86,6 @@ namespace YES_og.Models
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<veh000> veh000
-		{
-			get
-			{
-				return this.GetTable<veh000>();
-			}
-		}
-		
-		public System.Data.Linq.Table<dev100> dev100
-		{
-			get
-			{
-				return this.GetTable<dev100>();
-			}
-		}
-		
 		public System.Data.Linq.Table<cnc000> cnc000
 		{
 			get
@@ -120,6 +110,22 @@ namespace YES_og.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<dev000> dev000
+		{
+			get
+			{
+				return this.GetTable<dev000>();
+			}
+		}
+		
+		public System.Data.Linq.Table<dev100> dev100
+		{
+			get
+			{
+				return this.GetTable<dev100>();
+			}
+		}
+		
 		public System.Data.Linq.Table<sts000> sts000
 		{
 			get
@@ -127,536 +133,20 @@ namespace YES_og.Models
 				return this.GetTable<sts000>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.veh000")]
-	public partial class veh000 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _veh_id;
-		
-		private string _veh_brand;
-		
-		private string _veh_type;
-		
-		private string _veh_model;
-		
-		private string _tw_sale;
-		
-		private string _spot_type_ac;
-		
-		private string _spot_type_dc;
-		
-		private string _crt_user;
-		
-		private System.DateTime _crt_date;
-		
-		private string _udp_user;
-		
-		private System.Nullable<System.DateTime> _upd_date;
-		
-    #region 擴充性方法定義
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onveh_idChanging(int value);
-    partial void Onveh_idChanged();
-    partial void Onveh_brandChanging(string value);
-    partial void Onveh_brandChanged();
-    partial void Onveh_typeChanging(string value);
-    partial void Onveh_typeChanged();
-    partial void Onveh_modelChanging(string value);
-    partial void Onveh_modelChanged();
-    partial void Ontw_saleChanging(string value);
-    partial void Ontw_saleChanged();
-    partial void Onspot_type_acChanging(string value);
-    partial void Onspot_type_acChanged();
-    partial void Onspot_type_dcChanging(string value);
-    partial void Onspot_type_dcChanged();
-    partial void Oncrt_userChanging(string value);
-    partial void Oncrt_userChanged();
-    partial void Oncrt_dateChanging(System.DateTime value);
-    partial void Oncrt_dateChanged();
-    partial void Onudp_userChanging(string value);
-    partial void Onudp_userChanged();
-    partial void Onupd_dateChanging(System.Nullable<System.DateTime> value);
-    partial void Onupd_dateChanged();
-    #endregion
-		
-		public veh000()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int veh_id
+		public System.Data.Linq.Table<veh000> veh000
 		{
 			get
 			{
-				return this._veh_id;
-			}
-			set
-			{
-				if ((this._veh_id != value))
-				{
-					this.Onveh_idChanging(value);
-					this.SendPropertyChanging();
-					this._veh_id = value;
-					this.SendPropertyChanged("veh_id");
-					this.Onveh_idChanged();
-				}
+				return this.GetTable<veh000>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_brand", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
-		public string veh_brand
+		public System.Data.Linq.Table<zip000> zip000
 		{
 			get
 			{
-				return this._veh_brand;
-			}
-			set
-			{
-				if ((this._veh_brand != value))
-				{
-					this.Onveh_brandChanging(value);
-					this.SendPropertyChanging();
-					this._veh_brand = value;
-					this.SendPropertyChanged("veh_brand");
-					this.Onveh_brandChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_type", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string veh_type
-		{
-			get
-			{
-				return this._veh_type;
-			}
-			set
-			{
-				if ((this._veh_type != value))
-				{
-					this.Onveh_typeChanging(value);
-					this.SendPropertyChanging();
-					this._veh_type = value;
-					this.SendPropertyChanged("veh_type");
-					this.Onveh_typeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_model", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string veh_model
-		{
-			get
-			{
-				return this._veh_model;
-			}
-			set
-			{
-				if ((this._veh_model != value))
-				{
-					this.Onveh_modelChanging(value);
-					this.SendPropertyChanging();
-					this._veh_model = value;
-					this.SendPropertyChanged("veh_model");
-					this.Onveh_modelChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tw_sale", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
-		public string tw_sale
-		{
-			get
-			{
-				return this._tw_sale;
-			}
-			set
-			{
-				if ((this._tw_sale != value))
-				{
-					this.Ontw_saleChanging(value);
-					this.SendPropertyChanging();
-					this._tw_sale = value;
-					this.SendPropertyChanged("tw_sale");
-					this.Ontw_saleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type_ac", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string spot_type_ac
-		{
-			get
-			{
-				return this._spot_type_ac;
-			}
-			set
-			{
-				if ((this._spot_type_ac != value))
-				{
-					this.Onspot_type_acChanging(value);
-					this.SendPropertyChanging();
-					this._spot_type_ac = value;
-					this.SendPropertyChanged("spot_type_ac");
-					this.Onspot_type_acChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type_dc", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string spot_type_dc
-		{
-			get
-			{
-				return this._spot_type_dc;
-			}
-			set
-			{
-				if ((this._spot_type_dc != value))
-				{
-					this.Onspot_type_dcChanging(value);
-					this.SendPropertyChanging();
-					this._spot_type_dc = value;
-					this.SendPropertyChanged("spot_type_dc");
-					this.Onspot_type_dcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_user", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
-		public string crt_user
-		{
-			get
-			{
-				return this._crt_user;
-			}
-			set
-			{
-				if ((this._crt_user != value))
-				{
-					this.Oncrt_userChanging(value);
-					this.SendPropertyChanging();
-					this._crt_user = value;
-					this.SendPropertyChanged("crt_user");
-					this.Oncrt_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_date", DbType="DateTime NOT NULL")]
-		public System.DateTime crt_date
-		{
-			get
-			{
-				return this._crt_date;
-			}
-			set
-			{
-				if ((this._crt_date != value))
-				{
-					this.Oncrt_dateChanging(value);
-					this.SendPropertyChanging();
-					this._crt_date = value;
-					this.SendPropertyChanged("crt_date");
-					this.Oncrt_dateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_udp_user", DbType="VarChar(64)")]
-		public string udp_user
-		{
-			get
-			{
-				return this._udp_user;
-			}
-			set
-			{
-				if ((this._udp_user != value))
-				{
-					this.Onudp_userChanging(value);
-					this.SendPropertyChanging();
-					this._udp_user = value;
-					this.SendPropertyChanged("udp_user");
-					this.Onudp_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_upd_date", DbType="DateTime")]
-		public System.Nullable<System.DateTime> upd_date
-		{
-			get
-			{
-				return this._upd_date;
-			}
-			set
-			{
-				if ((this._upd_date != value))
-				{
-					this.Onupd_dateChanging(value);
-					this.SendPropertyChanging();
-					this._upd_date = value;
-					this.SendPropertyChanged("upd_date");
-					this.Onupd_dateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dev100")]
-	public partial class dev100 : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _type_id;
-		
-		private string _spot_ac_dc;
-		
-		private string _spot_type;
-		
-		private string _spot_type2;
-		
-		private string _crt_user;
-		
-		private System.DateTime _crt_date;
-		
-		private string _udp_user;
-		
-		private System.Nullable<System.DateTime> _upd_date;
-		
-    #region 擴充性方法定義
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Ontype_idChanging(int value);
-    partial void Ontype_idChanged();
-    partial void Onspot_ac_dcChanging(string value);
-    partial void Onspot_ac_dcChanged();
-    partial void Onspot_typeChanging(string value);
-    partial void Onspot_typeChanged();
-    partial void Onspot_type2Changing(string value);
-    partial void Onspot_type2Changed();
-    partial void Oncrt_userChanging(string value);
-    partial void Oncrt_userChanged();
-    partial void Oncrt_dateChanging(System.DateTime value);
-    partial void Oncrt_dateChanged();
-    partial void Onudp_userChanging(string value);
-    partial void Onudp_userChanged();
-    partial void Onupd_dateChanging(System.Nullable<System.DateTime> value);
-    partial void Onupd_dateChanged();
-    #endregion
-		
-		public dev100()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int type_id
-		{
-			get
-			{
-				return this._type_id;
-			}
-			set
-			{
-				if ((this._type_id != value))
-				{
-					this.Ontype_idChanging(value);
-					this.SendPropertyChanging();
-					this._type_id = value;
-					this.SendPropertyChanged("type_id");
-					this.Ontype_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_ac_dc", DbType="VarChar(5) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string spot_ac_dc
-		{
-			get
-			{
-				return this._spot_ac_dc;
-			}
-			set
-			{
-				if ((this._spot_ac_dc != value))
-				{
-					this.Onspot_ac_dcChanging(value);
-					this.SendPropertyChanging();
-					this._spot_ac_dc = value;
-					this.SendPropertyChanged("spot_ac_dc");
-					this.Onspot_ac_dcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string spot_type
-		{
-			get
-			{
-				return this._spot_type;
-			}
-			set
-			{
-				if ((this._spot_type != value))
-				{
-					this.Onspot_typeChanging(value);
-					this.SendPropertyChanging();
-					this._spot_type = value;
-					this.SendPropertyChanged("spot_type");
-					this.Onspot_typeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type2", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string spot_type2
-		{
-			get
-			{
-				return this._spot_type2;
-			}
-			set
-			{
-				if ((this._spot_type2 != value))
-				{
-					this.Onspot_type2Changing(value);
-					this.SendPropertyChanging();
-					this._spot_type2 = value;
-					this.SendPropertyChanged("spot_type2");
-					this.Onspot_type2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_user", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
-		public string crt_user
-		{
-			get
-			{
-				return this._crt_user;
-			}
-			set
-			{
-				if ((this._crt_user != value))
-				{
-					this.Oncrt_userChanging(value);
-					this.SendPropertyChanging();
-					this._crt_user = value;
-					this.SendPropertyChanged("crt_user");
-					this.Oncrt_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_date", DbType="DateTime NOT NULL")]
-		public System.DateTime crt_date
-		{
-			get
-			{
-				return this._crt_date;
-			}
-			set
-			{
-				if ((this._crt_date != value))
-				{
-					this.Oncrt_dateChanging(value);
-					this.SendPropertyChanging();
-					this._crt_date = value;
-					this.SendPropertyChanged("crt_date");
-					this.Oncrt_dateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_udp_user", DbType="VarChar(64)")]
-		public string udp_user
-		{
-			get
-			{
-				return this._udp_user;
-			}
-			set
-			{
-				if ((this._udp_user != value))
-				{
-					this.Onudp_userChanging(value);
-					this.SendPropertyChanging();
-					this._udp_user = value;
-					this.SendPropertyChanged("udp_user");
-					this.Onudp_userChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_upd_date", DbType="DateTime")]
-		public System.Nullable<System.DateTime> upd_date
-		{
-			get
-			{
-				return this._upd_date;
-			}
-			set
-			{
-				if ((this._upd_date != value))
-				{
-					this.Onupd_dateChanging(value);
-					this.SendPropertyChanging();
-					this._upd_date = value;
-					this.SendPropertyChanged("upd_date");
-					this.Onupd_dateChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<zip000>();
 			}
 		}
 	}
@@ -1687,6 +1177,850 @@ namespace YES_og.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dev000")]
+	public partial class dev000 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _device_id;
+		
+		private string _device_type;
+		
+		private string _device_supplier;
+		
+		private string _device_model;
+		
+		private string _device_SN;
+		
+		private string _device_place;
+		
+		private string _device_size;
+		
+		private string _device_iplv;
+		
+		private System.Nullable<int> _charger_qty;
+		
+		private string _charger_type;
+		
+		private string _charger_comm;
+		
+		private string _charger_prot;
+		
+		private string _charger_ac_dc;
+		
+		private string _charger_plug;
+		
+		private System.Nullable<int> _charger_current;
+		
+		private System.Nullable<int> _charger_voltage;
+		
+		private System.Nullable<int> _charger_outputpower;
+		
+		private string _note1;
+		
+		private string _device_status;
+		
+		private string _crt_user;
+		
+		private System.DateTime _crt_date;
+		
+		private string _udp_user;
+		
+		private System.Nullable<System.DateTime> _upd_date;
+		
+		private string _device_code;
+		
+    #region 擴充性方法定義
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Ondevice_idChanging(System.Guid value);
+    partial void Ondevice_idChanged();
+    partial void Ondevice_typeChanging(string value);
+    partial void Ondevice_typeChanged();
+    partial void Ondevice_supplierChanging(string value);
+    partial void Ondevice_supplierChanged();
+    partial void Ondevice_modelChanging(string value);
+    partial void Ondevice_modelChanged();
+    partial void Ondevice_SNChanging(string value);
+    partial void Ondevice_SNChanged();
+    partial void Ondevice_placeChanging(string value);
+    partial void Ondevice_placeChanged();
+    partial void Ondevice_sizeChanging(string value);
+    partial void Ondevice_sizeChanged();
+    partial void Ondevice_iplvChanging(string value);
+    partial void Ondevice_iplvChanged();
+    partial void Oncharger_qtyChanging(System.Nullable<int> value);
+    partial void Oncharger_qtyChanged();
+    partial void Oncharger_typeChanging(string value);
+    partial void Oncharger_typeChanged();
+    partial void Oncharger_commChanging(string value);
+    partial void Oncharger_commChanged();
+    partial void Oncharger_protChanging(string value);
+    partial void Oncharger_protChanged();
+    partial void Oncharger_ac_dcChanging(string value);
+    partial void Oncharger_ac_dcChanged();
+    partial void Oncharger_plugChanging(string value);
+    partial void Oncharger_plugChanged();
+    partial void Oncharger_currentChanging(System.Nullable<int> value);
+    partial void Oncharger_currentChanged();
+    partial void Oncharger_voltageChanging(System.Nullable<int> value);
+    partial void Oncharger_voltageChanged();
+    partial void Oncharger_outputpowerChanging(System.Nullable<int> value);
+    partial void Oncharger_outputpowerChanged();
+    partial void Onnote1Changing(string value);
+    partial void Onnote1Changed();
+    partial void Ondevice_statusChanging(string value);
+    partial void Ondevice_statusChanged();
+    partial void Oncrt_userChanging(string value);
+    partial void Oncrt_userChanged();
+    partial void Oncrt_dateChanging(System.DateTime value);
+    partial void Oncrt_dateChanged();
+    partial void Onudp_userChanging(string value);
+    partial void Onudp_userChanged();
+    partial void Onupd_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Onupd_dateChanged();
+    partial void Ondevice_codeChanging(string value);
+    partial void Ondevice_codeChanged();
+    #endregion
+		
+		public dev000()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_id", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid device_id
+		{
+			get
+			{
+				return this._device_id;
+			}
+			set
+			{
+				if ((this._device_id != value))
+				{
+					this.Ondevice_idChanging(value);
+					this.SendPropertyChanging();
+					this._device_id = value;
+					this.SendPropertyChanged("device_id");
+					this.Ondevice_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_type", DbType="VarChar(2) NOT NULL", CanBeNull=false)]
+		public string device_type
+		{
+			get
+			{
+				return this._device_type;
+			}
+			set
+			{
+				if ((this._device_type != value))
+				{
+					this.Ondevice_typeChanging(value);
+					this.SendPropertyChanging();
+					this._device_type = value;
+					this.SendPropertyChanged("device_type");
+					this.Ondevice_typeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_supplier", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
+		public string device_supplier
+		{
+			get
+			{
+				return this._device_supplier;
+			}
+			set
+			{
+				if ((this._device_supplier != value))
+				{
+					this.Ondevice_supplierChanging(value);
+					this.SendPropertyChanging();
+					this._device_supplier = value;
+					this.SendPropertyChanged("device_supplier");
+					this.Ondevice_supplierChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_model", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string device_model
+		{
+			get
+			{
+				return this._device_model;
+			}
+			set
+			{
+				if ((this._device_model != value))
+				{
+					this.Ondevice_modelChanging(value);
+					this.SendPropertyChanging();
+					this._device_model = value;
+					this.SendPropertyChanged("device_model");
+					this.Ondevice_modelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_SN", DbType="VarChar(50)")]
+		public string device_SN
+		{
+			get
+			{
+				return this._device_SN;
+			}
+			set
+			{
+				if ((this._device_SN != value))
+				{
+					this.Ondevice_SNChanging(value);
+					this.SendPropertyChanging();
+					this._device_SN = value;
+					this.SendPropertyChanged("device_SN");
+					this.Ondevice_SNChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_place", DbType="VarChar(2)")]
+		public string device_place
+		{
+			get
+			{
+				return this._device_place;
+			}
+			set
+			{
+				if ((this._device_place != value))
+				{
+					this.Ondevice_placeChanging(value);
+					this.SendPropertyChanging();
+					this._device_place = value;
+					this.SendPropertyChanged("device_place");
+					this.Ondevice_placeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_size", DbType="VarChar(50)")]
+		public string device_size
+		{
+			get
+			{
+				return this._device_size;
+			}
+			set
+			{
+				if ((this._device_size != value))
+				{
+					this.Ondevice_sizeChanging(value);
+					this.SendPropertyChanging();
+					this._device_size = value;
+					this.SendPropertyChanged("device_size");
+					this.Ondevice_sizeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_iplv", DbType="VarChar(6)")]
+		public string device_iplv
+		{
+			get
+			{
+				return this._device_iplv;
+			}
+			set
+			{
+				if ((this._device_iplv != value))
+				{
+					this.Ondevice_iplvChanging(value);
+					this.SendPropertyChanging();
+					this._device_iplv = value;
+					this.SendPropertyChanged("device_iplv");
+					this.Ondevice_iplvChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_qty", DbType="Int")]
+		public System.Nullable<int> charger_qty
+		{
+			get
+			{
+				return this._charger_qty;
+			}
+			set
+			{
+				if ((this._charger_qty != value))
+				{
+					this.Oncharger_qtyChanging(value);
+					this.SendPropertyChanging();
+					this._charger_qty = value;
+					this.SendPropertyChanged("charger_qty");
+					this.Oncharger_qtyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_type", DbType="VarChar(2)")]
+		public string charger_type
+		{
+			get
+			{
+				return this._charger_type;
+			}
+			set
+			{
+				if ((this._charger_type != value))
+				{
+					this.Oncharger_typeChanging(value);
+					this.SendPropertyChanging();
+					this._charger_type = value;
+					this.SendPropertyChanged("charger_type");
+					this.Oncharger_typeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_comm", DbType="VarChar(2)")]
+		public string charger_comm
+		{
+			get
+			{
+				return this._charger_comm;
+			}
+			set
+			{
+				if ((this._charger_comm != value))
+				{
+					this.Oncharger_commChanging(value);
+					this.SendPropertyChanging();
+					this._charger_comm = value;
+					this.SendPropertyChanged("charger_comm");
+					this.Oncharger_commChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_prot", DbType="VarChar(2)")]
+		public string charger_prot
+		{
+			get
+			{
+				return this._charger_prot;
+			}
+			set
+			{
+				if ((this._charger_prot != value))
+				{
+					this.Oncharger_protChanging(value);
+					this.SendPropertyChanging();
+					this._charger_prot = value;
+					this.SendPropertyChanged("charger_prot");
+					this.Oncharger_protChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_ac_dc", DbType="VarChar(2)")]
+		public string charger_ac_dc
+		{
+			get
+			{
+				return this._charger_ac_dc;
+			}
+			set
+			{
+				if ((this._charger_ac_dc != value))
+				{
+					this.Oncharger_ac_dcChanging(value);
+					this.SendPropertyChanging();
+					this._charger_ac_dc = value;
+					this.SendPropertyChanged("charger_ac_dc");
+					this.Oncharger_ac_dcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_plug", DbType="VarChar(3)")]
+		public string charger_plug
+		{
+			get
+			{
+				return this._charger_plug;
+			}
+			set
+			{
+				if ((this._charger_plug != value))
+				{
+					this.Oncharger_plugChanging(value);
+					this.SendPropertyChanging();
+					this._charger_plug = value;
+					this.SendPropertyChanged("charger_plug");
+					this.Oncharger_plugChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_current", DbType="Int")]
+		public System.Nullable<int> charger_current
+		{
+			get
+			{
+				return this._charger_current;
+			}
+			set
+			{
+				if ((this._charger_current != value))
+				{
+					this.Oncharger_currentChanging(value);
+					this.SendPropertyChanging();
+					this._charger_current = value;
+					this.SendPropertyChanged("charger_current");
+					this.Oncharger_currentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_voltage", DbType="Int")]
+		public System.Nullable<int> charger_voltage
+		{
+			get
+			{
+				return this._charger_voltage;
+			}
+			set
+			{
+				if ((this._charger_voltage != value))
+				{
+					this.Oncharger_voltageChanging(value);
+					this.SendPropertyChanging();
+					this._charger_voltage = value;
+					this.SendPropertyChanged("charger_voltage");
+					this.Oncharger_voltageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_charger_outputpower", DbType="Int")]
+		public System.Nullable<int> charger_outputpower
+		{
+			get
+			{
+				return this._charger_outputpower;
+			}
+			set
+			{
+				if ((this._charger_outputpower != value))
+				{
+					this.Oncharger_outputpowerChanging(value);
+					this.SendPropertyChanging();
+					this._charger_outputpower = value;
+					this.SendPropertyChanged("charger_outputpower");
+					this.Oncharger_outputpowerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_note1", DbType="NVarChar(500)")]
+		public string note1
+		{
+			get
+			{
+				return this._note1;
+			}
+			set
+			{
+				if ((this._note1 != value))
+				{
+					this.Onnote1Changing(value);
+					this.SendPropertyChanging();
+					this._note1 = value;
+					this.SendPropertyChanged("note1");
+					this.Onnote1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_status", DbType="VarChar(2) NOT NULL", CanBeNull=false)]
+		public string device_status
+		{
+			get
+			{
+				return this._device_status;
+			}
+			set
+			{
+				if ((this._device_status != value))
+				{
+					this.Ondevice_statusChanging(value);
+					this.SendPropertyChanging();
+					this._device_status = value;
+					this.SendPropertyChanged("device_status");
+					this.Ondevice_statusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_user", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
+		public string crt_user
+		{
+			get
+			{
+				return this._crt_user;
+			}
+			set
+			{
+				if ((this._crt_user != value))
+				{
+					this.Oncrt_userChanging(value);
+					this.SendPropertyChanging();
+					this._crt_user = value;
+					this.SendPropertyChanged("crt_user");
+					this.Oncrt_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_date", DbType="DateTime NOT NULL")]
+		public System.DateTime crt_date
+		{
+			get
+			{
+				return this._crt_date;
+			}
+			set
+			{
+				if ((this._crt_date != value))
+				{
+					this.Oncrt_dateChanging(value);
+					this.SendPropertyChanging();
+					this._crt_date = value;
+					this.SendPropertyChanged("crt_date");
+					this.Oncrt_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_udp_user", DbType="VarChar(64)")]
+		public string udp_user
+		{
+			get
+			{
+				return this._udp_user;
+			}
+			set
+			{
+				if ((this._udp_user != value))
+				{
+					this.Onudp_userChanging(value);
+					this.SendPropertyChanging();
+					this._udp_user = value;
+					this.SendPropertyChanged("udp_user");
+					this.Onudp_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_upd_date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> upd_date
+		{
+			get
+			{
+				return this._upd_date;
+			}
+			set
+			{
+				if ((this._upd_date != value))
+				{
+					this.Onupd_dateChanging(value);
+					this.SendPropertyChanging();
+					this._upd_date = value;
+					this.SendPropertyChanged("upd_date");
+					this.Onupd_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_device_code", DbType="VarChar(50)")]
+		public string device_code
+		{
+			get
+			{
+				return this._device_code;
+			}
+			set
+			{
+				if ((this._device_code != value))
+				{
+					this.Ondevice_codeChanging(value);
+					this.SendPropertyChanging();
+					this._device_code = value;
+					this.SendPropertyChanged("device_code");
+					this.Ondevice_codeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dev100")]
+	public partial class dev100 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _type_id;
+		
+		private string _spot_ac_dc;
+		
+		private string _spot_type;
+		
+		private string _spot_type2;
+		
+		private string _crt_user;
+		
+		private System.DateTime _crt_date;
+		
+		private string _udp_user;
+		
+		private System.Nullable<System.DateTime> _upd_date;
+		
+    #region 擴充性方法定義
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Ontype_idChanging(int value);
+    partial void Ontype_idChanged();
+    partial void Onspot_ac_dcChanging(string value);
+    partial void Onspot_ac_dcChanged();
+    partial void Onspot_typeChanging(string value);
+    partial void Onspot_typeChanged();
+    partial void Onspot_type2Changing(string value);
+    partial void Onspot_type2Changed();
+    partial void Oncrt_userChanging(string value);
+    partial void Oncrt_userChanged();
+    partial void Oncrt_dateChanging(System.DateTime value);
+    partial void Oncrt_dateChanged();
+    partial void Onudp_userChanging(string value);
+    partial void Onudp_userChanged();
+    partial void Onupd_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Onupd_dateChanged();
+    #endregion
+		
+		public dev100()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int type_id
+		{
+			get
+			{
+				return this._type_id;
+			}
+			set
+			{
+				if ((this._type_id != value))
+				{
+					this.Ontype_idChanging(value);
+					this.SendPropertyChanging();
+					this._type_id = value;
+					this.SendPropertyChanged("type_id");
+					this.Ontype_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_ac_dc", DbType="VarChar(5) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string spot_ac_dc
+		{
+			get
+			{
+				return this._spot_ac_dc;
+			}
+			set
+			{
+				if ((this._spot_ac_dc != value))
+				{
+					this.Onspot_ac_dcChanging(value);
+					this.SendPropertyChanging();
+					this._spot_ac_dc = value;
+					this.SendPropertyChanged("spot_ac_dc");
+					this.Onspot_ac_dcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type", DbType="VarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string spot_type
+		{
+			get
+			{
+				return this._spot_type;
+			}
+			set
+			{
+				if ((this._spot_type != value))
+				{
+					this.Onspot_typeChanging(value);
+					this.SendPropertyChanging();
+					this._spot_type = value;
+					this.SendPropertyChanged("spot_type");
+					this.Onspot_typeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type2", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string spot_type2
+		{
+			get
+			{
+				return this._spot_type2;
+			}
+			set
+			{
+				if ((this._spot_type2 != value))
+				{
+					this.Onspot_type2Changing(value);
+					this.SendPropertyChanging();
+					this._spot_type2 = value;
+					this.SendPropertyChanged("spot_type2");
+					this.Onspot_type2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_user", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
+		public string crt_user
+		{
+			get
+			{
+				return this._crt_user;
+			}
+			set
+			{
+				if ((this._crt_user != value))
+				{
+					this.Oncrt_userChanging(value);
+					this.SendPropertyChanging();
+					this._crt_user = value;
+					this.SendPropertyChanged("crt_user");
+					this.Oncrt_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_date", DbType="DateTime NOT NULL")]
+		public System.DateTime crt_date
+		{
+			get
+			{
+				return this._crt_date;
+			}
+			set
+			{
+				if ((this._crt_date != value))
+				{
+					this.Oncrt_dateChanging(value);
+					this.SendPropertyChanging();
+					this._crt_date = value;
+					this.SendPropertyChanged("crt_date");
+					this.Oncrt_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_udp_user", DbType="VarChar(64)")]
+		public string udp_user
+		{
+			get
+			{
+				return this._udp_user;
+			}
+			set
+			{
+				if ((this._udp_user != value))
+				{
+					this.Onudp_userChanging(value);
+					this.SendPropertyChanging();
+					this._udp_user = value;
+					this.SendPropertyChanged("udp_user");
+					this.Onudp_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_upd_date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> upd_date
+		{
+			get
+			{
+				return this._upd_date;
+			}
+			set
+			{
+				if ((this._upd_date != value))
+				{
+					this.Onupd_dateChanging(value);
+					this.SendPropertyChanging();
+					this._upd_date = value;
+					this.SendPropertyChanged("upd_date");
+					this.Onupd_dateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.sts000")]
 	public partial class sts000 : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1940,6 +2274,634 @@ namespace YES_og.Models
 					this._upd_date = value;
 					this.SendPropertyChanged("upd_date");
 					this.Onupd_dateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.veh000")]
+	public partial class veh000 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _veh_id;
+		
+		private string _veh_brand;
+		
+		private string _veh_type;
+		
+		private string _veh_model;
+		
+		private string _tw_sale;
+		
+		private string _spot_type_ac;
+		
+		private string _spot_type_dc;
+		
+		private string _crt_user;
+		
+		private System.DateTime _crt_date;
+		
+		private string _udp_user;
+		
+		private System.Nullable<System.DateTime> _upd_date;
+		
+    #region 擴充性方法定義
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onveh_idChanging(int value);
+    partial void Onveh_idChanged();
+    partial void Onveh_brandChanging(string value);
+    partial void Onveh_brandChanged();
+    partial void Onveh_typeChanging(string value);
+    partial void Onveh_typeChanged();
+    partial void Onveh_modelChanging(string value);
+    partial void Onveh_modelChanged();
+    partial void Ontw_saleChanging(string value);
+    partial void Ontw_saleChanged();
+    partial void Onspot_type_acChanging(string value);
+    partial void Onspot_type_acChanged();
+    partial void Onspot_type_dcChanging(string value);
+    partial void Onspot_type_dcChanged();
+    partial void Oncrt_userChanging(string value);
+    partial void Oncrt_userChanged();
+    partial void Oncrt_dateChanging(System.DateTime value);
+    partial void Oncrt_dateChanged();
+    partial void Onudp_userChanging(string value);
+    partial void Onudp_userChanged();
+    partial void Onupd_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Onupd_dateChanged();
+    #endregion
+		
+		public veh000()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int veh_id
+		{
+			get
+			{
+				return this._veh_id;
+			}
+			set
+			{
+				if ((this._veh_id != value))
+				{
+					this.Onveh_idChanging(value);
+					this.SendPropertyChanging();
+					this._veh_id = value;
+					this.SendPropertyChanged("veh_id");
+					this.Onveh_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_brand", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string veh_brand
+		{
+			get
+			{
+				return this._veh_brand;
+			}
+			set
+			{
+				if ((this._veh_brand != value))
+				{
+					this.Onveh_brandChanging(value);
+					this.SendPropertyChanging();
+					this._veh_brand = value;
+					this.SendPropertyChanged("veh_brand");
+					this.Onveh_brandChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_type", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string veh_type
+		{
+			get
+			{
+				return this._veh_type;
+			}
+			set
+			{
+				if ((this._veh_type != value))
+				{
+					this.Onveh_typeChanging(value);
+					this.SendPropertyChanging();
+					this._veh_type = value;
+					this.SendPropertyChanged("veh_type");
+					this.Onveh_typeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_veh_model", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string veh_model
+		{
+			get
+			{
+				return this._veh_model;
+			}
+			set
+			{
+				if ((this._veh_model != value))
+				{
+					this.Onveh_modelChanging(value);
+					this.SendPropertyChanging();
+					this._veh_model = value;
+					this.SendPropertyChanged("veh_model");
+					this.Onveh_modelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tw_sale", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		public string tw_sale
+		{
+			get
+			{
+				return this._tw_sale;
+			}
+			set
+			{
+				if ((this._tw_sale != value))
+				{
+					this.Ontw_saleChanging(value);
+					this.SendPropertyChanging();
+					this._tw_sale = value;
+					this.SendPropertyChanged("tw_sale");
+					this.Ontw_saleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type_ac", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string spot_type_ac
+		{
+			get
+			{
+				return this._spot_type_ac;
+			}
+			set
+			{
+				if ((this._spot_type_ac != value))
+				{
+					this.Onspot_type_acChanging(value);
+					this.SendPropertyChanging();
+					this._spot_type_ac = value;
+					this.SendPropertyChanged("spot_type_ac");
+					this.Onspot_type_acChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_type_dc", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string spot_type_dc
+		{
+			get
+			{
+				return this._spot_type_dc;
+			}
+			set
+			{
+				if ((this._spot_type_dc != value))
+				{
+					this.Onspot_type_dcChanging(value);
+					this.SendPropertyChanging();
+					this._spot_type_dc = value;
+					this.SendPropertyChanged("spot_type_dc");
+					this.Onspot_type_dcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_user", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
+		public string crt_user
+		{
+			get
+			{
+				return this._crt_user;
+			}
+			set
+			{
+				if ((this._crt_user != value))
+				{
+					this.Oncrt_userChanging(value);
+					this.SendPropertyChanging();
+					this._crt_user = value;
+					this.SendPropertyChanged("crt_user");
+					this.Oncrt_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_date", DbType="DateTime NOT NULL")]
+		public System.DateTime crt_date
+		{
+			get
+			{
+				return this._crt_date;
+			}
+			set
+			{
+				if ((this._crt_date != value))
+				{
+					this.Oncrt_dateChanging(value);
+					this.SendPropertyChanging();
+					this._crt_date = value;
+					this.SendPropertyChanged("crt_date");
+					this.Oncrt_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_udp_user", DbType="VarChar(64)")]
+		public string udp_user
+		{
+			get
+			{
+				return this._udp_user;
+			}
+			set
+			{
+				if ((this._udp_user != value))
+				{
+					this.Onudp_userChanging(value);
+					this.SendPropertyChanging();
+					this._udp_user = value;
+					this.SendPropertyChanged("udp_user");
+					this.Onudp_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_upd_date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> upd_date
+		{
+			get
+			{
+				return this._upd_date;
+			}
+			set
+			{
+				if ((this._upd_date != value))
+				{
+					this.Onupd_dateChanging(value);
+					this.SendPropertyChanging();
+					this._upd_date = value;
+					this.SendPropertyChanged("upd_date");
+					this.Onupd_dateChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zip000")]
+	public partial class zip000 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _zip_id;
+		
+		private string _country;
+		
+		private string _district;
+		
+		private string _addr;
+		
+		private string _addr2;
+		
+		private string _zone;
+		
+		private string _region;
+		
+		private string _crt_user;
+		
+		private System.DateTime _crt_date;
+		
+		private string _udp_user;
+		
+		private System.Nullable<System.DateTime> _upd_date;
+		
+		private string _zip_type;
+		
+    #region 擴充性方法定義
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onzip_idChanging(string value);
+    partial void Onzip_idChanged();
+    partial void OncountryChanging(string value);
+    partial void OncountryChanged();
+    partial void OndistrictChanging(string value);
+    partial void OndistrictChanged();
+    partial void OnaddrChanging(string value);
+    partial void OnaddrChanged();
+    partial void Onaddr2Changing(string value);
+    partial void Onaddr2Changed();
+    partial void OnzoneChanging(string value);
+    partial void OnzoneChanged();
+    partial void OnregionChanging(string value);
+    partial void OnregionChanged();
+    partial void Oncrt_userChanging(string value);
+    partial void Oncrt_userChanged();
+    partial void Oncrt_dateChanging(System.DateTime value);
+    partial void Oncrt_dateChanged();
+    partial void Onudp_userChanging(string value);
+    partial void Onudp_userChanged();
+    partial void Onupd_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Onupd_dateChanged();
+    partial void Onzip_typeChanging(string value);
+    partial void Onzip_typeChanged();
+    #endregion
+		
+		public zip000()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zip_id", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string zip_id
+		{
+			get
+			{
+				return this._zip_id;
+			}
+			set
+			{
+				if ((this._zip_id != value))
+				{
+					this.Onzip_idChanging(value);
+					this.SendPropertyChanging();
+					this._zip_id = value;
+					this.SendPropertyChanged("zip_id");
+					this.Onzip_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_country", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string country
+		{
+			get
+			{
+				return this._country;
+			}
+			set
+			{
+				if ((this._country != value))
+				{
+					this.OncountryChanging(value);
+					this.SendPropertyChanging();
+					this._country = value;
+					this.SendPropertyChanged("country");
+					this.OncountryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_district", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string district
+		{
+			get
+			{
+				return this._district;
+			}
+			set
+			{
+				if ((this._district != value))
+				{
+					this.OndistrictChanging(value);
+					this.SendPropertyChanging();
+					this._district = value;
+					this.SendPropertyChanged("district");
+					this.OndistrictChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_addr", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string addr
+		{
+			get
+			{
+				return this._addr;
+			}
+			set
+			{
+				if ((this._addr != value))
+				{
+					this.OnaddrChanging(value);
+					this.SendPropertyChanging();
+					this._addr = value;
+					this.SendPropertyChanged("addr");
+					this.OnaddrChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_addr2", DbType="NVarChar(50)")]
+		public string addr2
+		{
+			get
+			{
+				return this._addr2;
+			}
+			set
+			{
+				if ((this._addr2 != value))
+				{
+					this.Onaddr2Changing(value);
+					this.SendPropertyChanging();
+					this._addr2 = value;
+					this.SendPropertyChanged("addr2");
+					this.Onaddr2Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zone", DbType="NVarChar(10)")]
+		public string zone
+		{
+			get
+			{
+				return this._zone;
+			}
+			set
+			{
+				if ((this._zone != value))
+				{
+					this.OnzoneChanging(value);
+					this.SendPropertyChanging();
+					this._zone = value;
+					this.SendPropertyChanged("zone");
+					this.OnzoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_region", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string region
+		{
+			get
+			{
+				return this._region;
+			}
+			set
+			{
+				if ((this._region != value))
+				{
+					this.OnregionChanging(value);
+					this.SendPropertyChanging();
+					this._region = value;
+					this.SendPropertyChanged("region");
+					this.OnregionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_user", DbType="VarChar(64) NOT NULL", CanBeNull=false)]
+		public string crt_user
+		{
+			get
+			{
+				return this._crt_user;
+			}
+			set
+			{
+				if ((this._crt_user != value))
+				{
+					this.Oncrt_userChanging(value);
+					this.SendPropertyChanging();
+					this._crt_user = value;
+					this.SendPropertyChanged("crt_user");
+					this.Oncrt_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_crt_date", DbType="DateTime NOT NULL")]
+		public System.DateTime crt_date
+		{
+			get
+			{
+				return this._crt_date;
+			}
+			set
+			{
+				if ((this._crt_date != value))
+				{
+					this.Oncrt_dateChanging(value);
+					this.SendPropertyChanging();
+					this._crt_date = value;
+					this.SendPropertyChanged("crt_date");
+					this.Oncrt_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_udp_user", DbType="VarChar(64)")]
+		public string udp_user
+		{
+			get
+			{
+				return this._udp_user;
+			}
+			set
+			{
+				if ((this._udp_user != value))
+				{
+					this.Onudp_userChanging(value);
+					this.SendPropertyChanging();
+					this._udp_user = value;
+					this.SendPropertyChanged("udp_user");
+					this.Onudp_userChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_upd_date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> upd_date
+		{
+			get
+			{
+				return this._upd_date;
+			}
+			set
+			{
+				if ((this._upd_date != value))
+				{
+					this.Onupd_dateChanging(value);
+					this.SendPropertyChanging();
+					this._upd_date = value;
+					this.SendPropertyChanged("upd_date");
+					this.Onupd_dateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zip_type", DbType="VarChar(1)")]
+		public string zip_type
+		{
+			get
+			{
+				return this._zip_type;
+			}
+			set
+			{
+				if ((this._zip_type != value))
+				{
+					this.Onzip_typeChanging(value);
+					this.SendPropertyChanging();
+					this._zip_type = value;
+					this.SendPropertyChanged("zip_type");
+					this.Onzip_typeChanged();
 				}
 			}
 		}

@@ -1,8 +1,484 @@
-﻿
+﻿@using YES_og.Models
+@model YES_og.Models.cnc000
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    YES_og.Models.cnc000 cnc000 = ViewBag.cnc000;
+    YES_og.Models.cnc001 cnc001 = ViewBag.cnc001;
+    var cnc002s = ViewBag.cnc002s;
+    string fnstr = ViewBag.fnstr;
+
+    string cncId = int.Parse(cnc000.cnc_id.ToString()).ToString("000000");
 }
 
-<h2>Edit</h2>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>基本資料</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "DataForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <input type="hidden" name="cnc_id" value="@Model.cnc_id" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">案件編號</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="cncId" value="@cncId" readonly>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="contact_person" value="@cnc000.contact_person">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">手機</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="contact_mobile" value="@cnc000.contact_mobile">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">E-mail</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="contact_email" value="@cnc000.contact_email">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">車輛品牌</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("veh_brand", (IEnumerable<SelectListItem>)ViewBag.selectVehList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">郵遞區號</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("zip_id", (IEnumerable<SelectListItem>)ViewBag.selectZipList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">安裝地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="install_address" value="@cnc000.install_address">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">住宅類型</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("loc_class", (IEnumerable<SelectListItem>)ViewBag.loc_classList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">方便聯絡時段</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="contact_time" value="@cnc000.contact_time">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">購車據點</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="dealer_name" value="@cnc000.dealer_name">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">購車資訊:業代/訂單編號</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="sales_info" value="@cnc000.sales_info">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">申請時間</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="crt_date" value="@Convert.ToDateTime(cnc000.crt_date).ToString("yyyy/MM/dd")" readonly>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">目前進度</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" value="@cnc000.cnc_status" readonly>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">車主備註</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="note" value="@cnc000.note">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">更新狀態</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("cnc_status", (IEnumerable<SelectListItem>)ViewBag.cnc_statusList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">業務備註</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="note1" value="@cnc000.note1">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row ">
+                        <label class="col-sm-2 col-form-label">場勘時間</label>
+                        <div class="col-sm-10">
+                            @*<input type="datetime-local" class="form-control" name="survey_time">*@
+                            <div class="row">
+                                <div class="input-group date col-6">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input type="text" class="form-control" name="surveyDate" value="@Convert.ToDateTime(cnc001.survey_time).ToString("yyyy/MM/dd")">
+                                </div>
+                                <div class="input-group clockpicker col-6" data-autoclose="true">
+                                    <input type="text" class="form-control" name="surveyTime" value="@Convert.ToDateTime(cnc001.survey_time).ToString("hh:mm")">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">場勘照片</label>
+                        <div class="col-sm-10">
+                            <div id="aUploadArea">
+                                <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <div id='aUploadFileList' class="filename">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">報價單</label>
+                        <div class="col-sm-10">
+                            <div id="bUploadArea">
+                                <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <div id='bUploadFileList' class="filename"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row ">
+                        <label class="col-sm-2 col-form-label">施工時間</label>
+                        <div class="col-sm-10">
+                            @*<input type="datetime-local" class="form-control" name="install_time">*@
+                            <div class="row">
+                                <div class="input-group date col-6">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                    <input type="text" class="form-control" name="installDate" value="@Convert.ToDateTime(cnc001.install_time).ToString("yyyy/MM/dd")">
+                                </div>
+                                <div class="input-group clockpicker col-6" data-autoclose="true">
+                                    <input type="text" class="form-control" name="installTime" value="@Convert.ToDateTime(cnc001.survey_time).ToString("hh:mm")">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div><div class="form-group row">
+                        <label class="col-sm-2 col-form-label">施工照片</label>
+                        <div class="col-sm-10">
+                            <div id="cUploadArea">
+                                <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <div id='cUploadFileList' class="filename"></div>
+                            </div>
+                        </div>
+                    </div><div class="form-group row">
+                        <label class="col-sm-2 col-form-label">驗收照片</label>
+                        <div class="col-sm-10">
+                            <div id="dUploadArea">
+                                <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
+                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
+                                <div id='dUploadFileList' class="filename"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">照片與檔案</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(fnstr))
+                                {
+                                    Array fnstrArr = fnstr.Split(',');
+                                    foreach (var fn in fnstrArr)
+                                    {
+                                        if (fn != "")
+                                        {
+                                            string picname1 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type1" + "/") + fn;
+                                            string picname2 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type2" + "/") + fn;
+                                            string picname3 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type3" + "/") + fn;
+                                            string picname4 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type4" + "/") + fn;
+                                            //type1
+                                            if (System.IO.File.Exists(picname1))
+                                            {
+                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                    @try
+                                                    {
+                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname1, true);
+                                                        MemoryStream ms = new MemoryStream();
+                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                        bImage.Dispose();
+
+                                                        byte[] byteImage = ms.ToArray();
+                                                        ms.Close();
+
+
+                                                        var base64 = Convert.ToBase64String(byteImage);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                    }
+
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type1&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type1', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                </div>
+                                            }
+                                            //type2
+                                            if (System.IO.File.Exists(picname2))
+                                            {
+                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                        @try
+                                                        {
+                                                            System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname2, true);
+                                                            MemoryStream ms = new MemoryStream();
+                                                            bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                            bImage.Dispose();
+
+                                                            byte[] byteImage = ms.ToArray();
+                                                            ms.Close();
+
+
+                                                            var base64 = Convert.ToBase64String(byteImage);
+                                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                                            <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+
+                                                        }
+                                                        catch (Exception e)
+                                                        {
+                                                        }
+
+                                                        <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type2&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+
+                                                        <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type2', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                </div>
+
+                                            }
+                                            //type3
+                                            if (System.IO.File.Exists(picname3))
+                                            {
+                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                    @try
+                                                    {
+                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname3, true);
+                                                        MemoryStream ms = new MemoryStream();
+                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                        bImage.Dispose();
+
+                                                        byte[] byteImage = ms.ToArray();
+                                                        ms.Close();
+
+
+                                                        var base64 = Convert.ToBase64String(byteImage);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                    }
+
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type3&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type1', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                </div>
+                                            }
+                                            //type4
+                                            if (System.IO.File.Exists(picname4))
+                                            {
+                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                    @try
+                                                    {
+                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname4, true);
+                                                        MemoryStream ms = new MemoryStream();
+                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                        bImage.Dispose();
+
+                                                        byte[] byteImage = ms.ToArray();
+                                                        ms.Close();
+
+
+                                                        var base64 = Convert.ToBase64String(byteImage);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                    }
+
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type4&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type1', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                </div>
+                                            }
+                                        }
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="text-right">
+                        <a href="/Follow/Index" class="btn btn-white">取消</a>
+                        <button type="button" id="btnEdit" class="btn btn-success">修改</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size:4rem; color:#bbb; opacity:1;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <img class="modal-content" style="width:100%;">
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        //檔案上傳
+        var aUpload = [];
+        $.MultiUploadFile("aUploadArea", "aUploadFileList", aUpload);
+        var bUpload = [];
+        $.MultiUploadFile("bUploadArea", "bUploadFileList", bUpload);
+        var cUpload = [];
+        $.MultiUploadFile("cUploadArea", "cUploadFileList", cUpload);
+        var dUpload = [];
+        $.MultiUploadFile("dUploadArea", "dUploadFileList", dUpload);
+
+        $('#btnEdit').click(function () {
+            debugger;
+            dataFormAjaxPost($('#DataForm'), "/Follow/Edit");
+        });
+
+        function dataFormAjaxPost($dataForm, url) {
+
+            var formData = new FormData($dataForm[0]);
+
+            //多檔上傳的檔案夾帶
+            for (var i = 0; i < aUpload.length; i++) {
+                formData.append('aUpload', aUpload[i]);
+            }
+            for (var i = 0; i < bUpload.length; i++) {
+                formData.append('bUpload', bUpload[i]);
+            }
+            for (var i = 0; i < cUpload.length; i++) {
+                formData.append('cUpload', cUpload[i]);
+            }
+            for (var i = 0; i < dUpload.length; i++) {
+                formData.append('dUpload', dUpload[i]);
+            }
+
+             $.ajax({
+                    url: url,
+                    data: formData,
+                    type: 'post',
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    //async: false,
+                    datatype: 'JSON',
+                    success: function (data) {
+                        debugger;
+                        if (data.IsSuccess) {
+                            window.location = '@Url.Action("Index", "Follow")';
+                        } else {
+                            if (data.ModelStateErrors != null) {
+                                // show model state error
+                                $dataForm.validate().showErrors(data.ModelStateErrors);
+                                alert('請確認資料輸入無誤！');
+                            } else {
+                                alert('執行失敗！');
+                            }
+                        }
+                    }
+                });
+
+
+        }
+
+
+        //刪除檔案->隱藏檔案(更新file_status=0)
+        function remove(id, type, fileName) {
+            var r = confirm("確定刪除？");
+            if (r == true) {
+                window.location.href = "/Follow/RemoveUploadFile/" + id + "?type=" + type + "&fileName=" + fileName;
+            } else {
+                return;
+            }
+        }
+
+        // Get the modal
+        var modal = $("#myModal");
+        var modalImg = modal.find('.modal-content');
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var img = $(".myImg");
+        var captionBox = $("#caption");
+
+        img.click(function () {
+            modalImg.attr('src', $(this).attr('src'));
+            captionBox.text($(this).attr('alt'));
+            $('#myModal').modal('show')
+        });
+
+    </script>
+}
 

@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     List<YES_og.Models.sts000> sts = ViewBag.sts;
+    List<YES_og.Models.zip000> zip000 = ViewBag.zip000;
 }
 
 <div class="row">
@@ -36,11 +37,11 @@
                 <a class="btn btn-primary mb-3" href="/Follow/Create">
                     新增資料
                 </a>
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sendEmailModal">
+                @*<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sendEmailModal">
                     發送
-                </button>
+                </button>*@
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <table class="table table-striped table-bordered table-hover" id="cncTable">
                         <thead>
                             <tr>
                                 <th>案件編號</th>
@@ -69,16 +70,25 @@
                                     <td>@i.contact_mobile</td>
                                     <td>@i.veh_brand</td>
                                     <td>
-                                        @sts.FirstOrDefault(x=>x.item_id == i.loc_class).item_desc
+                                        @sts.FirstOrDefault(x => x.item_id == i.loc_class).item_desc
                                     </td>
-                                    <td>@i.zip_id</td>
+                                    <td>
+                                        @i.zip_id
+                                        @*@{
+                                            string z = zip000.FirstOrDefault(x => x.zip_id == i.zip_id).country+'-'+ zip000.FirstOrDefault(x => x.zip_id == i.zip_id).district;
+                                            @z
+                                        }*@ 
+                                    </td>
                                     <td>@sts.FirstOrDefault(x => x.item_id == i.cnc_status).item_desc</td>
                                     <td>@i.crt_date</td>
                                     <td>
-                                        <a class="btn btn-primary mb-3" onclick="location.href='@Url.Action("Edit", "Follow", new { id = i.cnc_id})'">
+                                        <button class="btn btn-primary mb-3" onclick="location.href='@Url.Action("Edit", "Follow", new { id = i.cnc_id})'">
                                             編輯
-                                        </a>
-                                        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sendEmailModal">
+                                        </button>
+                                        @*<button type="button" class="btn btn-primary mb-3" name="sendBtn" data-toggle="modal" data-target="#sendEmailModal">
+                                            發送
+                                        </button>*@
+                                        <button type="button" class="btn btn-primary mb-3" name="sendBtn" btn-id="@i.cnc_id">
                                             發送
                                         </button>
                                     </td>
@@ -115,8 +125,10 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" id="tab-1" class="tab-pane active">
-                                            <div class="panel-body">
-                                                <textarea class="form-control">已立案</textarea>
+                                            <div class="panel-body" id="tab-1body">
+                                                @*<textarea class="form-control">
+
+                                                </textarea>*@
                                             </div>
                                         </div>
                                         <div role="tabpanel" id="tab-2" class="tab-pane">
@@ -152,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-success" onclick="addCar();">發送</button>
@@ -165,9 +177,61 @@
 
 @section Scripts {
     <script>
+        $(document).ready(function () {
+            $('#cncTable').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                order: [[7, 'desc']],
+                buttons: [
+                ]
+            });
+        });
+
         //檔案上傳
         var tUpload = [];
         $.MultiUploadFile("tUploadArea", "tUploadFileList", tUpload);
+
+        //get發送detail
+        $('#cncTable').on('click','button[name="sendBtn"]',
+            function () {
+                var btnData = $(this).attr('btn-id');
+
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "/Follow/sendMailDetail",
+                    data: {
+                        id: btnData
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#sendEmailModal').modal('show');
+                        $('#tab-1body').html("");
+                        $('#tab-1body').append(Tab1Data(data));
+                        
+                    }
+                });
+            });
+
+        function Tab1Data(data) {
+            debugger;
+            var Data = data.AchievementData;
+            var sb = new StringBuffer();
+
+            sb.append('<textarea class="form-control" style="height:250px;">');
+            sb.append('親愛的車主  ' + data.contact_person + ' 先生/小姐  您好：&#10;');
+            sb.append('案件編號：' + data.cncId + '&#10;');
+            sb.append('您的電動車充電樁建置進度，目前 已完成立案 ，我們會隨時更新進度，並再以E-Mail方式即時告知您。&#10;');
+            sb.append('若有任何疑問，請聯繫業務代表OOO，手機號碼 0000000000。&#10;');
+            sb.append('很榮幸能為您服務，祝您一切平安順利。&#10;');
+            sb.append('裕電俥電股份有限公司  敬上。&#10;');
+            sb.append('</textarea>');
+
+            var html = sb.toString();
+            return html;
+        }
     </script>
 }
 
