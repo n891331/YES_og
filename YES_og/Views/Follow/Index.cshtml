@@ -38,8 +38,8 @@
                     新增資料
                 </a>
                 @*<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#sendEmailModal">
-                    發送
-                </button>*@
+                        發送
+                    </button>*@
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="cncTable">
                         <thead>
@@ -75,9 +75,9 @@
                                     <td>
                                         @i.zip_id
                                         @*@{
-                                            string z = zip000.FirstOrDefault(x => x.zip_id == i.zip_id).country+'-'+ zip000.FirstOrDefault(x => x.zip_id == i.zip_id).district;
-                                            @z
-                                        }*@ 
+                                                string z = zip000.FirstOrDefault(x => x.zip_id == i.zip_id).country+'-'+ zip000.FirstOrDefault(x => x.zip_id == i.zip_id).district;
+                                                @z
+                                            }*@
                                     </td>
                                     <td>@sts.FirstOrDefault(x => x.item_id == i.cnc_status).item_desc</td>
                                     <td>@i.crt_date</td>
@@ -86,9 +86,9 @@
                                             編輯
                                         </button>
                                         @*<button type="button" class="btn btn-primary mb-3" name="sendBtn" data-toggle="modal" data-target="#sendEmailModal">
-                                            發送
-                                        </button>*@
-                                        <button type="button" class="btn btn-primary mb-3" name="sendBtn" btn-id="@i.cnc_id">
+                                                發送
+                                            </button>*@
+                                        <button type="button" class="btn btn-warning mb-3" name="sendBtn" btn-id="@i.cnc_id">
                                             發送
                                         </button>
                                     </td>
@@ -104,7 +104,10 @@
 </div>
 
 <!-- Modal -->
-<form method="post" id="sendEmailForm" action="" enctype="multipart/form-data">
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "EmailDataForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
     <div class="modal inmodal fade" id="sendEmailModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -128,22 +131,19 @@
                                             <div class="panel-body" id="tab-1body">
                                                 @*<textarea class="form-control">
 
-                                                </textarea>*@
+                                                    </textarea>*@
                                             </div>
                                         </div>
                                         <div role="tabpanel" id="tab-2" class="tab-pane">
-                                            <div class="panel-body">
-                                                <textarea class="form-control">場勘時間</textarea>
+                                            <div class="panel-body" id="tab-2body">
                                             </div>
                                         </div>
                                         <div role="tabpanel" id="tab-3" class="tab-pane">
-                                            <div class="panel-body">
-                                                <textarea class="form-control">報價單</textarea>
+                                            <div class="panel-body" id="tab-3body">
                                             </div>
                                         </div>
                                         <div role="tabpanel" id="tab-4" class="tab-pane">
-                                            <div class="panel-body">
-                                                <textarea class="form-control">施工時間</textarea>
+                                            <div class="panel-body" id="tab-4body">
                                             </div>
                                         </div>
                                     </div>
@@ -164,19 +164,19 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-success" onclick="addCar();">發送</button>
+                    <button type="button" class="btn btn-success" id="sendBtn">發送</button>
                 </div>
             </div>
         </div>
     </div>
-</form>
+}
 
 
-@section Scripts {
-    <script>
+    @section Scripts {
+        <script>
         $(document).ready(function () {
             $('#cncTable').DataTable({
                 pageLength: 25,
@@ -206,24 +206,28 @@
                     },
                     dataType: "json",
                     success: function (data) {
-                        debugger;
                         $('#sendEmailModal').modal('show');
                         $('#tab-1body').html("");
+                        $('#tab-2body').html("");
+                        $('#tab-3body').html("");
+                        $('#tab-4body').html("");
                         $('#tab-1body').append(Tab1Data(data));
-                        
+                        $('#tab-2body').append(Tab2Data(data));
+                        $('#tab-3body').append(Tab3Data(data));
+                        $('#tab-4body').append(Tab4Data(data));
+
                     }
                 });
             });
 
         function Tab1Data(data) {
-            debugger;
-            var Data = data.AchievementData;
             var sb = new StringBuffer();
-
+            sb.append(' <input type="hidden" name="cncId" id="cncId" value="' + data.cncId + '">');
+            sb.append(' <input type="hidden" name="recipientMail" id="recipientMail" value="' + data.contact_email + '">');
             sb.append('<textarea class="form-control" style="height:250px;">');
             sb.append('親愛的車主  ' + data.contact_person + ' 先生/小姐  您好：&#10;');
             sb.append('案件編號：' + data.cncId + '&#10;');
-            sb.append('您的電動車充電樁建置進度，目前 已完成立案 ，我們會隨時更新進度，並再以E-Mail方式即時告知您。&#10;');
+            sb.append('您的電動車充電樁建置進度，目前已完成立案 ，我們會隨時更新進度，並再以E-Mail方式即時告知您。&#10;');
             sb.append('若有任何疑問，請聯繫業務代表OOO，手機號碼 0000000000。&#10;');
             sb.append('很榮幸能為您服務，祝您一切平安順利。&#10;');
             sb.append('裕電俥電股份有限公司  敬上。&#10;');
@@ -232,6 +236,127 @@
             var html = sb.toString();
             return html;
         }
-    </script>
-}
+
+        function Tab2Data(data) {
+            var sb = new StringBuffer();
+            sb.append(' <input type="hidden" name="cncId" id="cncId" value="' + data.cncId + '">');
+            sb.append(' <input type="hidden" name="recipientMail" id="recipientMail" value="' + data.contact_email + '">');
+            sb.append('<textarea class="form-control" style="height:250px;">');
+            sb.append('親愛的車主  ' + data.contact_person + ' 先生/小姐  您好：&#10;');
+            sb.append('案件編號：' + data.cncId + '&#10;');
+            sb.append('您的電動車充電樁建置場勘時間已確認在 ' + data.survey_time + '。&#10;');
+            sb.append('我們抵達前會再次與您聯繫。&#10;');
+            sb.append('若有任何疑問，請聯繫業務代表OOO，手機號碼 0000000000。&#10;');
+            sb.append('很榮幸能為您服務，祝您一切平安順利。&#10;');
+            sb.append('裕電俥電股份有限公司  敬上。&#10;');
+            sb.append('</textarea>');
+
+            var html = sb.toString();
+            return html;
+        }
+
+        function Tab3Data(data) {
+            var sb = new StringBuffer();
+            sb.append(' <input type="hidden" name="cncId" id="cncId" value="' + data.cncId + '">');
+            sb.append(' <input type="hidden" name="recipientMail" id="recipientMail" value="' + data.contact_email + '">');
+            sb.append('<textarea class="form-control" style="height:250px;">');
+            sb.append('親愛的車主  ' + data.contact_person + ' 先生/小姐  您好：&#10;');
+            sb.append('案件編號：' + data.cncId + '&#10;');
+            sb.append('您的電動車充電樁安裝場勘報價已完成，請參考附件報價單詳細資訊。&#10;');
+            sb.append('若您對報價單沒有問題，再煩請您簽名，並用傳真/E-Mail回寄/拍照等方式將報價單回傳給我們。&#10;');
+            sb.append('若有任何疑問，請聯繫業務代表OOO，手機號碼 0000000000。&#10;');
+            sb.append('很榮幸能為您服務，祝您一切平安順利。&#10;');
+            sb.append('裕電俥電股份有限公司  敬上。&#10;');
+            sb.append('</textarea>');
+
+            var html = sb.toString();
+            return html;
+        }
+
+        function Tab4Data(data) {
+            var sb = new StringBuffer();
+            sb.append(' <input type="hidden" name="cncId" id="cncId" value="' + data.cncId + '">');
+            sb.append(' <input type="hidden" name="recipientMail" id="recipientMail" value="' + data.contact_email + '">');
+            sb.append('<textarea class="form-control" style="height:250px;">');
+            sb.append('親愛的車主  ' + data.contact_person + ' 先生/小姐  您好：&#10;');
+            sb.append('案件編號：' + data.cncId + '&#10;');
+            sb.append('您的電動車充電樁施工時間已確認在 ' + data.install_time + '。&#10;');
+            sb.append('我們抵達前會再次與您聯繫。&#10;');
+            sb.append('若有任何疑問，請聯繫業務代表OOO，手機號碼 0000000000。&#10;');
+            sb.append('很榮幸能為您服務，祝您一切平安順利。&#10;');
+            sb.append('裕電俥電股份有限公司  敬上。&#10;');
+            sb.append('</textarea>');
+
+            var html = sb.toString();
+            return html;
+        }
+
+        $('#sendBtn').click(function () {
+            var msg = "您確定要發送嗎?";
+            if (confirm(msg) == true) {
+                dataFormAjaxPost($('#EmailDataForm'), "/Follow/SendEmail");
+            } else {
+                return false;
+            }
+        });
+
+            function dataFormAjaxPost($dataForm, url) {
+                debugger;
+                var cnc_id = $('#cncId').val();
+                var recipientMail = $('#recipientMail').val();
+
+                var formData = new FormData($dataForm[0]);
+
+                var subject = $('.nav-link.active').text();
+                var getId = $('.nav-link.active').attr('href').replace('#','');
+
+                const element = document.getElementById(getId);
+                var content = $(element).text();
+
+                formData.append('cnc_id', cnc_id);
+                formData.append('recipientMail', recipientMail);
+                formData.append('subject', subject);
+                formData.append('content', content);
+
+                //多檔上傳的檔案夾帶
+                for (var i = 0; i < tUpload.length; i++) {
+                    formData.append('tUpload', tUpload[i]);
+                }
+
+                $.ajax({
+                    url: url,
+                    data: formData,
+                    type: 'post',
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    //async: false,
+                    datatype: 'JSON',
+                    success: function (data) {
+                        debugger;
+                        if (data.IsSuccess == true) {
+                            swal({
+                                title: 'SUCCESS',
+                                text: '發送成功',
+                                icon: 'success'
+                            }, function () {
+                                $('#sendEmailModal').modal('hide');
+                            });
+                        } else {
+                            swal({
+                                title: 'Fail',
+                                text: data.ErrorMessage,
+                                icon: 'error'
+                            });
+                        }
+                    }
+                });
+
+
+            }
+
+            
+
+        </script>
+    }
 

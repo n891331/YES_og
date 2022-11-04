@@ -32,23 +32,23 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">姓名</label>
+                        <label class="col-sm-2 col-form-label">姓名<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_person">
+                            <input type="text" class="form-control" id="contact_person" name="contact_person">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">手機</label>
+                        <label class="col-sm-2 col-form-label">手機<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_mobile">
+                            <input type="text" class="form-control" id="contact_mobile" name="contact_mobile">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">E-mail</label>
+                        <label class="col-sm-2 col-form-label">E-mail<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_email">
+                            <input type="text" class="form-control" id="contact_email" name="contact_email">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -67,9 +67,9 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">安裝地址</label>
+                        <label class="col-sm-2 col-form-label">安裝地址<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="install_address">
+                            <input type="text" class="form-control" id="install_address" name="install_address">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -81,23 +81,23 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">方便聯絡時段</label>
+                        <label class="col-sm-2 col-form-label">方便聯絡時段<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_time">
+                            <input type="text" class="form-control" id="contact_time" name="contact_time">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">購車據點</label>
+                        <label class="col-sm-2 col-form-label">購車據點<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="dealer_name">
+                            <input type="text" class="form-control" id="dealer_name" name="dealer_name">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">購車資訊:業代/訂單編號</label>
+                        <label class="col-sm-2 col-form-label">購車資訊:業代/訂單編號<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="sales_info">
+                            <input type="text" class="form-control" id="sales_info" name="sales_info">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -308,6 +308,34 @@
 
         $('#btnSave').click(function () {
             debugger;
+            if (($('#contact_person').val()).length <= 0) {
+                alert("請填入姓名");
+                return;
+            }
+            if (($('#contact_mobile').val()).length <= 0) {
+                alert("請填入手機");
+                return;
+            }
+            if (($('#contact_email').val()).length <= 0) {
+                alert("請填入E-mail");
+                return;
+            }
+            if (($('#install_address').val()).length <= 0) {
+                alert("請填入安裝地址");
+                return;
+            }
+            if (($('#contact_time').val()).length <= 0) {
+                alert("請填入方便聯絡時段");
+                return;
+            }
+            if (($('#dealer_name').val()).length <= 0) {
+                alert("請填入購車據點");
+                return;
+            }
+            if (($('#sales_info').val()).length <= 0) {
+                alert("請填入購車資訊:業代/訂單編號");
+                return;
+            }
             dataFormAjaxPost($('#DataForm'), "/Follow/Create");
         });
 
@@ -347,9 +375,19 @@
                             if (data.ModelStateErrors != null) {
                                 // show model state error
                                 $dataForm.validate().showErrors(data.ModelStateErrors);
-                                alert('請確認資料輸入無誤！');
+                                //alert('請確認資料輸入無誤！');
+                                swal({
+                                    title: 'Fail',
+                                    text: '請確認資料輸入無誤!',
+                                    icon: 'error'
+                                });
                             } else {
-                                alert('執行失敗！');
+                                //alert('執行失敗！');
+                                swal({
+                                    title: 'Fail',
+                                    text: '執行失敗!',
+                                    icon: 'error'
+                                });
                             }
                         }
                     }

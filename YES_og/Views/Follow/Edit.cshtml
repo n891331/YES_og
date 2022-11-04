@@ -37,23 +37,23 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">姓名</label>
+                        <label class="col-sm-2 col-form-label">姓名<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_person" value="@cnc000.contact_person">
+                            <input type="text" class="form-control" name="contact_person" id="contact_person" value="@cnc000.contact_person">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">手機</label>
+                        <label class="col-sm-2 col-form-label">手機<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_mobile" value="@cnc000.contact_mobile">
+                            <input type="text" class="form-control" name="contact_mobile" id="contact_mobile" value="@cnc000.contact_mobile">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">E-mail</label>
+                        <label class="col-sm-2 col-form-label">E-mail<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_email" value="@cnc000.contact_email">
+                            <input type="text" class="form-control" name="contact_email" id="contact_email" value="@cnc000.contact_email">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -72,9 +72,9 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">安裝地址</label>
+                        <label class="col-sm-2 col-form-label">安裝地址<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="install_address" value="@cnc000.install_address">
+                            <input type="text" class="form-control" name="install_address" id="install_address" value="@cnc000.install_address">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -86,23 +86,23 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">方便聯絡時段</label>
+                        <label class="col-sm-2 col-form-label">方便聯絡時段<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_time" value="@cnc000.contact_time">
+                            <input type="text" class="form-control" name="contact_time" id="contact_time" value="@cnc000.contact_time">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">購車據點</label>
+                        <label class="col-sm-2 col-form-label">購車據點<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="dealer_name" value="@cnc000.dealer_name">
+                            <input type="text" class="form-control" name="dealer_name" id="dealer_name" value="@cnc000.dealer_name">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">購車資訊:業代/訂單編號</label>
+                        <label class="col-sm-2 col-form-label">購車資訊:業代/訂單編號<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="sales_info" value="@cnc000.sales_info">
+                            <input type="text" class="form-control" name="sales_info" id="sales_info" value="@cnc000.sales_info">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -241,7 +241,7 @@
                                             //type1
                                             if (System.IO.File.Exists(picname1))
                                             {
-                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
                                                     @try
                                                     {
                                                         System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname1, true);
@@ -271,7 +271,7 @@
                                             //type2
                                             if (System.IO.File.Exists(picname2))
                                             {
-                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
                                                         @try
                                                         {
                                                             System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname2, true);
@@ -302,7 +302,7 @@
                                             //type3
                                             if (System.IO.File.Exists(picname3))
                                             {
-                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
                                                     @try
                                                     {
                                                         System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname3, true);
@@ -332,7 +332,7 @@
                                             //type4
                                             if (System.IO.File.Exists(picname4))
                                             {
-                                                <div class="col-md-6 d-flex align-items-center mb-3">
+                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
                                                     @try
                                                     {
                                                         System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname4, true);
@@ -405,7 +405,34 @@
         $.MultiUploadFile("dUploadArea", "dUploadFileList", dUpload);
 
         $('#btnEdit').click(function () {
-            debugger;
+            if (($('#contact_person').val()).length <= 0) {
+                alert("請填入姓名");
+                return;
+            }
+            if (($('#contact_mobile').val()).length <= 0) {
+                alert("請填入手機");
+                return;
+            }
+            if (($('#contact_email').val()).length <= 0) {
+                alert("請填入E-mail");
+                return;
+            }
+            if (($('#install_address').val()).length <= 0) {
+                alert("請填入安裝地址");
+                return;
+            }
+            if (($('#contact_time').val()).length <= 0) {
+                alert("請填入方便聯絡時段");
+                return;
+            }
+            if (($('#dealer_name').val()).length <= 0) {
+                alert("請填入購車據點");
+                return;
+            }
+            if (($('#sales_info').val()).length <= 0) {
+                alert("請填入購車資訊:業代/訂單編號");
+                return;
+            }
             dataFormAjaxPost($('#DataForm'), "/Follow/Edit");
         });
 
@@ -437,7 +464,6 @@
                     //async: false,
                     datatype: 'JSON',
                     success: function (data) {
-                        debugger;
                         if (data.IsSuccess) {
                             window.location = '@Url.Action("Index", "Follow")';
                         } else {
@@ -457,10 +483,47 @@
 
 
         //刪除檔案->隱藏檔案(更新file_status=0)
+        //function remove(id, type, fileName) {
+        //    var r = confirm("確定刪除？");
+        //    if (r == true) {
+        //        window.location.href = "/Follow/RemoveUploadFile/" + id + "?type=" + type + "&fileName=" + fileName;
+        //    } else {
+        //        return;
+        //    }
+        //}
+
         function remove(id, type, fileName) {
             var r = confirm("確定刪除？");
             if (r == true) {
-                window.location.href = "/Follow/RemoveUploadFile/" + id + "?type=" + type + "&fileName=" + fileName;
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "/Follow/RemoveUploadFile",
+                    data: {
+                        id: id,
+                        type: type,
+                        fileName: fileName
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.IsSuccess == true) {
+                            swal({
+                                title: 'SUCCESS',
+                                text: '刪除成功',
+                                icon: 'success'
+                            }, function () {
+                                const element = document.getElementById(data.fileName);
+                                $(element).remove();
+                            });
+                        } else {
+                            swal({
+                                title: 'Fail',
+                                text: data.ErrorMessage,
+                                icon: 'error'
+                            });
+                        }
+                    }
+                });
             } else {
                 return;
             }

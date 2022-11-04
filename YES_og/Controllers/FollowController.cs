@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using System.Xml.Linq;
 using YES_og.Models;
 using static System.Net.Mime.MediaTypeNames;
@@ -484,17 +486,30 @@ namespace YES_og.Controllers
             }
         }
 
-
+        /// <summary>
+        /// 發送btn，get detail
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult sendMailDetail(int id)
         {
             string jsonContent;
             JObject jObjectDetail = new JObject();
             var c = _db.cnc000.Where(x => x.cnc_id == id).FirstOrDefault();
+            var c1 = _db.cnc001.Where(x => x.cnc_id == id).FirstOrDefault();
+            string s = c1.survey_time.ToString();
+            string i = c1.install_time.ToString();
             jObjectDetail.Add(new JProperty("cnc_id", id));
             jObjectDetail.Add(new JProperty("contact_person", c.contact_person));
             jObjectDetail.Add(new JProperty("contact_mobile", c.contact_mobile));
             jObjectDetail.Add(new JProperty("contact_email", c.contact_email));
             jObjectDetail.Add(new JProperty("install_address", c.install_address));
+            jObjectDetail.Add(new JProperty(!string.IsNullOrEmpty(s)
+                    ? new JProperty("survey_time", String.Format("{0:yyyy/MM/dd HH:mm:ss}", s))
+                    : new JProperty("survey_time", "")));
+            jObjectDetail.Add(new JProperty(!string.IsNullOrEmpty(i)
+                    ? new JProperty("install_time", String.Format("{0:yyyy/MM/dd HH:mm:ss}", i))
+                    : new JProperty("install_time", "")));
 
             string cncId = int.Parse(id.ToString()).ToString("000000");
             jObjectDetail.Add(new JProperty("cncId", cncId));
@@ -503,7 +518,138 @@ namespace YES_og.Controllers
             return new ContentResult { Content = jsonContent, ContentType = "application/json" };
         }
 
-        // GET: Follow/Delete/5
+        //寄信功能
+        [HttpPost]
+        public ActionResult SendEmail(emailDetail formData, HttpPostedFileBase[] tUpload)
+        {
+            string failedMsg = "";
+            try
+            {
+                MailMessage msg1 = new MailMessage();
+                //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
+                List<string> MailList = new List<string>();
+                MailList.Add(formData.recipientMail);
+                msg1.To.Add(string.Join(",", MailList.ToArray()));
+
+                //MailAddress(寄信的帳號,寄信帳號的名稱,System.Text.Encoding.UTF8)
+                msg1.From = new MailAddress("hannie.peng@yes-charging.com.tw", "裕電能源", System.Text.Encoding.UTF8);
+
+                msg1.Subject = formData.subject;
+                //郵件標題編碼  
+                msg1.SubjectEncoding = System.Text.Encoding.UTF8;
+                //郵件內容
+                msg1.Body = formData.content.Replace("\r\n", "<br/>");
+                msg1.IsBodyHtml = true;
+                msg1.BodyEncoding = System.Text.Encoding.UTF8; //郵件內容編碼 
+                msg1.Priority = MailPriority.Normal; //郵件優先級 
+                                                     //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
+
+                //附件
+                if (tUpload != null)
+                {
+                    foreach (var item in tUpload)
+                    {
+                        fileDtail f = SaveEmailUploadFile(item, formData.cnc_id);
+                        msg1.Attachments.Add(new Attachment(f.savedPath));
+                    }
+                }
+                //foreach(var item in tUpload)
+                //{
+                //    msg1.Attachments.Add(new Attachment(Path + "\\" + item));
+                //}
+
+                //宣告寄信郵件伺服器的連接
+                SmtpClient mySmtp = new SmtpClient("smtp.gmail.com", 587);
+
+                //設定你的帳號密碼
+                mySmtp.Credentials = new System.Net.NetworkCredential("hannie.peng@yes-charging.com.tw", "hanni8712");
+                //Gmial 的 smtp 使用 SSL
+                mySmtp.EnableSsl = true;
+                mySmtp.Send(msg1);
+
+                var returnData = new
+                {
+                    IsSuccess = true
+                };
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
+            catch (Exception ex)
+            {
+                failedMsg = ex.ToString();
+                var returnData = new
+                {
+                    IsSuccess = false
+                };
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
+
+            
+        }
+
+        public class emailDetail
+        {
+            public string subject { get; set; }
+            public string content { get; set; }
+            public string recipientMail { get; set; }
+            public int cnc_id { get; set; }
+        }
+
+        static private fileDtail SaveEmailUploadFile(HttpPostedFileBase upfile,int cnc_id)
+        {
+            string filePath = System.Web.HttpContext.Current.Server.MapPath("~/upfiles/emailFile/" + cnc_id + "/");
+
+            //建立檔案資料夾
+            string docupath = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "upfiles\\emailFile\\" +
+                              cnc_id + "\\" ;
+            if (!Directory.Exists(docupath))
+            {
+                Directory.CreateDirectory(@docupath);
+            }
+
+            //取得副檔名
+            string extension = upfile.FileName.Split('.')[upfile.FileName.Split('.').Length - 1].ToLower();
+            //這是原本檔名
+            //string fileNameWithoutExtension =
+            //    upfile.FileName.Substring(0, upfile.FileName.Length - extension.Length - 1);
+            //string fileName = fileNameWithoutExtension + "." + extension;
+
+            //自己寫取亂碼
+            string fileNameRandom = RandomString(6);
+            string fileName = fileNameRandom + "." + extension;
+
+            string yyyyMMdd = DateTime.Now.ToString("yyyyMMdd");
+
+            //若有同一日有重複檔名，檔名需變成最大流水號+1
+            int i = 0;
+            foreach (string fp in Directory.GetFiles(filePath))
+            {
+                string fn = Path.GetFileName(fp);
+                //舊檔案除去流水號的完整檔名
+                string existedfileName = fn.Substring(fn.IndexOf('_') + 1);
+
+                if (fn.Substring(0, 8).Equals(yyyyMMdd) && existedfileName.Equals(fileName))
+                {
+                    int seq = int.Parse(fn.Substring(8, 2));
+                    if (i < seq)
+                    {
+                        i = seq;
+                    }
+                }
+            }
+
+            //string fileNameTemp = yyyyMMdd + (i + 1).ToString("00") + "_" + fileNameWithoutExtension;
+            string fileNameTemp = yyyyMMdd + (i + 1).ToString("00") + "_" + fileNameRandom;
+            string newfileName = string.Format("{0}.{1}", fileNameTemp, extension);
+            string savedPath = Path.Combine(filePath, newfileName);
+            upfile.SaveAs(savedPath);
+
+            fileDtail fileDtail = new fileDtail();
+            fileDtail.FileName = newfileName;
+            fileDtail.savedPath = savedPath;
+
+            return fileDtail;
+        }
+
         public ActionResult Delete(int id)
         {
             return View();
@@ -640,9 +786,15 @@ namespace YES_og.Controllers
 
             //取得副檔名
             string extension = upfile.FileName.Split('.')[upfile.FileName.Split('.').Length - 1].ToLower();
-            string fileNameWithoutExtension =
-                upfile.FileName.Substring(0, upfile.FileName.Length - extension.Length - 1);
-            string fileName = fileNameWithoutExtension + "." + extension;
+            //這是原本檔名
+            //string fileNameWithoutExtension =
+            //    upfile.FileName.Substring(0, upfile.FileName.Length - extension.Length - 1);
+            //string fileName = fileNameWithoutExtension + "." + extension;
+
+            //自己寫取亂碼
+            string fileNameRandom = RandomString(6);
+            string fileName = fileNameRandom + "." + extension;
+
             string yyyyMMdd = DateTime.Now.ToString("yyyyMMdd");
 
             //若有同一日有重複檔名，檔名需變成最大流水號+1
@@ -663,7 +815,8 @@ namespace YES_og.Controllers
                 }
             }
 
-            string fileNameTemp = yyyyMMdd + (i + 1).ToString("00") + "_" + fileNameWithoutExtension;
+            //string fileNameTemp = yyyyMMdd + (i + 1).ToString("00") + "_" + fileNameWithoutExtension;
+            string fileNameTemp = yyyyMMdd + (i + 1).ToString("00") + "_" + fileNameRandom;
             string newfileName = string.Format("{0}.{1}", fileNameTemp, extension);
             string savedPath = Path.Combine(filePath, newfileName);
             upfile.SaveAs(savedPath);
@@ -726,12 +879,35 @@ namespace YES_og.Controllers
         // 功能：刪除檔案(更新欄位-隱藏檔案)
         public ActionResult RemoveUploadFile(int id, string type, string fileName)
         {
-            var cnc002Form = _db.cnc002.Where(w => w.cnc_id == id && w.File_name == fileName).Single();
-            cnc002Form.file_status = 0;
+            //var cnc002Form = _db.cnc002.Where(w => w.cnc_id == id && w.File_name == fileName).Single();
+            //cnc002Form.file_status = 0;
 
-            SaveUpdate(_db.cnc002, cnc002Form);
+            //SaveUpdate(_db.cnc002, cnc002Form);
 
-            return RedirectToAction("Edit", new { id = id });
+            //return RedirectToAction("Edit", new { id = id });
+            try
+            {
+                var cnc002Form = _db.cnc002.Where(w => w.cnc_id == id && w.File_name == fileName).Single();
+                cnc002Form.file_status = 0;
+
+                SaveUpdate(_db.cnc002, cnc002Form);
+
+                var returnData = new
+                {
+                    IsSuccess = true,
+                    fileName
+                };
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
+            catch
+            {
+                var returnData = new
+                {
+                    // 成功與否
+                    IsSuccess = false
+                };
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
         }
 
         /// <summary>
