@@ -1,38 +1,39 @@
-﻿
+﻿@using YES_og.Models
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    stn000 stn000 = ViewBag.stn000;
+    List<stn003> stn003 = ViewBag.stn003;
     var stn102 = ViewBag.stn102;
-    var station_id = ViewBag.station_id;
+    string fnstr = ViewBag.fnstr;
 }
+
 
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox ">
             <div class="ibox-title">
                 <h5>基本資料</h5>
-                @*<div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                    </div>*@
             </div>
             <div class="ibox-content">
                 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "stnDataForm" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
+                    <input type="hidden" name="crt_user" value="@stn000.crt_user"/>
+                    <input type="hidden" name="crt_date" value="@stn000.crt_date"/>
+                    <input type="button" class="d-none" id="getDataBtn" value="@stn000.station_id" />
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">充電站ID</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="station_id" id="station_id" value="@station_id" readonly>
+                            <input type="text" class="form-control" name="station_id" id="station_id" value="@stn000.station_id" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">充電站名稱</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="station_name" id="station_name">
+                            <input type="text" class="form-control" name="station_name" id="station_name" value="@stn000.station_name">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -48,27 +49,17 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">充電站地址</label>
                         <div class="col-sm-10">
-                            <div class="d-flex mb-2">
-                                @Html.DropDownList("country", (IEnumerable<SelectListItem>)ViewBag.selectCountryList, new { @class = "form-control mr-2", id = "country" })
-                                <select class="form-control" name="district" id="district">
-                                    <option>地區</option>
-                                </select>
-                            </div>
-                            <input type="text" class="form-control" name="addr" id="addr">
+                            <input type="text" class="form-control" name="addr" id="addr" value="@stn000.station_address">
                             <input type="hidden" name="station_zip" id="station_zip" value="" />
-                            <input type="hidden" name="station_address" id="station_address" value="" />
+                            <input type="hidden" name="station_address" id="station_address" value="@stn000.station_address" />
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">經度、緯度(充電站出入口地址)</label>
                         <div class="col-sm-10 d-flex align-items-center">
-                            @*<button class="btn btn-info mr-2" style="white-space:nowrap;" id="convertBtn">
-                                    地址轉換
-                                </button>*@
-                            <input type="button" class="btn btn-info mr-2" style="white-space:nowrap;" id="convertBtn" value="地址轉換" />
-                            <input type="text" class="form-control mr-2" name="station_longitude" id="station_longitude" readonly>
-                            <input type="text" class="form-control" name="station_latitude" id="station_latitude" readonly>
+                            <input type="text" class="form-control mr-2" name="station_longitude" id="station_longitude" value="@stn000.station_longitude" readonly>
+                            <input type="text" class="form-control" name="station_latitude" id="station_latitude" value="@stn000.station_latitude" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -96,14 +87,14 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">充電站所在樓層</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="station_floor" id="station_floor">
+                            <input type="text" class="form-control" name="station_floor" id="station_floor" value="@stn000.station_floor">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">充電站停車格</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="station_car_space" id="station_car_space">
+                            <input type="text" class="form-control" name="station_car_space" id="station_car_space" value="@stn000.station_car_space">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -112,215 +103,165 @@
                         <label class="col-sm-2 col-form-label">站點營應時間</label>
                         <div class="col-sm-10">
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="startCheckbox">
-                                        <label class="form-check-label" for="startCheckbox">
-                                            套用全部開始時間
-                                        </label>
-                                        <input type="hidden" name="week1" id="week1" value="1">
-                                        <input type="hidden" name="week2" id="week2" value="2">
-                                        <input type="hidden" name="week3" id="week3" value="3">
-                                        <input type="hidden" name="week4" id="week4" value="4">
-                                        <input type="hidden" name="week5" id="week5" value="5">
-                                        <input type="hidden" name="week6" id="week6" value="6">
-                                        <input type="hidden" name="week7" id="week7" value="7">
-                                    </div>
-                                    <div class="input-group clockpicker" data-autoclose="true">
-                                        <input type="text" class="form-control" id="startTime">
-                                        <span class="input-group-addon">
-                                            <span class="fa fa-clock-o"></span>
-                                        </span>
-                                    </div>
-                                    <div class="hr-line-dashed"></div>
+                                <div class="col-12">
                                     <div class="panel-body p-0">
                                         <div class="panel-group" id="accordion">
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <h5 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">設定個別開始時間</a>
+                                                        <a class="d-block" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">營業時間</a>
                                                     </h5>
                                                 </div>
                                                 <div id="collapseOne" class="panel-collapse collapse in">
-                                                    <div class="panel-body" id="startOpen">
-                                                        <div class="form-group row">
+                                                    <div class="panel-body row" id="startOpen">
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週一營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart1" id="tStart1">
+                                                                    <input type="text" class="form-control" name="tStart1" id="tStart1" value="@stn003.Where(x=>x.week_start=="1" && x.week_end=="1").FirstOrDefault().time_start.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-12 col-form-label">週二營業開始時間</label>
-                                                            <div class="col-12">
-                                                                <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart2" id="tStart2">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-12 col-form-label">週三營業開始時間</label>
-                                                            <div class="col-12">
-                                                                <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart3" id="tStart3">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-12 col-form-label">週四營業開始時間</label>
-                                                            <div class="col-12">
-                                                                <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart4" id="tStart4">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-12 col-form-label">週五營業開始時間</label>
-                                                            <div class="col-12">
-                                                                <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart5" id="tStart5">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-12 col-form-label">週六營業開始時間</label>
-                                                            <div class="col-12">
-                                                                <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart6" id="tStart6">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-12 col-form-label">週日營業開始時間</label>
-                                                            <div class="col-12">
-                                                                <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart7" id="tStart7">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="endCheckbox">
-                                        <label class="form-check-label" for="endCheckbox">
-                                            套用全部結束時間
-                                        </label>
-                                    </div>
-                                    <div class="input-group clockpicker" data-autoclose="true">
-                                        <input type="text" class="form-control" id="endTime">
-                                        <span class="input-group-addon">
-                                            <span class="fa fa-clock-o"></span>
-                                        </span>
-                                    </div>
-                                    <div class="hr-line-dashed"></div>
-                                    <div class="panel-body p-0">
-                                        <div class="panel-group" id="accordion">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">設定個別結束時間</a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseTwo" class="panel-collapse collapse">
-                                                    <div class="panel-body" id="endClose">
-                                                        <div class="form-group row">
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週一營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd1" id="tEnd1">
+                                                                    <input type="text" class="form-control" name="tEnd1" id="tEnd1" value="@stn003.Where(x=>x.week_start=="1" && x.week_end=="1").FirstOrDefault().time_end.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
+                                                        <div class="form-group col-6">
+                                                            <label class="col-12 col-form-label">週二營業開始時間</label>
+                                                            <div class="col-12">
+                                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                                    <input type="text" class="form-control" name="tStart2" id="tStart2" value="@stn003.Where(x=>x.week_start=="2" && x.week_end=="2").FirstOrDefault().time_start.Insert(2,":")">
+                                                                    <span class="input-group-addon">
+                                                                        <span class="fa fa-clock-o"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週二營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd2" id="tEnd2">
+                                                                    <input type="text" class="form-control" name="tEnd2" id="tEnd2" value="@stn003.Where(x=>x.week_start=="2" && x.week_end=="2").FirstOrDefault().time_end.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
+                                                        <div class="form-group col-6">
+                                                            <label class="col-12 col-form-label">週三營業開始時間</label>
+                                                            <div class="col-12">
+                                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                                    <input type="text" class="form-control" name="tStart3" id="tStart3" value="@stn003.Where(x=>x.week_start=="3" && x.week_end=="3").FirstOrDefault().time_start.Insert(2,":")">
+                                                                    <span class="input-group-addon">
+                                                                        <span class="fa fa-clock-o"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週三營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd3" id="tEnd3">
+                                                                    <input type="text" class="form-control" name="tEnd3" id="tEnd3" value="@stn003.Where(x=>x.week_start=="3" && x.week_end=="3").FirstOrDefault().time_end.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
+                                                        <div class="form-group col-6">
+                                                            <label class="col-12 col-form-label">週四營業開始時間</label>
+                                                            <div class="col-12">
+                                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                                    <input type="text" class="form-control" name="tStart4" id="tStart4" value="@stn003.Where(x=>x.week_start=="4" && x.week_end=="4").FirstOrDefault().time_start.Insert(2,":")">
+                                                                    <span class="input-group-addon">
+                                                                        <span class="fa fa-clock-o"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週四營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd4" id="tEnd4">
+                                                                    <input type="text" class="form-control" name="tEnd4" id="tEnd4" value="@stn003.Where(x=>x.week_start=="4" && x.week_end=="4").FirstOrDefault().time_end.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
+                                                        <div class="form-group col-6">
+                                                            <label class="col-12 col-form-label">週五營業開始時間</label>
+                                                            <div class="col-12">
+                                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                                    <input type="text" class="form-control" name="tStart5" id="tStart5" value="@stn003.Where(x=>x.week_start=="5" && x.week_end=="5").FirstOrDefault().time_start.Insert(2,":")">
+                                                                    <span class="input-group-addon">
+                                                                        <span class="fa fa-clock-o"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週五營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd5" id="tEnd5">
+                                                                    <input type="text" class="form-control" name="tEnd5" id="tEnd5" value="@stn003.Where(x=>x.week_start=="5" && x.week_end=="5").FirstOrDefault().time_end.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
+                                                        <div class="form-group col-6">
+                                                            <label class="col-12 col-form-label">週六營業開始時間</label>
+                                                            <div class="col-12">
+                                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                                    <input type="text" class="form-control" name="tStart6" id="tStart6" value="@stn003.Where(x=>x.week_start=="6" && x.week_end=="6").FirstOrDefault().time_start.Insert(2,":")">
+                                                                    <span class="input-group-addon">
+                                                                        <span class="fa fa-clock-o"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週六營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd6" id="tEnd6">
+                                                                    <input type="text" class="form-control" name="tEnd6" id="tEnd6" value="@stn003.Where(x=>x.week_start=="6" && x.week_end=="6").FirstOrDefault().time_end.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
+                                                        <div class="form-group col-6">
+                                                            <label class="col-12 col-form-label">週日營業開始時間</label>
+                                                            <div class="col-12">
+                                                                <div class="input-group clockpicker" data-autoclose="true">
+                                                                    <input type="text" class="form-control" name="tStart7" id="tStart7" value="@stn003.Where(x=>x.week_start=="7" && x.week_end=="7").FirstOrDefault().time_start.Insert(2,":")">
+                                                                    <span class="input-group-addon">
+                                                                        <span class="fa fa-clock-o"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-6">
                                                             <label class="col-12 col-form-label">週日營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd7" id="tEnd7">
+                                                                    <input type="text" class="form-control" name="tEnd7" id="tEnd7" value="@stn003.Where(x=>x.week_start=="7" && x.week_end=="7").FirstOrDefault().time_end.Insert(2,":")">
                                                                     <span class="input-group-addon">
                                                                         <span class="fa fa-clock-o"></span>
                                                                     </span>
@@ -333,6 +274,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -341,76 +283,70 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">場域端聯絡人員</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_person_local" id="contact_person_local">
+                            <input type="text" class="form-control" name="contact_person_local" id="contact_person_local" value="@stn000.contact_person_local">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">場域端聯絡手機</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_mobile_local" id="contact_mobile_local">
+                            <input type="text" class="form-control" name="contact_mobile_local" id="contact_mobile_local" value="@stn000.contact_mobile_local">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">場域端聯絡人電話/分機</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="customer_phone2_local" id="customer_phone2_local">
+                            <input type="text" class="form-control" name="customer_phone2_local" id="customer_phone2_local" value="@stn000.customer_phone2_local">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">場域端聯絡人E-Mail</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_email_local" id="contact_email_local">
+                            <input type="text" class="form-control" name="contact_email_local" id="contact_email_local" value="@stn000.contact_email_local">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">場域端聯絡人LineID</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_lineid_local" id="contact_lineid_local">
+                            <input type="text" class="form-control" name="contact_lineid_local" id="contact_lineid_local" value="@stn000.contact_lineid_local">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">場域端聯絡人傳真</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_fax_local" id="contact_fax_local">
+                            <input type="text" class="form-control" name="contact_fax_local" id="contact_fax_local" value="@stn000.contact_fax_local">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">註記1(會在對外APP顯示)</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="station_note" id="station_note"></textarea>
+                            <textarea class="form-control" name="station_note" id="station_note">@stn000.station_note</textarea>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">註記2(僅在內部系統顯示)</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="station_note1" id="station_note1"></textarea>
+                            <textarea class="form-control" name="station_note1" id="station_note1">@stn000.station_note1</textarea>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
 
                     @* 充電樁 *@
-                    <div class="row">
-                        @Html.DropDownList("device_model", (IEnumerable<SelectListItem>)ViewBag.selectDevModelList, new { @class = "form-control col-3 ml-3 mr-2", id = "device_model" })
-                        <button type="button" class="btn btn-primary mb-3" id="addSpotBtn">
-                            新增資料
-                        </button>
-                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    @*<th></th>*@
                                     <th>充電槍號(槍ID)</th>
                                     @*<th>型號</th>*@
-                                    <th>廠牌</th>
-                                    <th>充電槍規格</th>
+                                    @*<th>廠牌</th>*@
+                                    @*<th>充電槍規格</th>*@
                                     <th>充電樁ID</th>
                                     <th>充電樁序號(設備序號)</th>
                                     <th>設備驗收日期</th>
@@ -422,101 +358,16 @@
                                 </tr>
                             </thead>
                             <tbody id="spotList">
-                                @*<tr>
-                                        <td class="text-center">
-                                            <a href="#"><i class="fa fa-minus-circle text-danger"></i></a>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <select class="form-control m-b" name="account">
-                                                <option>option 1</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            to
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <select class="form-control m-b" name="account">
-                                                <option>option 1</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <select class="form-control m-b" name="account">
-                                                <option>option 1</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control m-b" name="account">
-                                                <option>option 1</option>
-                                                <option>option 2</option>
-                                                <option>option 3</option>
-                                                <option>option 4</option>
-                                            </select>
-                                        </td>
-                                    </tr>*@
                             </tbody>
                         </table>
                     </div>
                     <div class="hr-line-dashed"></div>
 
                     @* 匯入 *@
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#netWorkModal">
-                        選擇手機門號/線路編號(匯入站點)
-                    </button>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th></th>
                                     <th>網路類型</th>
                                     <th>手機門號/線路編號</th>
                                     <th>IP位置</th>
@@ -532,33 +383,114 @@
                     </div>
                     <div class="hr-line-dashed"></div>
 
-                    @* 上傳圖片 *@
+                    @* 主圖 *@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">主圖</label>
                         <div class="col-sm-10">
-                            <div id="rUploadArea">
-                                <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
-                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
-                                <div id='rUploadFileList' class="filename"></div>
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(fnstr))
+                                {
+                                    Array fnstrArr = fnstr.Split(',');
+                                    foreach (var fn in fnstrArr)
+                                    {
+                                        if (fn != "")
+                                        {
+                                            string picname2 = Server.MapPath("~/upfiles/stnFiles/" + stn000.station_id + "/" + "01" + "/") + fn;
+                                            //type2
+                                            if (System.IO.File.Exists(picname2))
+                                            {
+                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
+                                                    @try
+                                                    {
+                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname2, true);
+                                                        MemoryStream ms = new MemoryStream();
+                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                        bImage.Dispose();
+
+                                                        byte[] byteImage = ms.ToArray();
+                                                        ms.Close();
+
+
+                                                        var base64 = Convert.ToBase64String(byteImage);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                    }
+
+                                                    <a class="remove mr-1" href="/Station/GetFile/@stn000.station_id?type=01&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+
+                                                    @*<a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@stn000.station_id', '01', '@fn')"><i class="fa fa-times-circle"></i></a>*@
+                                                </div>
+
+                                            }
+
+                                        }
+                                    }
+
+                                }
                             </div>
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div>
+
+                    @* 其他圖 *@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">其他圖</label>
                         <div class="col-sm-10">
-                            <div id="sUploadArea">
-                                <input type="file" multiple max-size="10485760" accept-extension="docx|doc|pptx|ppt|jpg|jpeg|png|pdf|zip|rar|7z|xlsx" />
-                                <span style="word-break: break-all;" class="d-block small noticeTxt">(僅接受 DOCX,DOC,PPTX,PPT,JPG,JPEG,PNG,PDF,ZIP,RAR,7Z,xlsx)</span>
-                                <div id='sUploadFileList' class="filename"></div>
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(fnstr))
+                                {
+                                    Array fnstrArr = fnstr.Split(',');
+                                    foreach (var fn in fnstrArr)
+                                    {
+                                        if (fn != "")
+                                        {
+                                            string picname1 = Server.MapPath("~/upfiles/stnFiles/" + stn000.station_id + "/" + "00" + "/") + fn;
+                                            //type1
+                                            if (System.IO.File.Exists(picname1))
+                                            {
+                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
+                                                    @try
+                                                    {
+                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname1, true);
+                                                        MemoryStream ms = new MemoryStream();
+                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                        bImage.Dispose();
+
+                                                        byte[] byteImage = ms.ToArray();
+                                                        ms.Close();
+
+
+                                                        var base64 = Convert.ToBase64String(byteImage);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                    }
+
+                                                    <a class="remove mr-1" href="/Station/GetFile/@stn000.station_id?type=00&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+
+                                                    @*<a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@stn000.station_id', '00', '@fn')"><i class="fa fa-times-circle"></i></a>*@
+                                                </div>
+                                            }
+                                        }
+                                    }
+
+                                }
                             </div>
                         </div>
                     </div>
+
                     <div class="hr-line-dashed"></div>
 
                     <div class="text-right">
-                        <a href="/Station/Index" class="btn btn-white">取消</a>
-                        <button type="button" class="btn btn-success" id="btnSave">新增</button>
+                        <a href="/Station/Index" class="btn btn-white">返回</a>
                     </div>
                 }
             </div>
@@ -610,19 +542,6 @@
                                             </td>
                                         </tr>
                                     }
-                                    <tr>
-                                        <td>
-                                            <input class="" type="checkbox" name="network_id" value="5E728666-9430-40ED-9EBC-3BAF9C5864FE">
-                                        </td>
-                                        <td>86</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -631,10 +550,22 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">返回</button>
                 <button type="button" class="btn btn-success" id="addNetWork">新增</button>
             </div>
         </div>
+    </div>
+</div>
+
+@* 顯示圖片modal *@
+<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size:4rem; color:#bbb; opacity:1;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <img class="modal-content" style="width:100%;">
+        <!-- Modal Caption (Image Text) -->
+        <div id="caption"></div>
     </div>
 </div>
 
@@ -654,17 +585,133 @@
                 buttons: [
                 ]
             });
+
+            //找充電樁資料
+            $('#getDataBtn').trigger('click');
         });
 
-        $('#select-all').change(function () {
-            $('input[name=network_id]:checkbox:not(:disabled)').prop('checked', this.checked);
+        //找充電樁資料
+        $('#getDataBtn').on('click', function () {
+            debugger;
+            var station_id = $(this).val();
+
+            $.ajax({
+                type: "POST",
+                async: true,
+                url: "/Station/GetEditData",
+                data: {
+                    station_id: station_id
+                },
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    spotTrCount = data.jObjectSpotList.length;
+                    $('#spotList').append(GetEditSpotItem(data));
+                    $('.date').datepicker();
+                }
+            });
+
         });
 
-        //檔案上傳
-        var rUpload = [];
-        $.MultiUploadFile("rUploadArea", "rUploadFileList", rUpload);
-        var sUpload = [];
-        $.MultiUploadFile("sUploadArea", "sUploadFileList", sUpload);
+        //append 充電樁編輯資料
+        function GetEditSpotItem(data) {
+            var sb = new StringBuffer();
+            //充電樁狀態
+            var DdlSSList = data.DdlSSList;
+            //費率
+            //var DdlFeeList = data.DdlFeeList;
+
+            //資料陣列的流水號
+            //var arr = spotTrCount;
+            for (var i = 0; i < data.jObjectSpotList.length; i++) {
+                spotCount++;
+                var num = spotCount - 1;
+
+                sb.append('<tr name="' + data.jObjectSpotList[i].chargespot_seq + '" class="' + spotCount + '">');
+                //sb.append('    <td class="text-center">');
+                //sb.append('        <a href="javascript:void(0)" name="delSpotBtn" btn-val="' + data.jObjectSpotList[i].chargespot_seq + '" btn-id="' + data.jObjectSpotList[i].chargespot_id +'"><i class="fa fa-minus-circle text-danger"></i></a>');
+                //sb.append('    </td>');
+                //充電槍ID
+                sb.append('    <td>');
+                sb.append(''+ data.jObjectSpotList[i].chargespot_id + '');
+                sb.append('    </td>');
+                //型號
+                //sb.append('    <td>');
+                //sb.append('        <input type="text" class="form-control minW" name="" value="" readonly>');
+                //sb.append('    </td>');
+                //廠牌
+                //sb.append('    <td>');
+                //sb.append('        <input type="text" class="form-control minW" name="" value="" readonly>');
+                //sb.append('    </td>');
+                //充電槍規格
+                //sb.append('    <td>');
+                //sb.append('        <input type="text" class="form-control minW" name="" value="" readonly>');
+                //sb.append('    </td>');
+                //充電樁ID
+                sb.append('    <td>');
+                sb.append(' ' + data.jObjectSpotList[i].chargespot_seq + '');
+                sb.append('    </td>');
+                //充電樁序號(設備序號)
+                sb.append('    <td>');
+                sb.append(' ' + data.jObjectSpotList[i].device_sn + '');
+                sb.append('    </td>');
+                //設備驗收日期
+                sb.append('    <td>');
+                sb.append('' + data.jObjectSpotList[i].acpt_time + '');
+                sb.append('    </td>');
+                //設備保固起訖日期
+                sb.append('    <td>');
+                sb.append('' + data.jObjectSpotList[i].wty_start + '');
+                sb.append('        - ');
+                sb.append('' + data.jObjectSpotList[i].wty_end + '');
+                sb.append('        </div>');
+                sb.append('    </td>');
+                //充電樁所在樓層
+                sb.append('    <td>');
+                sb.append('' + data.jObjectSpotList[i].spot_floor + '');
+                sb.append('    </td>');
+                //充電槍對應停車格
+                sb.append('    <td>');
+                sb.append('' + data.jObjectSpotList[i].spot_car_space + '');
+                sb.append('    </td>');
+                //充電槍狀態
+                sb.append('    <td>');
+                sb.append(' ' + data.jObjectSpotList[i].spot_status + '');
+                sb.append('    </td>');
+                //費率方案
+                sb.append('    <td>');
+                //充電槍序號(充電樁第幾支槍)
+                sb.append(' <input type="hidden" name="SpotItems[' + num + '].chargegun_seq" value="' + data.jObjectSpotList[i].chargegun_seq + '"> ');
+                //站ID
+                sb.append(' <input type="hidden" name="SpotItems[' + num + '].station_id" value="' + data.jObjectSpotList[i].station_id + '"> ');
+                sb.append(' <input type="hidden" name="SpotItems[' + num + '].device_id" value="' + data.jObjectSpotList[i].device_id + '"> ');
+                sb.append('       - ');
+                sb.append('    </td>');
+                sb.append('</tr>');
+
+            }
+            var html = sb.toString();
+            return html;
+
+
+        }
+
+
+
+        // Get the modal
+        var modal = $("#myModal");
+        var modalImg = modal.find('.modal-content');
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var img = $(".myImg");
+        var captionBox = $("#caption");
+
+        img.click(function () {
+            modalImg.attr('src', $(this).attr('src'));
+            captionBox.text($(this).attr('alt'));
+            $('#myModal').modal('show')
+        });
+
+
 
         //第2層地區選單
         $('#stnDataForm').on('change',
@@ -697,36 +744,6 @@
                     }
                 });
             });
-
-        //轉換地址btn :1.把zip_id值補上 2.做轉換經緯度
-        $('#convertBtn').on('click', function () {
-            debugger;
-            var country = $("#country").val();
-            var district = $("#district").val();
-            var addr = $("#addr").val();
-
-            //GetZip(country, district);
-            //$('#zip_id').val(zipId);
-
-            $.ajax({
-                type: "POST",
-                async: true,
-                url: "/Station/GetZipId",
-                data: {
-                    country,
-                    district
-                },
-                dataType: "json",
-                success: function (data) {
-                    debugger;
-                    var zipId = data.ZipId;
-                    $("#station_zip").val(zipId);
-                    let str = country + district + addr;
-                    $("#station_address").val(str);
-                }
-            });
-
-        });
 
         //append 時間
         $('#startCheckbox').on('change', function (event) {
@@ -816,16 +833,16 @@
                 dataType: "json",
                 success: function (data) {
                     debugger;
-
-
+                    //spotCount++;
+                    //potTrCount = data.jObjectSpotList.length;
                     $('#spotList').append(GetSpotItem(data));
+                    //potTrCount++;
                     $('.date').datepicker();
                 }
             });
 
 
         });
-
 
         //append 充電樁
         function GetSpotItem(data) {
@@ -837,16 +854,18 @@
             //費率
             //var DdlFeeList = data.DdlFeeList;
 
-            //資料陣列的流水號
-            //var arr = spotTrCount;
             for (var i = 0; i < data.jObjectSpotList.length; i++) {
+                 //資料陣列的流水號
+                spotCount++;
+                var num = spotCount - 1;
+
                 sb.append('<tr name="' + data.jObjectSpotList[i].chargespot_seq +'" class="'+spotCount+'">');
-                sb.append('    <td class="text-center">');
-                sb.append('        <a href="javascript:void(0)" name="delSpotBtn" btn-val="' + data.jObjectSpotList[i].chargespot_seq + '" btn-id="' + data.jObjectSpotList[i].chargespot_id + '" btn-sId="' + data.jObjectSpotList[i].station_id +'"><i class="fa fa-minus-circle text-danger"></i></a>');
-                sb.append('    </td>');
+                //sb.append('    <td class="text-center">');
+                //sb.append('        <a href="javascript:void(0)" name="delSpotBtn" btn-val="' + data.jObjectSpotList[i].chargespot_seq + '" btn-id="' + data.jObjectSpotList[i].chargespot_id +'"><i class="fa fa-minus-circle text-danger"></i></a>');
+                //sb.append('    </td>');
                 //充電槍ID
                 sb.append('    <td>');
-                sb.append('        <input type="number" class="form-control minW" name="SpotItems[' + spotTrCount + '].chargespot_id" value="' + data.jObjectSpotList[i].chargespot_id + '" readonly>');
+                sb.append('        <input type="number" class="form-control minW" name="SpotItems[' + num + '].chargespot_id" value="' + data.jObjectSpotList[i].chargespot_id + '" readonly>');
                 sb.append('    </td>');
                 //型號
                 //sb.append('    <td>');
@@ -862,12 +881,11 @@
                 sb.append('    </td>');
                 //充電樁ID
                 sb.append('    <td>');
-                sb.append('        <input type="text" class="form-control minW" name="" value="' + data.jObjectSpotList[i].chargespot_seq + '" readonly>');
-                sb.append(' <input type="hidden" name="SpotItems[' + spotTrCount + '].chargespot_seq" value="' + data.jObjectSpotList[i].chargespot_seq + '"> ');
+                sb.append('        <input type="text" class="form-control minW" name="SpotItems[' + num + '].chargespot_seq" value="' + data.jObjectSpotList[i].chargespot_seq +'" readonly>');
                 sb.append('    </td>');
                 //充電樁序號(設備序號)
                 sb.append('    <td>');
-                sb.append('        <input type="number" class="form-control minW" name="SpotItems[' + spotTrCount + '].device_sn" value="">');
+                sb.append('        <input type="number" class="form-control minW" name="SpotItems[' + num + '].device_sn" value="">');
                 sb.append('    </td>');
                 //設備驗收日期
                 sb.append('    <td>');
@@ -875,7 +893,7 @@
                 sb.append('            <span class="input-group-addon">');
                 sb.append('                <i class="fa fa-calendar"></i>');
                 sb.append('            </span>');
-                sb.append('            <input type="text" class="form-control minW" name="SpotItems[' + spotTrCount + '].acpt_time">');
+                sb.append('            <input type="text" class="form-control minW" name="SpotItems[' + num + '].acpt_time">');
                 sb.append('        </div>');
                 sb.append('    </td>');
                 //設備保固起訖日期
@@ -884,27 +902,27 @@
                 sb.append('            <span class="input-group-addon">');
                 sb.append('                <i class="fa fa-calendar"></i>');
                 sb.append('            </span>');
-                sb.append('            <input type="text" class="form-control minW" name="SpotItems[' + spotTrCount + '].wty_start">');
+                sb.append('            <input type="text" class="form-control minW" name="SpotItems[' + num + '].wty_start">');
                 sb.append('        </div>');
                 sb.append('        to');
                 sb.append('        <div class="input-group date" style="flex-wrap: nowrap;">');
                 sb.append('            <span class="input-group-addon">');
                 sb.append('                <i class="fa fa-calendar"></i>');
                 sb.append('            </span>');
-                sb.append('            <input type="text" class="form-control minW" name="SpotItems[' + spotTrCount + '].wty_end">');
+                sb.append('            <input type="text" class="form-control minW" name="SpotItems[' + num + '].wty_end">');
                 sb.append('        </div>');
                 sb.append('    </td>');
                 //充電樁所在樓層
                 sb.append('    <td>');
-                sb.append('        <input type="text" class="form-control minW" name="SpotItems[' + spotTrCount + '].spot_floor">');
+                sb.append('        <input type="text" class="form-control minW" name="SpotItems[' + num + '].spot_floor">');
                 sb.append('    </td>');
                 //充電槍對應停車格
                 sb.append('    <td>');
-                sb.append('        <input type="text" class="form-control minW" placeholder="請輸入車格數字" style="min-width:130px;" name="SpotItems[' + spotTrCount + '].spot_car_space">');
+                sb.append('        <input type="text" class="form-control minW" placeholder="請輸入車格數字" style="min-width:130px;" name="SpotItems[' + num + '].spot_car_space">');
                 sb.append('    </td>');
                 //充電槍狀態
                 sb.append('    <td>');
-                sb.append('        <select class="form-control m-b minW" name="SpotItems[' + spotTrCount + '].spot_status">');
+                sb.append('        <select class="form-control m-b minW" name="SpotItems[' + num + '].spot_status">');
                 $.each(DdlSSList, function (index, val) {
                     var selectedStr = data.DdlSSList == index ? "selected" : "";
                     sb.append('        <option value="' + index + '" ' + selectedStr + '>' + val + '</option>');
@@ -914,16 +932,14 @@
                 //費率方案
                 sb.append('    <td>');
                 //充電槍序號(充電樁第幾支槍)
-                sb.append(' <input type="hidden" name="SpotItems[' + spotTrCount + '].chargegun_seq" value="' + data.jObjectSpotList[i].chargegun_seq + '"> ');
+                sb.append(' <input type="hidden" name="SpotItems[' + num + '].chargegun_seq" value="' + data.jObjectSpotList[i].chargegun_seq + '"> ');
                 //站ID
-                sb.append(' <input type="hidden" name="SpotItems[' + spotTrCount + '].station_id" value="' + data.jObjectSpotList[i].station_id + '"> ');
-                sb.append(' <input type="hidden" name="SpotItems[' + spotTrCount + '].device_id" value="' + data.device_id + '"> ');
-                //sb.append(' <input type="hidden" name="SpotItems[' + i + '].device_sn" value="' + data.device_sn + '"> ');
+                sb.append(' <input type="hidden" name="SpotItems[' + num + '].station_id" value="' + data.jObjectSpotList[i].station_id + '"> ');
+                sb.append(' <input type="hidden" name="SpotItems[' + num + '].device_id" value="' + data.jObjectSpotList[i].device_id + '"> ');
                 sb.append('       - ');
                 sb.append('    </td>');
                 sb.append('</tr>');
 
-                spotTrCount++;
             }
             var html = sb.toString();
             return html;
@@ -931,177 +947,13 @@
 
         }
 
-        //充電樁 delSpotBtn 刪除該行
-        //$("#spotList").on("click",
-        //    "a[name='delSpotBtn']",
-        //    function () {
-        //        debugger;
-        //        var msg = "您確定要刪除此型號嗎?";
-        //        if (confirm(msg) == true) {
-        //            var btnData = $(this).attr('btn-val');
-        //            $('#spotList tr[name="' + btnData + '"] td input[name$=chargespot_seq]').val(0);
-        //            $('#spotList tr[name="' + btnData + '"]').hide();
 
-        //        } else {
-        //            return false;
-        //        }
-        //    });
+        
+
+        
 
 
-
-        //充電樁 delSpotBtn 刪除該行
-        $("#spotList").on("click",
-            "a[name='delSpotBtn']",
-            function () {
-                debugger;
-                var msg = "您確定要刪除此型號嗎?";
-                if (confirm(msg) == true) {
-                    //stn001使用
-                    var stationId = $(this).attr('btn-sId');
-                    var btnData = $(this).attr('btn-val');
-                    //stn101使用
-                    var soptId = $(this).attr('btn-id');
-                    $.ajax({
-                        type: "POST",
-                        async: true,
-                        url: "/Station/DeleteModel",
-                        data: {
-                            stationId: stationId,
-                            btnData: btnData,
-                            soptId: soptId
-                        },
-                        dataType: "json",
-                        success: function (data) {
-                            debugger;
-                            //tr刪掉
-                            //$('#spotList tr[name="'+btnData+'"]').remove();
-                            $('#spotList tr[name="' + btnData + '"] td input[name$=chargespot_seq]').val(0);
-                            $('#spotList tr[name="' + btnData + '"]').hide();
-                        }
-                    });
-
-                } else {
-                    return false;
-                }
-            });
-
-        //儲存
-        $('#btnSave').click(function () {
-            debugger;
-            //if (($('#contact_person').val()).length <= 0) {
-            //    alert("請填入姓名");
-            //    return;
-            //}
-            //if (($('#contact_mobile').val()).length <= 0) {
-            //    alert("請填入手機");
-            //    return;
-            //}
-            //if (($('#contact_email').val()).length <= 0) {
-            //    alert("請填入E-mail");
-            //    return;
-            //}
-            //if (($('#install_address').val()).length <= 0) {
-            //    alert("請填入安裝地址");
-            //    return;
-            //}
-            //if (($('#contact_time').val()).length <= 0) {
-            //    alert("請填入方便聯絡時段");
-            //    return;
-            //}
-            //if (($('#dealer_name').val()).length <= 0) {
-            //    alert("請填入購車據點");
-            //    return;
-            //}
-            //if (($('#sales_info').val()).length <= 0) {
-            //    alert("請填入購車資訊:業代/訂單編號");
-            //    return;
-            //}
-            dataFormAjaxPost($('#stnDataForm'), "/Station/Create");
-        });
-
-        function dataFormAjaxPost($dataForm, url) {
-
-            var formData = new FormData($dataForm[0]);
-
-            //多檔上傳的檔案夾帶
-            for (var i = 0; i < rUpload.length; i++) {
-                formData.append('rUpload', rUpload[i]);
-            }
-            for (var i = 0; i < sUpload.length; i++) {
-                formData.append('sUpload', sUpload[i]);
-            }
-
-             $.ajax({
-                    url: url,
-                    data: formData,
-                    type: 'post',
-                    contentType: false,
-                    processData: false,
-                    cache: false,
-                    //async: false,
-                    datatype: 'JSON',
-                    success: function (data) {
-                        debugger;
-                        if (data.IsSuccess) {
-                            window.location = '@Url.Action("Index", "Station")';
-                        } else {
-                            if (data.ModelStateErrors != null) {
-                                // show model state error
-                                $dataForm.validate().showErrors(data.ModelStateErrors);
-                                //alert('請確認資料輸入無誤！');
-                                swal({
-                                    title: 'Fail',
-                                    text: '請確認資料輸入無誤!',
-                                    icon: 'error'
-                                });
-                            } else {
-                                //alert('執行失敗！');
-                                swal({
-                                    title: 'Fail',
-                                    text: '執行失敗!',
-                                    icon: 'error'
-                                });
-                            }
-                        }
-                    }
-                });
-
-
-        }
-
-
-            //function GetZipId(country, district) {
-            //    $.ajax({
-            //        type: "POST",
-            //        async: true,
-            //        url: "/Station/GetZipId",
-            //        data: {
-            //            country,
-            //            district
-            //        },
-            //        dataType: "json",
-            //        success: function (data) {
-            //            debugger;
-            //            var zipId = data.zipId;
-            //            return zipId;
-            //        }
-            //    });
-            //}
-
-
-            //轉經緯度
-//        var geocoder = new google.maps.Geocoder();
-//geocoder.geocode({ address: '台北市忠孝東路五段' },
-//function (result, status) {
-//	if (status == google.maps.GeocoderStatus.OK) {
-
-//		var location = result[0].geometry.location;
-//		// location.Pa 緯度
-//		// location.Qa 經度
-
-//	} else {
-//		alert('解析失敗!回傳狀態為：' + status);
-//	}
-//});
+           
     </script>
 }
+

@@ -234,10 +234,10 @@
                                     {
                                         if (fn != "")
                                         {
-                                            string picname1 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type1" + "/") + fn;
-                                            string picname2 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type2" + "/") + fn;
-                                            string picname3 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type3" + "/") + fn;
-                                            string picname4 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "type4" + "/") + fn;
+                                            string picname1 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "00" + "/") + fn;
+                                            string picname2 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "01" + "/") + fn;
+                                            string picname3 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "02" + "/") + fn;
+                                            string picname4 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "03" + "/") + fn;
                                             //type1
                                             if (System.IO.File.Exists(picname1))
                                             {
@@ -263,39 +263,39 @@
                                                     {
                                                     }
 
-                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type1&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=00&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
 
-                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type1', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '00', '@fn')"><i class="fa fa-times-circle"></i></a>
                                                 </div>
                                             }
                                             //type2
                                             if (System.IO.File.Exists(picname2))
                                             {
                                                 <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
-                                                        @try
-                                                        {
-                                                            System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname2, true);
-                                                            MemoryStream ms = new MemoryStream();
-                                                            bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                                                            bImage.Dispose();
+                                                    @try
+                                                    {
+                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname2, true);
+                                                        MemoryStream ms = new MemoryStream();
+                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                        bImage.Dispose();
 
-                                                            byte[] byteImage = ms.ToArray();
-                                                            ms.Close();
+                                                        byte[] byteImage = ms.ToArray();
+                                                        ms.Close();
 
 
-                                                            var base64 = Convert.ToBase64String(byteImage);
-                                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                                        var base64 = Convert.ToBase64String(byteImage);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                                                            <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
 
-                                                        }
-                                                        catch (Exception e)
-                                                        {
-                                                        }
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                    }
 
-                                                        <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type2&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=01&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
 
-                                                        <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type2', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '01', '@fn')"><i class="fa fa-times-circle"></i></a>
                                                 </div>
 
                                             }
@@ -324,9 +324,9 @@
                                                     {
                                                     }
 
-                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type3&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=02&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
 
-                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type1', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '02', '@fn')"><i class="fa fa-times-circle"></i></a>
                                                 </div>
                                             }
                                             //type4
@@ -354,9 +354,9 @@
                                                     {
                                                     }
 
-                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=type4&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=03&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
 
-                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', 'type1', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '03', '@fn')"><i class="fa fa-times-circle"></i></a>
                                                 </div>
                                             }
                                         }
@@ -380,6 +380,7 @@
     </div>
 </div>
 
+@* 顯示圖片modal *@
 <div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size:4rem; color:#bbb; opacity:1;">
@@ -492,6 +493,7 @@
         //    }
         //}
 
+        //刪除檔案
         function remove(id, type, fileName) {
             var r = confirm("確定刪除？");
             if (r == true) {

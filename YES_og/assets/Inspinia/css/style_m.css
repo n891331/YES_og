@@ -39,3 +39,7 @@ input[type=file] {
     padding: 10px 0;
     height: 150px;
 }
+
+.minW {
+    min-width: 130px;
+}

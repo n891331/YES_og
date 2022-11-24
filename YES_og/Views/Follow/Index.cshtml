@@ -70,7 +70,7 @@
                                     <td>@i.contact_mobile</td>
                                     <td>@i.veh_brand</td>
                                     <td>
-                                        @sts.FirstOrDefault(x => x.item_id == i.loc_class).item_desc
+                                        @sts.FirstOrDefault(x => x.item_id == i.loc_class && x.prog_id == "cnc000" && x.fun_id == "loc_class").item_desc
                                     </td>
                                     <td>
                                         @i.zip_id
@@ -79,7 +79,7 @@
                                                 @z
                                             }*@
                                     </td>
-                                    <td>@sts.FirstOrDefault(x => x.item_id == i.cnc_status).item_desc</td>
+                                    <td>@sts.FirstOrDefault(x => x.item_id == i.cnc_status && x.prog_id == "cnc000" && x.fun_id == "cnc_status").item_desc</td>
                                     <td>@i.crt_date</td>
                                     <td>
                                         <button class="btn btn-primary mb-3" onclick="location.href='@Url.Action("Edit", "Follow", new { id = i.cnc_id})'">

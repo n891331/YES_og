@@ -418,11 +418,14 @@
     <Content Include="Views\Station\Index.cshtml" />
     <Content Include="Views\Station\Create.cshtml" />
     <Content Include="Views\Follow\Edit.cshtml" />
+    <Content Include="Views\Station\Edit.cshtml" />
+    <Content Include="Views\Station\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="upfiles\cncFiles\" />
     <Folder Include="upfiles\emailFile\" />
+    <Folder Include="upfiles\stnFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

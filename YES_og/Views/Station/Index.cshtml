@@ -1,7 +1,9 @@
-﻿
+﻿@model IEnumerable<YES_og.Models.stn000>
+@using YES_og.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<sts000> stationType = ViewBag.stationType;
 }
 
 <div class="row">
@@ -16,45 +18,48 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group row">
-                            <label class="col-12 col-form-label">充電站ID</label>
-                            <div class="col-12">
-                                <input type="text" class="form-control" id="veh_brand" name="veh_brand">
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <label class="col-12 col-form-label" for="SearchById">充電站ID</label>
+                                <div class="col-12">
+                                    @Html.TextBox("SearchById", null, new { @class = "form-control", Value = ViewData["SearchById"], autocomplete = "off" })
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group row">
-                            <label class="col-12 col-form-label">客戶ID</label>
-                            <div class="col-12">
-                                <input type="text" class="form-control" id="veh_brand" name="veh_brand">
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <label class="col-12 col-form-label" for="SearchByStationOwner">客戶ID</label>
+                                <div class="col-12">
+                                    @Html.TextBox("SearchByStationOwner", null, new { @class = "form-control", Value = ViewData["SearchByStationOwner"], autocomplete = "off" })
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group row">
-                            <label class="col-12 col-form-label">充電站名稱</label>
-                            <div class="col-12">
-                                <input type="text" class="form-control" id="veh_brand" name="veh_brand">
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <label class="col-12 col-form-label" for="SearchByStationName">充電站名稱</label>
+                                <div class="col-12">
+                                    @Html.TextBox("SearchByStationName", null, new { @class = "form-control", Value = ViewData["SearchByStationName"], autocomplete = "off" })
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group row">
-                            <label class="col-12 col-form-label">站點類型</label>
-                            <div class="col-12">
-                                <input type="text" class="form-control" id="veh_brand" name="veh_brand">
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <label class="col-12 col-form-label" for="SearchByStationType">站點類型</label>
+                                <div class="col-12">
+                                    @Html.DropDownList("SearchByStationType", (IEnumerable<SelectListItem>)ViewBag.selectTypeList, new { @class = "form-control" })
+                                </div>
                             </div>
                         </div>
+                        <div class="col-12 text-right">
+                            <button class="btn btn-info" type="submit">
+                                搜尋
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-12 text-right">
-                        <a class="btn btn-info" href="/Follow/Create">
-                            搜尋
-                        </a>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
@@ -75,7 +80,7 @@
                 <a class="btn btn-primary mb-3" href="/Station/Create">
                     新增資料
                 </a>
-                <div class="table-responsive">
+                <div class="table-responsive" id="stnBox">
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                             <tr>
@@ -90,15 +95,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @*@foreach (var i in Model)
-                                {
-                                    <tr>
-                                        <td>@i.brand</td>
-                                        <td>@i.model</td>
-                                        <td>@i.year</td>
-                                        <td>@i.update_time</td>
-                                    </tr>
-                                }*@
+                            @foreach (var i in Model)
+                            {
+                                <tr>
+                                    <td>@i.station_id</td>
+                                    <td>@i.station_owner</td>
+                                    <td>@i.station_name</td>
+                                    <td>@stationType.Where(x=>x.item_id == i.station_type).FirstOrDefault().item_desc</td>
+                                    <td>@i.contact_mobile_local</td>
+                                    <td>@i.customer_phone2_local</td>
+                                    <td>@i.upd_date</td>
+                                    <td>
+                                        <button class="btn btn-primary mb-3" onclick="location.href='@Url.Action("Detail", "Station", new { station_id = i.station_id})'">
+                                            檢視
+                                        </button>
+                                        <button class="btn btn-primary mb-3" onclick="location.href='@Url.Action("Edit", "Station", new { station_id = i.station_id})'">
+                                            編輯
+                                        </button>
+                                        <a href="javascript:void(0)" class="btn btn-danger mb-3" name="delBtn" btn-id="@i.station_id">刪除</a>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -110,5 +127,34 @@
 
 
 @section Scripts {
+    <script>
+        $("#stnBox").on("click",
+            "a[name='delBtn']",
+            function () {
+                debugger;
+                var msg = "您確定要刪除此筆資料嗎?";
+                if (confirm(msg) == true) {
+                    var station_id = $(this).attr('btn-id');
+                    $.ajax({
+                        type: "POST",
+                        async: true,
+                        url: "/Station/Delete",
+                        data: {
+                            station_id: station_id
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            debugger;
+                            location.reload();
+                        }
+                    });
 
+                } else {
+                    return false;
+                }
+            });
+
+
+
+    </script>
 }

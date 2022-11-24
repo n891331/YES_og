@@ -54,19 +54,19 @@ namespace YES_og.Controllers
             #region 選單
             //狀態
             var selectStatusList = new List<SelectListItem>();
-            var s = _db.sts000.Where(x => x.fun_id == "cnc_status").OrderBy(x => x.item_seq);
+            var s = _db.sts000.Where(x => x.fun_id == "cnc_status" && x.prog_id == "cnc000").OrderBy(x => x.item_seq);
             foreach (var item in s)
             {
-                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id.ToString() });
+                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id });
             }
             ViewBag.selectStatusList = selectStatusList;
 
             //住宅類型
             var selectLocList = new List<SelectListItem>();
-            var L = _db.sts000.Where(x => x.fun_id == "loc_class").OrderBy(x => x.item_seq);
+            var L = _db.sts000.Where(x => x.fun_id == "loc_class" && x.prog_id == "cnc000").OrderBy(x => x.item_seq);
             foreach (var item in L)
             {
-                selectLocList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id.ToString() });
+                selectLocList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id });
             }
             ViewBag.selectLocList = selectLocList;
 
@@ -158,7 +158,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in aUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id,"type1");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id,"00");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -169,8 +169,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "00";
+                        cnc002.file_status = "01";
                         SaveCreate(_db.cnc002, cnc002);
                     }
                 }
@@ -180,7 +180,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in bUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "type2");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "01");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -191,8 +191,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "01";
+                        cnc002.file_status = "01";
                         SaveCreate(_db.cnc002, cnc002);
                     }
                 }
@@ -202,7 +202,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in cUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "type3");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "02");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -213,8 +213,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "02";
+                        cnc002.file_status = "01";
                         SaveCreate(_db.cnc002, cnc002);
                     }
                 }
@@ -224,7 +224,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in dUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "type4");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "03");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -235,8 +235,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "03";
+                        cnc002.file_status = "01";
                         SaveCreate(_db.cnc002, cnc002);
                     }
                 }
@@ -272,7 +272,7 @@ namespace YES_og.Controllers
             ViewBag.cnc001 = cnc001;
             List<cnc002> cnc002s = _db.cnc002.Where(x=> x.cnc_id == id).ToList();
             ViewBag.cnc002s = cnc002s;
-            var fileName = _db.cnc002.Where(x => x.cnc_id == id && x.file_status==1).ToList().Select(a=>a.File_name);
+            var fileName = _db.cnc002.Where(x => x.cnc_id == id && x.file_status=="01").ToList().Select(a=>a.File_name);
             List<string> fname = new List<string>() { };
             var fnstr = String.Join(",", fileName);
             ViewBag.fnstr = fnstr;
@@ -280,19 +280,19 @@ namespace YES_og.Controllers
             #region 選單
             //狀態
             var selectStatusList = new List<SelectListItem>();
-            var s = _db.sts000.Where(x => x.fun_id == "cnc_status").OrderBy(x => x.item_seq);
+            var s = _db.sts000.Where(x => x.fun_id == "cnc_status" && x.prog_id == "cnc000" ).OrderBy(x => x.item_seq);
             foreach (var item in s)
             {
-                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id.ToString() });
+                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id});
             }
             ViewBag.cnc_statusList = new SelectList(selectStatusList, "Value", "Text", cnc000.cnc_status);
 
             //住宅類型
             var selectLocList = new List<SelectListItem>();
-            var L = _db.sts000.Where(x => x.fun_id == "loc_class").OrderBy(x => x.item_seq);
+            var L = _db.sts000.Where(x => x.fun_id == "loc_class" && x.prog_id == "cnc000" ).OrderBy(x => x.item_seq);
             foreach (var item in L)
             {
-                selectLocList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id.ToString() });
+                selectLocList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id });
             }
             ViewBag.loc_classList = new SelectList(selectLocList, "Value", "Text", cnc000.loc_class);
             //車款
@@ -373,7 +373,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in aUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "type1");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "00");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -384,8 +384,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "00";
+                        cnc002.file_status = "01";
 
                         var newDB = new DBePowerDataContext();
                         SaveCreate(_db.cnc002, cnc002 , false, newDB.cnc002);
@@ -397,7 +397,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in bUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "type2");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "01");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -408,8 +408,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "01";
+                        cnc002.file_status = "01";
 
                         var newDB = new DBePowerDataContext();
                         SaveCreate(_db.cnc002, cnc002, false, newDB.cnc002);
@@ -421,7 +421,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in cUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "type3");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "02");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -432,8 +432,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "02";
+                        cnc002.file_status = "01";
 
                         var newDB = new DBePowerDataContext();
                         SaveCreate(_db.cnc002, cnc002, false, newDB.cnc002);
@@ -445,7 +445,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in dUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "type4");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "03");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -456,8 +456,8 @@ namespace YES_og.Controllers
                         cnc002.cnc_id = cncForm.cnc_id;
                         cnc002.File_name = f.FileName;
                         cnc002.File_path = f.savedPath;
-                        cnc002.cnc_status = cncForm.cnc_status;
-                        cnc002.file_status = 1;
+                        cnc002.file_type = "03";
+                        cnc002.file_status = "01";
 
                         var newDB = new DBePowerDataContext();
                         SaveCreate(_db.cnc002, cnc002, false, newDB.cnc002);
@@ -707,7 +707,7 @@ namespace YES_og.Controllers
             /// <summary>
             /// 站點屬性
             /// </summary>
-            public int loc_class { get; set; }
+            public string loc_class { get; set; }
             /// <summary>
             /// 聯繫時間
             /// </summary>
@@ -731,7 +731,7 @@ namespace YES_og.Controllers
             /// <summary>
             /// cnc狀態
             /// </summary>
-            public int cnc_status { get; set; }
+            public string cnc_status { get; set; }
             /// <summary>
             /// 申請時間
             /// </summary>
@@ -829,7 +829,6 @@ namespace YES_og.Controllers
         }
 
         // 功能：回傳既存檔案
-        // GET: /TestMultiUpload/GetFile
         public object GetFile(int id, string type, string fileName)
         {
             var Form = _db.cnc002.Where(w => w.cnc_id == id);
@@ -888,7 +887,7 @@ namespace YES_og.Controllers
             try
             {
                 var cnc002Form = _db.cnc002.Where(w => w.cnc_id == id && w.File_name == fileName).Single();
-                cnc002Form.file_status = 0;
+                cnc002Form.file_status = "00";
 
                 SaveUpdate(_db.cnc002, cnc002Form);
 
@@ -911,7 +910,7 @@ namespace YES_og.Controllers
         }
 
         /// <summary>
-        /// 檔案使用
+        /// 檔案使用自定義
         /// </summary>
         public class fileDtail
         {
