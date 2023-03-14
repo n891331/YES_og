@@ -86,9 +86,9 @@
                     </div>
                     <div class="hr-line-dashed"></div>
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">方便聯絡時段<small class="text-danger">*</small></label>
+                        <label class="col-sm-2 col-form-label">方便聯絡時段</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="contact_time" id="contact_time" value="@cnc000.contact_time">
+                            <input type="text" class="form-control" name="contact_time" id="contact_time" value="@cnc000.contact_time" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -223,8 +223,9 @@
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
+                    //顯示照片與檔案
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">照片與檔案</label>
+                        <label class="col-sm-2 col-form-label">場勘照片</label>
                         <div class="col-sm-10">
                             <div class="row">
                                 @if (!string.IsNullOrEmpty(fnstr))
@@ -235,9 +236,6 @@
                                         if (fn != "")
                                         {
                                             string picname1 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "00" + "/") + fn;
-                                            string picname2 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "01" + "/") + fn;
-                                            string picname3 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "02" + "/") + fn;
-                                            string picname4 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "03" + "/") + fn;
                                             //type1
                                             if (System.IO.File.Exists(picname1))
                                             {
@@ -268,37 +266,25 @@
                                                     <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '00', '@fn')"><i class="fa fa-times-circle"></i></a>
                                                 </div>
                                             }
-                                            //type2
-                                            if (System.IO.File.Exists(picname2))
-                                            {
-                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
-                                                    @try
-                                                    {
-                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname2, true);
-                                                        MemoryStream ms = new MemoryStream();
-                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                                                        bImage.Dispose();
+                                        }
+                                    }
 
-                                                        byte[] byteImage = ms.ToArray();
-                                                        ms.Close();
-
-
-                                                        var base64 = Convert.ToBase64String(byteImage);
-                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-
-                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
-
-                                                    }
-                                                    catch (Exception e)
-                                                    {
-                                                    }
-
-                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=01&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
-
-                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '01', '@fn')"><i class="fa fa-times-circle"></i></a>
-                                                </div>
-
-                                            }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">施工照片</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(fnstr))
+                                {
+                                    Array fnstrArr = fnstr.Split(',');
+                                    foreach (var fn in fnstrArr)
+                                    {
+                                        if (fn != "")
+                                        {
+                                            string picname3 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "02" + "/") + fn;
                                             //type3
                                             if (System.IO.File.Exists(picname3))
                                             {
@@ -329,6 +315,25 @@
                                                     <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '02', '@fn')"><i class="fa fa-times-circle"></i></a>
                                                 </div>
                                             }
+                                        }
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">驗收照片</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(fnstr))
+                                {
+                                    Array fnstrArr = fnstr.Split(',');
+                                    foreach (var fn in fnstrArr)
+                                    {
+                                        if (fn != "")
+                                        {
+                                            string picname4 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "03" + "/") + fn;
                                             //type4
                                             if (System.IO.File.Exists(picname4))
                                             {
@@ -366,6 +371,57 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">報價單</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                @if (!string.IsNullOrEmpty(fnstr))
+                                {
+                                    Array fnstrArr = fnstr.Split(',');
+                                    foreach (var fn in fnstrArr)
+                                    {
+                                        if (fn != "")
+                                        {
+                                            string picname2 = Server.MapPath("~/upfiles/cncFiles/" + @Model.cnc_id + "/" + "01" + "/") + fn;
+                                            //type2
+                                            if (System.IO.File.Exists(picname2))
+                                            {
+                                                <div class="col-md-6 d-flex align-items-center mb-3" id="@fn">
+                                                    @try
+                                                    {
+                                                        System.Drawing.Bitmap bImage = (System.Drawing.Bitmap)System.Drawing.Image.FromFile(picname2, true);
+                                                        MemoryStream ms = new MemoryStream();
+                                                        bImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                                        bImage.Dispose();
+
+                                                        byte[] byteImage = ms.ToArray();
+                                                        ms.Close();
+
+
+                                                        var base64 = Convert.ToBase64String(byteImage);
+                                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                                        <img src="@imgSrc" class="myImg mr-1" style="width:30px; height:30px;" alt="@fn">
+
+                                                    }
+                                                    catch (Exception e)
+                                                    {
+                                                    }
+
+                                                    <a class="remove mr-1" href="/Follow/GetFile/@Model.cnc_id?type=01&filename=@fn"><i class="fa fa-download" aria-hidden="true"></i>@fn</a>
+
+                                                    <a href="javascript:void(0)" class="removeFile remove text-danger" onclick="remove('@Model.cnc_id', '01', '@fn')"><i class="fa fa-times-circle"></i></a>
+                                                </div>
+
+                                            }
+                                        }
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+
 
 
                     <div class="hr-line-dashed"></div>

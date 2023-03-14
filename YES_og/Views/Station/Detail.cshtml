@@ -20,9 +20,10 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
-                    <input type="hidden" name="crt_user" value="@stn000.crt_user"/>
-                    <input type="hidden" name="crt_date" value="@stn000.crt_date"/>
+                    <input type="hidden" name="crt_user" value="@stn000.crt_user" />
+                    <input type="hidden" name="crt_date" value="@stn000.crt_date" />
                     <input type="button" class="d-none" id="getDataBtn" value="@stn000.station_id" />
+                    <input type="button" class="d-none" id="getnwDataBtn" value="@stn000.station_id" />
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">充電站ID</label>
                         <div class="col-sm-10">
@@ -118,10 +119,8 @@
                                                             <label class="col-12 col-form-label">週一營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart1" id="tStart1" value="@stn003.Where(x=>x.week_start=="1" && x.week_end=="1").FirstOrDefault().time_start.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    @*<input type="text" class="form-control" name="tStart1" id="tStart1" value="@stn003.Where(x=>x.week_start=="1" && x.week_end=="1").FirstOrDefault().time_start.Insert(2,":")">*@
+                                                                    <input type="text" class="form-control" name="tStart1" id="tStart1" value="@stn003.Where(x=>x.week == 1).FirstOrDefault().time_start.Insert(2,":")">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -129,10 +128,8 @@
                                                             <label class="col-12 col-form-label">週一營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd1" id="tEnd1" value="@stn003.Where(x=>x.week_start=="1" && x.week_end=="1").FirstOrDefault().time_end.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    @*<input type="text" class="form-control" name="tEnd1" id="tEnd1" value="@stn003.Where(x=>x.week_start=="1" && x.week_end=="1").FirstOrDefault().time_end.Insert(2,":")">*@
+                                                                    <input type="text" class="form-control" name="tEnd1" id="tEnd1" value="@stn003.Where(x=>x.week == 1).FirstOrDefault().time_end.Insert(2,":")">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -140,10 +137,8 @@
                                                             <label class="col-12 col-form-label">週二營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart2" id="tStart2" value="@stn003.Where(x=>x.week_start=="2" && x.week_end=="2").FirstOrDefault().time_start.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tStart2" id="tStart2" value="@stn003.Where(x=>x.week == 2).FirstOrDefault().time_start.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -151,10 +146,8 @@
                                                             <label class="col-12 col-form-label">週二營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd2" id="tEnd2" value="@stn003.Where(x=>x.week_start=="2" && x.week_end=="2").FirstOrDefault().time_end.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tEnd2" id="tEnd2" value="@stn003.Where(x=>x.week ==2).FirstOrDefault().time_end.Insert(2,":")">
+                                                                   
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -162,10 +155,8 @@
                                                             <label class="col-12 col-form-label">週三營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart3" id="tStart3" value="@stn003.Where(x=>x.week_start=="3" && x.week_end=="3").FirstOrDefault().time_start.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tStart3" id="tStart3" value="@stn003.Where(x=>x.week==3).FirstOrDefault().time_start.Insert(2,":")">
+                                                                   
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -173,10 +164,8 @@
                                                             <label class="col-12 col-form-label">週三營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd3" id="tEnd3" value="@stn003.Where(x=>x.week_start=="3" && x.week_end=="3").FirstOrDefault().time_end.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tEnd3" id="tEnd3" value="@stn003.Where(x=>x.week == 3).FirstOrDefault().time_end.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -184,10 +173,8 @@
                                                             <label class="col-12 col-form-label">週四營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart4" id="tStart4" value="@stn003.Where(x=>x.week_start=="4" && x.week_end=="4").FirstOrDefault().time_start.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tStart4" id="tStart4" value="@stn003.Where(x=>x.week == 4).FirstOrDefault().time_start.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -195,10 +182,8 @@
                                                             <label class="col-12 col-form-label">週四營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd4" id="tEnd4" value="@stn003.Where(x=>x.week_start=="4" && x.week_end=="4").FirstOrDefault().time_end.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tEnd4" id="tEnd4" value="@stn003.Where(x=>x.week == 4).FirstOrDefault().time_end.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -206,10 +191,8 @@
                                                             <label class="col-12 col-form-label">週五營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart5" id="tStart5" value="@stn003.Where(x=>x.week_start=="5" && x.week_end=="5").FirstOrDefault().time_start.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tStart5" id="tStart5" value="@stn003.Where(x=>x.week == 5).FirstOrDefault().time_start.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -217,10 +200,8 @@
                                                             <label class="col-12 col-form-label">週五營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd5" id="tEnd5" value="@stn003.Where(x=>x.week_start=="5" && x.week_end=="5").FirstOrDefault().time_end.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tEnd5" id="tEnd5" value="@stn003.Where(x=>x.week == 5).FirstOrDefault().time_end.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -228,10 +209,8 @@
                                                             <label class="col-12 col-form-label">週六營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart6" id="tStart6" value="@stn003.Where(x=>x.week_start=="6" && x.week_end=="6").FirstOrDefault().time_start.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tStart6" id="tStart6" value="@stn003.Where(x=>x.week == 6).FirstOrDefault().time_start.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -239,10 +218,8 @@
                                                             <label class="col-12 col-form-label">週六營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd6" id="tEnd6" value="@stn003.Where(x=>x.week_start=="6" && x.week_end=="6").FirstOrDefault().time_end.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tEnd6" id="tEnd6" value="@stn003.Where(x=>x.week == 6).FirstOrDefault().time_end.Insert(2,":")">
+                                                                   
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -250,10 +227,8 @@
                                                             <label class="col-12 col-form-label">週日營業開始時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tStart7" id="tStart7" value="@stn003.Where(x=>x.week_start=="7" && x.week_end=="7").FirstOrDefault().time_start.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tStart7" id="tStart7" value="@stn003.Where(x=>x.week == 7).FirstOrDefault().time_start.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -261,10 +236,8 @@
                                                             <label class="col-12 col-form-label">週日營業結束時間</label>
                                                             <div class="col-12">
                                                                 <div class="input-group clockpicker" data-autoclose="true">
-                                                                    <input type="text" class="form-control" name="tEnd7" id="tEnd7" value="@stn003.Where(x=>x.week_start=="7" && x.week_end=="7").FirstOrDefault().time_end.Insert(2,":")">
-                                                                    <span class="input-group-addon">
-                                                                        <span class="fa fa-clock-o"></span>
-                                                                    </span>
+                                                                    <input type="text" class="form-control" name="tEnd7" id="tEnd7" value="@stn003.Where(x=>x.week == 7).FirstOrDefault().time_end.Insert(2,":")">
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -274,7 +247,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -374,10 +347,20 @@
                                     <th>SIM卡ID/數據機型號</th>
                                     <th>電信方案</th>
                                     <th>電信方案啟用日期</th>
-                                    <th>電信方案結束日期</th>
                                 </tr>
                             </thead>
                             <tbody id="netWorkList">
+                                @foreach (var i in stn102)
+                                {
+                                    <tr>
+                                        <td>@i.network_no</td>
+                                        <td>@i.network_type</td>
+                                        <td>@i.network_ip</td>
+                                        <td>@i.network_sn</td>
+                                        <td>@i.network_fee</td>
+                                        <td>@String.Format("{0:yyyy/MM/dd}", i.active_date)</td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -513,33 +496,32 @@
                             <table class="table table-striped table-bordered table-hover" id="networkTable">
                                 <thead>
                                     <tr>
-                                        <th>
+                                        @*<th>
                                             <input class="" type="checkbox" name="select-all" id="select-all">
-                                        </th>
+                                        </th>*@
                                         <th>手機門號/線路編號</th>
                                         <th>網路類型</th>
                                         <th>IP位置</th>
                                         <th>SIM卡ID/數據機型號</th>
                                         <th>電信方案</th>
                                         <th>電信方案啟用日期</th>
-                                        <th>電信方案結束日期</th>
+                                        @*<th>電信方案結束日期</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var i in stn102)
                                     {
                                         <tr>
-                                            <td>
+                                            @*<td>
                                                 <input class="" type="checkbox" name="network_id" id="network_id" value="@i.network_id">
-                                            </td>
+                                            </td>*@
                                             <td>@i.network_no</td>
                                             <td>@i.network_type</td>
                                             <td>@i.network_ip</td>
                                             <td>@i.network_sn</td>
                                             <td>@i.network_fee</td>
                                             <td>@i.active_date</td>
-                                            <td>
-                                            </td>
+                                           
                                         </tr>
                                     }
                                 </tbody>
@@ -577,22 +559,13 @@
         var spotCount = 0;
         var spotTrCount = 0;
         $(document).ready(function () {
-            $('#networkTable').DataTable({
-                pageLength: 25,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                order: [[7, 'desc']],
-                buttons: [
-                ]
-            });
-
             //找充電樁資料
             $('#getDataBtn').trigger('click');
         });
+        $('input,select,textarea').attr('readonly', true);
 
         //找充電樁資料
         $('#getDataBtn').on('click', function () {
-            debugger;
             var station_id = $(this).val();
 
             $.ajax({
@@ -604,7 +577,6 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
                     spotTrCount = data.jObjectSpotList.length;
                     $('#spotList').append(GetEditSpotItem(data));
                     $('.date').datepicker();
@@ -696,12 +668,29 @@
 
         }
 
+        //找匯入站點資料
+        //$('#getnwDataBtn').on('click', function () {
+        //    var station_id = $(this).val();
 
+        //    $.ajax({
+        //        type: "POST",
+        //        async: true,
+        //        url: "/Station/GetnwEditData",
+        //        data: {
+        //            station_id: station_id
+        //        },
+        //        dataType: "json",
+        //        success: function (data) {
+        //            //spotTrCount = data.jObjectSpotList.length;
+        //            $('#netWorkList').append(GetNetWorkList(data));
+        //        }
+        //    });
+
+        //});
 
         // Get the modal
         var modal = $("#myModal");
         var modalImg = modal.find('.modal-content');
-        // Get the image and insert it inside the modal - use its "alt" text as a caption
         var img = $(".myImg");
         var captionBox = $("#caption");
 
@@ -710,8 +699,6 @@
             captionBox.text($(this).attr('alt'));
             $('#myModal').modal('show')
         });
-
-
 
         //第2層地區選單
         $('#stnDataForm').on('change',
@@ -787,7 +774,6 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
                     //$('#netWorkList').empty();
                     netWorkTrCount = data.jObjectNetWorkList.length;
                     $('#netWorkList').append(GetNetWorkList(data));
@@ -821,7 +807,6 @@
         $('#addSpotBtn').on('click', function () {
             var devId = $('#device_model').val();
             var sId = $('#station_id').val();
-            debugger;
             $.ajax({
                 type: "POST",
                 async: true,
@@ -832,7 +817,6 @@
                 url: "/Station/GetSpotItem",
                 dataType: "json",
                 success: function (data) {
-                    debugger;
                     //spotCount++;
                     //potTrCount = data.jObjectSpotList.length;
                     $('#spotList').append(GetSpotItem(data));
@@ -947,13 +931,6 @@
 
         }
 
-
-        
-
-        
-
-
-           
     </script>
 }
 

@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>@ViewBag.Title - 業主網2.0</title>
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/assets/Inspinia/css/bootstrap.min.css" rel="stylesheet" />
@@ -52,19 +53,19 @@
                             </ul>
                         </li>*@
                     <li>
-                        <a href="basic_gallery.html#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">電動車管理</span><span class="fa arrow"></span></a>
+                        <a href="basic_gallery.html#"><i class="fa fa-car"></i> <span class="nav-label">電動車管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="/Car/Index">電動車列表</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="basic_gallery.html#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">車樁相隨管理</span><span class="fa arrow"></span></a>
+                        <a href="basic_gallery.html#"><i class="fa fa-slideshare"></i> <span class="nav-label">車樁相隨管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="/Follow/Index">案件追蹤管理</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="basic_gallery.html#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">充電站管理</span><span class="fa arrow"></span></a>
+                        <a href="basic_gallery.html#"><i class="fa fa-podcast"></i> <span class="nav-label">充電站管理</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="/Station/Index">充電站基本資料</a></li>
                         </ul>
@@ -249,11 +250,19 @@
     <script src="~/assets/vendor/StringBuffer/StringBuffer.js"></script>
     <script src="~/assets/vendor/MultiUploadFile/MultiUploadFile.js"></script>
 
-    @*<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>*@
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyArYMj94HTZ14lnE_VFLs9DARA8nHs708k"></script>
+
     <script>
         // Upgrade button class name
         $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
-        $.fn.datepicker.defaults.format = "yyyy/mm/dd";
+        //$.fn.datepicker.defaults.format = "yyyy/mm/dd";
+        $.extend($.fn.datepicker.defaults, {
+            autoclose: true,
+            format: 'yyyy/mm/dd',
+            //orientation: 'bottom left',
+            todayHighlight: true,
+            showOnFocus: false
+        });
         $(document).ready(function () {
             $('.dataTables-example').DataTable({
                 pageLength: 25,

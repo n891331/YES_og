@@ -13,6 +13,8 @@ using static YES_og.Controllers.FollowController;
 using System.Web.Util;
 using System.Web.Helpers;
 using System.Security.Cryptography;
+using Microsoft.Ajax.Utilities;
+
 
 namespace YES_og.Controllers
 {
@@ -34,11 +36,11 @@ namespace YES_og.Controllers
                 string SearchById = getViewDateStr("SearchById");
                 stn000 = stn000.Where(w => w.station_id.Contains(SearchById));
             }
-            //if (hasViewData("SearchByStationOwner"))
-            //{
-            //    string SearchByStationOwner = getViewDateStr("SearchByStationOwner");
-            //    stn000 = stn000.Where(w => w.station_owner.Contains(SearchByStationOwner));
-            //}
+            if (hasViewData("SearchByStationOwner"))
+            {
+                string SearchByStationOwner = getViewDateStr("SearchByStationOwner");
+                stn000 = stn000.Where(w => w.station_owner.ToString() == SearchByStationOwner);
+            }
             if (hasViewData("SearchByStationName"))
             {
                 string SearchByStationName = getViewDateStr("SearchByStationName");
@@ -51,9 +53,13 @@ namespace YES_og.Controllers
                 stn000 = stn000.Where(w => w.station_type.Contains(SearchByStationType));
             }
 
-            //站點類型
+            //站點類型(顯示資料用)
             List<sts000> stationType = _db.sts000.Where(x => x.prog_id == "stn000" && x.fun_id == "station_type").ToList();
             ViewBag.stationType = stationType;
+
+            //客戶ID(顯示資料用)
+            List<cus000> cus000 = _db.cus000.ToList();
+            ViewBag.cus000 = cus000;
 
             // 站點類型
             var selectTypeList = new List<SelectListItem>();
@@ -64,6 +70,15 @@ namespace YES_og.Controllers
                 selectTypeList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id });
             }
             ViewBag.selectTypeList = selectTypeList;
+
+            //客戶ID
+            var selectCustomerIDList = new List<SelectListItem>();
+            var cId = _db.cus000.ToList();
+            foreach (var item in cId)
+            {
+                selectCustomerIDList.Add(new SelectListItem { Text = item.customer_fullname, Value = item.customer_id.ToString() });
+            }
+            ViewBag.selectCustomerIDList = selectCustomerIDList;
 
             return View(stn000);
         }
@@ -130,7 +145,7 @@ namespace YES_og.Controllers
             //型號
             var selectDevModelList = new List<SelectListItem>();
             var d = _db.dev000.ToList();
-            selectDevModelList.Add(new SelectListItem { Text = "請選擇型號", Value = "" });
+            selectDevModelList.Add(new SelectListItem { Text = "請選擇充電樁型號", Value = "" });
             foreach (var item in d)
             {
                 selectDevModelList.Add(new SelectListItem { Text = item.device_model, Value = item.device_id.ToString() });
@@ -152,7 +167,7 @@ namespace YES_og.Controllers
             //List<stn000> data = _db.stn000.OrderByDescending(o => o.station_id).ToList();
             //station_id = data.Count == 0 ? (station_id + 1) : (data.FirstOrDefault().station_id + 1);
             int station_id = 0;
-            station_id = _db.stn000.Count() == 0? (station_id + 1) : (_db.stn000.Count() + 1);
+            station_id = _db.stn000.Count() == 0? (station_id + 1) : (Convert.ToInt32(_db.stn000.Select(x=>x.station_id).Max()) + 1);
             ViewBag.station_id = station_id;
             //string cncId = int.Parse(cnc_id.ToString()).ToString("000000");
             //ViewBag.cncId = cncId;
@@ -160,7 +175,7 @@ namespace YES_og.Controllers
             #endregion
 
             //充電站網路設定檔
-            var stn102 = _db.stn102.ToList();
+            var stn102 = _db.stn102.Where(x=>x.station_id == "").ToList();
             ViewBag.stn102 = stn102;
 
             return View();
@@ -220,48 +235,113 @@ namespace YES_og.Controllers
             return new ContentResult { Content = jsonContent, ContentType = "application/json" };
         }
 
-        /// <summary>
-        /// 選擇手機門號/線路編號(匯入站點)的list
-        /// </summary>
-        /// <param name="idStr"></param>
-        /// <returns></returns>
         [HttpPost]
-        public ActionResult GetNetWorkList(string idStr)
+        public ActionResult GetnwDetail()
         {
             //資料組成
-            var stn102 = _db.stn102.ToList();
-            string[] nId = idStr.Split(',');
+            var data = _db.stn102.Where(x => x.station_id == "").ToList();
 
             //生成主項目清單
             string jsonContent;
             JObject jObjectNetWorkList = new JObject();
             JArray jArrayNetWork = new JArray();
 
-            foreach (var i in stn102)
+            foreach (var i in data)
             {
-                foreach (var j in nId)
-                {
-                    if(i.network_id.ToString() == j)
-                    {
-                        JObject jObjectNetWork = new JObject();
+                JObject jObjectNetWork = new JObject();
 
-                        jObjectNetWork.Add(new JProperty("network_id", i.network_id));
-                        jObjectNetWork.Add(new JProperty("network_no", i.network_no));
-                        jObjectNetWork.Add(new JProperty("network_type", i.network_type));
-                        jObjectNetWork.Add(new JProperty("network_ip", i.network_ip));
-                        jObjectNetWork.Add(new JProperty("network_sn", i.network_sn));
-                        jObjectNetWork.Add(new JProperty("network_fee", i.network_fee));
-                        jObjectNetWork.Add(new JProperty("active_date", i.active_date));
+                jObjectNetWork.Add(new JProperty("network_id", i.network_id));
+                jObjectNetWork.Add(new JProperty("network_no", i.network_no));
+                jObjectNetWork.Add(new JProperty("network_type", i.network_type));
+                jObjectNetWork.Add(new JProperty("network_ip", i.network_ip));
+                jObjectNetWork.Add(new JProperty("network_sn", i.network_sn));
+                jObjectNetWork.Add(new JProperty("network_fee", i.network_fee));
+                jObjectNetWork.Add(new JProperty("active_date", setDateFormat(i.active_date)));
 
-                        jArrayNetWork.Add(jObjectNetWork);
-                    }
-                }
+                jArrayNetWork.Add(jObjectNetWork);
             }
 
             jObjectNetWorkList.Add(new JProperty("jObjectNetWorkList", jArrayNetWork));
 
             jsonContent = JsonConvert.SerializeObject(jObjectNetWorkList, Formatting.Indented);
             return new ContentResult { Content = jsonContent, ContentType = "application/json" };
+        }
+
+        /// <summary>
+        /// 選擇手機門號/線路編號(匯入站點)的list
+        /// </summary>
+        /// <param name="idStr"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetNetWorkList(string idStr, string sId)
+        {
+            string[] nId = idStr.Split(',');
+
+            foreach(var i in nId)
+            {
+                var stn102 = _db.stn102.Where(x => x.network_id.ToString() == i).FirstOrDefault();
+                stn102.station_id = sId;
+
+                SaveUpdate(_db.stn102, stn102);
+            }
+
+            //資料組成
+            var data = _db.stn102.Where(x => x.station_id == sId).ToList();
+
+            //生成主項目清單
+            string jsonContent;
+            JObject jObjectNetWorkList = new JObject();
+            JArray jArrayNetWork = new JArray();
+
+            foreach (var i in data)
+            {
+                JObject jObjectNetWork = new JObject();
+
+                jObjectNetWork.Add(new JProperty("network_id", i.network_id));
+                jObjectNetWork.Add(new JProperty("network_no", i.network_no));
+                jObjectNetWork.Add(new JProperty("network_type", i.network_type));
+                jObjectNetWork.Add(new JProperty("network_ip", i.network_ip));
+                jObjectNetWork.Add(new JProperty("network_sn", i.network_sn));
+                jObjectNetWork.Add(new JProperty("network_fee", i.network_fee));
+                jObjectNetWork.Add(new JProperty("active_date", setDateFormat(i.active_date)));
+
+                jArrayNetWork.Add(jObjectNetWork);
+            }
+
+            jObjectNetWorkList.Add(new JProperty("jObjectNetWorkList", jArrayNetWork));
+
+            jsonContent = JsonConvert.SerializeObject(jObjectNetWorkList, Formatting.Indented);
+            return new ContentResult { Content = jsonContent, ContentType = "application/json" };
+        }
+        
+        [HttpPost]
+        public ActionResult DeleteNetwork(string nId)
+        {
+            try
+            {
+                var data = _db.stn102.Where(x => x.network_id.ToString() == nId).FirstOrDefault();
+                data.station_id = "";
+
+                SaveUpdate(_db.stn102, data);
+
+
+                var returnData = new
+                {
+                    IsSuccess = true
+                };
+
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
+            catch (Exception ex)
+            {
+                var returnData = new
+                {
+                    IsSuccess = false,
+                    ErrorInfo = ex.Message
+                };
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
+
         }
 
         /// <summary>
@@ -317,7 +397,7 @@ namespace YES_og.Controllers
                 stn001.spot_floor = "";
                 stn001.spot_car_space = "";
                 stn001.spot_note = "";
-                stn001.spot_status = "01";
+                stn001.spot_status = 1;
 
                 SaveCreate(_db.stn001, stn001);
 
@@ -524,10 +604,8 @@ namespace YES_og.Controllers
 
                 #region w1
                 stn003 w1 = new stn003();
-                w1.chargespot_id = null;
                 w1.station_id = stn000.station_id;
-                w1.week_start = SEstn003.week1;
-                w1.week_end = SEstn003.week1;
+                w1.week = SEstn003.week1;
                 w1.time_start = SEstn003.tStart1.Remove(2,1);
                 w1.time_end = SEstn003.tEnd1.Remove(2, 1);
                 SaveCreate(_db.stn003, w1);
@@ -535,10 +613,8 @@ namespace YES_og.Controllers
 
                 #region w2
                 stn003 w2 = new stn003();
-                w2.chargespot_id = null;
                 w2.station_id = stn000.station_id;
-                w2.week_start = SEstn003.week2;
-                w2.week_end = SEstn003.week2;
+                w2.week= SEstn003.week2;
                 w2.time_start = SEstn003.tStart2.Remove(2, 1);
                 w2.time_end = SEstn003.tEnd2.Remove(2, 1);
                 SaveCreate(_db.stn003, w2);
@@ -546,10 +622,8 @@ namespace YES_og.Controllers
 
                 #region w3
                 stn003 w3 = new stn003();
-                w3.chargespot_id = null;
                 w3.station_id = stn000.station_id;
-                w3.week_start = SEstn003.week3;
-                w3.week_end = SEstn003.week3;
+                w3.week = SEstn003.week3;
                 w3.time_start = SEstn003.tStart3.Remove(2, 1);
                 w3.time_end = SEstn003.tEnd3.Remove(2, 1);
                 SaveCreate(_db.stn003, w3);
@@ -557,10 +631,8 @@ namespace YES_og.Controllers
 
                 #region w4
                 stn003 w4 = new stn003();
-                w4.chargespot_id = null;
                 w4.station_id = stn000.station_id;
-                w4.week_start = SEstn003.week4;
-                w4.week_end = SEstn003.week4;
+                w4.week = SEstn003.week4;
                 w4.time_start = SEstn003.tStart4.Remove(2, 1);
                 w4.time_end = SEstn003.tEnd4.Remove(2, 1);
                 SaveCreate(_db.stn003, w4);
@@ -568,10 +640,8 @@ namespace YES_og.Controllers
 
                 #region w5
                 stn003 w5 = new stn003();
-                w5.chargespot_id = null;
                 w5.station_id = stn000.station_id;
-                w5.week_start = SEstn003.week5;
-                w5.week_end = SEstn003.week5;
+                w5.week = SEstn003.week5;
                 w5.time_start = SEstn003.tStart5.Remove(2, 1);
                 w5.time_end = SEstn003.tEnd5.Remove(2, 1);
                 SaveCreate(_db.stn003, w5);
@@ -579,10 +649,8 @@ namespace YES_og.Controllers
 
                 #region w6
                 stn003 w6 = new stn003();
-                w6.chargespot_id = null;
                 w6.station_id = stn000.station_id;
-                w6.week_start = SEstn003.week6;
-                w6.week_end = SEstn003.week6;
+                w6.week = SEstn003.week6;
                 w6.time_start = SEstn003.tStart6.Remove(2, 1);
                 w6.time_end = SEstn003.tEnd6.Remove(2, 1);
                 SaveCreate(_db.stn003, w6);
@@ -590,10 +658,8 @@ namespace YES_og.Controllers
 
                 #region w7
                 stn003 w7 = new stn003();
-                w7.chargespot_id = null;
                 w7.station_id = stn000.station_id;
-                w7.week_start = SEstn003.week7;
-                w7.week_end = SEstn003.week7;
+                w7.week = SEstn003.week7;
                 w7.time_start = SEstn003.tStart7.Remove(2, 1);
                 w7.time_end = SEstn003.tEnd7.Remove(2, 1);
                 SaveCreate(_db.stn003, w7);
@@ -702,25 +768,25 @@ namespace YES_og.Controllers
         /// </summary>
         public class SEstn003
         {
-            public string week1 { get; set; }
+            public int week1 { get; set; }
             public string tStart1 { get; set; }
             public string tEnd1 { get; set; }
-            public string week2 { get; set; }
+            public int week2 { get; set; }
             public string tStart2 { get; set; }
             public string tEnd2 { get; set; }
-            public string week3 { get; set; }
+            public int week3 { get; set; }
             public string tStart3 { get; set; }
             public string tEnd3 { get; set; }
-            public string week4 { get; set; }
+            public int week4 { get; set; }
             public string tStart4 { get; set; }
             public string tEnd4 { get; set; }
-            public string week5 { get; set; }
+            public int week5 { get; set; }
             public string tStart5 { get; set; }
             public string tEnd5 { get; set; }
-            public string week6 { get; set; }
+            public int week6 { get; set; }
             public string tStart6 { get; set; }
             public string tEnd6 { get; set; }
-            public string week7 { get; set; }
+            public int week7 { get; set; }
             public string tStart7 { get; set; }
             public string tEnd7 { get; set; }
 
@@ -763,7 +829,7 @@ namespace YES_og.Controllers
             /// <summary>
             /// 充電槍狀態
             /// </summary>
-            public string spot_status { get; set; }
+            public int spot_status { get; set; }
             #endregion
 
             #region stn101 充電站設備檔
@@ -850,7 +916,7 @@ namespace YES_og.Controllers
             //型號
             var selectDevModelList = new List<SelectListItem>();
             var d = _db.dev000.ToList();
-            selectDevModelList.Add(new SelectListItem { Text = "請選擇型號", Value = "" });
+            selectDevModelList.Add(new SelectListItem { Text = "請選擇充電樁型號", Value = "" });
             foreach (var item in d)
             {
                 selectDevModelList.Add(new SelectListItem { Text = item.device_model, Value = item.device_id.ToString() });
@@ -971,6 +1037,37 @@ namespace YES_og.Controllers
             return new ContentResult { Content = jsonContent, ContentType = "application/json" };
         }
 
+        [HttpPost]
+        public ActionResult GetnwEditData(string station_id)
+        {
+            List<stn102> stn102 = _db.stn102.Where(x => x.station_id == station_id).ToList();
+
+            //生成主項目清單
+            string jsonContent;
+            JObject jObjectNetWorkList = new JObject();
+            JArray jArrayNetWork = new JArray();
+
+            foreach (var i in stn102)
+            {
+                JObject jObjectNetWork = new JObject();
+
+                jObjectNetWork.Add(new JProperty("network_id", i.network_id));
+                jObjectNetWork.Add(new JProperty("network_no", i.network_no));
+                jObjectNetWork.Add(new JProperty("network_type", i.network_type));
+                jObjectNetWork.Add(new JProperty("network_ip", i.network_ip));
+                jObjectNetWork.Add(new JProperty("network_sn", i.network_sn));
+                jObjectNetWork.Add(new JProperty("network_fee", i.network_fee));
+                jObjectNetWork.Add(new JProperty("active_date", setDateFormat(i.active_date)));
+
+                jArrayNetWork.Add(jObjectNetWork);
+            }
+
+            jObjectNetWorkList.Add(new JProperty("jObjectNetWorkList", jArrayNetWork));
+
+            jsonContent = JsonConvert.SerializeObject(jObjectNetWorkList, Formatting.Indented);
+            return new ContentResult { Content = jsonContent, ContentType = "application/json" };
+        }
+
         // POST: Station/Edit/5
         [HttpPost]
         public ActionResult Edit(stn000 stn000, List<SEstnCS> SpotItems, SEstn003 SEstn003, HttpPostedFileBase[] rUpload, HttpPostedFileBase[] sUpload)
@@ -986,10 +1083,8 @@ namespace YES_og.Controllers
                 }
                 #region w1
                 stn003 w1 = new stn003();
-                w1.chargespot_id = null;
                 w1.station_id = stn000.station_id;
-                w1.week_start = SEstn003.week1;
-                w1.week_end = SEstn003.week1;
+                w1.week = SEstn003.week1;
                 w1.time_start = SEstn003.tStart1.Remove(2, 1);
                 w1.time_end = SEstn003.tEnd1.Remove(2, 1);
                 SaveCreate(_db.stn003, w1);
@@ -997,10 +1092,8 @@ namespace YES_og.Controllers
 
                 #region w2
                 stn003 w2 = new stn003();
-                w2.chargespot_id = null;
                 w2.station_id = stn000.station_id;
-                w2.week_start = SEstn003.week2;
-                w2.week_end = SEstn003.week2;
+                w2.week = SEstn003.week2;
                 w2.time_start = SEstn003.tStart2.Remove(2, 1);
                 w2.time_end = SEstn003.tEnd2.Remove(2, 1);
                 SaveCreate(_db.stn003, w2);
@@ -1008,10 +1101,8 @@ namespace YES_og.Controllers
 
                 #region w3
                 stn003 w3 = new stn003();
-                w3.chargespot_id = null;
                 w3.station_id = stn000.station_id;
-                w3.week_start = SEstn003.week3;
-                w3.week_end = SEstn003.week3;
+                w3.week = SEstn003.week3;
                 w3.time_start = SEstn003.tStart3.Remove(2, 1);
                 w3.time_end = SEstn003.tEnd3.Remove(2, 1);
                 SaveCreate(_db.stn003, w3);
@@ -1019,10 +1110,8 @@ namespace YES_og.Controllers
 
                 #region w4
                 stn003 w4 = new stn003();
-                w4.chargespot_id = null;
                 w4.station_id = stn000.station_id;
-                w4.week_start = SEstn003.week4;
-                w4.week_end = SEstn003.week4;
+                w4.week = SEstn003.week4;
                 w4.time_start = SEstn003.tStart4.Remove(2, 1);
                 w4.time_end = SEstn003.tEnd4.Remove(2, 1);
                 SaveCreate(_db.stn003, w4);
@@ -1030,10 +1119,8 @@ namespace YES_og.Controllers
 
                 #region w5
                 stn003 w5 = new stn003();
-                w5.chargespot_id = null;
                 w5.station_id = stn000.station_id;
-                w5.week_start = SEstn003.week5;
-                w5.week_end = SEstn003.week5;
+                w5.week = SEstn003.week5;
                 w5.time_start = SEstn003.tStart5.Remove(2, 1);
                 w5.time_end = SEstn003.tEnd5.Remove(2, 1);
                 SaveCreate(_db.stn003, w5);
@@ -1041,10 +1128,8 @@ namespace YES_og.Controllers
 
                 #region w6
                 stn003 w6 = new stn003();
-                w6.chargespot_id = null;
                 w6.station_id = stn000.station_id;
-                w6.week_start = SEstn003.week6;
-                w6.week_end = SEstn003.week6;
+                w6.week = SEstn003.week6;
                 w6.time_start = SEstn003.tStart6.Remove(2, 1);
                 w6.time_end = SEstn003.tEnd6.Remove(2, 1);
                 SaveCreate(_db.stn003, w6);
@@ -1052,10 +1137,8 @@ namespace YES_og.Controllers
 
                 #region w7
                 stn003 w7 = new stn003();
-                w7.chargespot_id = null;
                 w7.station_id = stn000.station_id;
-                w7.week_start = SEstn003.week7;
-                w7.week_end = SEstn003.week7;
+                w7.week = SEstn003.week7;
                 w7.time_start = SEstn003.tStart7.Remove(2, 1);
                 w7.time_end = SEstn003.tEnd7.Remove(2, 1);
                 SaveCreate(_db.stn003, w7);
@@ -1250,6 +1333,138 @@ namespace YES_og.Controllers
         }
 
         /// <summary>
+        /// 新增的取消，返回index (刪除已新增資料stn001、stn101，更新stn102)
+        /// </summary>
+        /// <param name="sId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DelCreate(string sId)
+        {
+            try
+            {
+                //string[] nId = ntStr.Split(',');
+
+                //foreach (var i in nId)
+                //{
+                //    var stn102 = _db.stn102.Where(x => x.network_id.ToString() == i.ToString()).FirstOrDefault();
+                //    stn102.station_id = "";
+
+                //    SaveUpdate(_db.stn102, stn102);
+                //}
+
+                //刪除已新增的stn001
+                var stn001 = _db.stn001.Where(x=>x.station_id == sId).ToList();
+                if(stn001.Count() > 0)
+                {
+                    foreach(var i in stn001)
+                    {
+                        SaveDelete(_db.stn001, i);
+                    }
+                }
+
+                //刪除已新增的stn101
+                var stn101 = _db.stn101.Where(x => x.station_id == sId).ToList();
+                if (stn101.Count() > 0)
+                {
+                    foreach (var j in stn101)
+                    {
+                        SaveDelete(_db.stn101, j);
+                    }
+                }
+
+                //更新匯入的站點
+                var stn102 = _db.stn102.Where(x => x.station_id == sId).ToList();
+                if (stn102.Count() > 0)
+                {
+                    foreach (var k in stn102)
+                    {
+                        k.station_id = "";
+                        SaveUpdate(_db.stn102, k);
+                    }
+                }
+
+                var returnData = new
+                {
+                    IsSuccess = true
+                };
+
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
+            catch (Exception ex)
+            {
+                var returnData = new
+                {
+                    IsSuccess = false,
+                    ErrorInfo = ex.Message
+                };
+                return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+            }
+
+        }
+
+        /// <summary>
+        /// 編輯的取消，返回index (暫時先註解掉)
+        /// </summary>
+        /// <param name="sId"></param>
+        /// <returns></returns>
+        //[HttpPost]
+        //public ActionResult DelEdit(string sId)
+        //{
+        //    try
+        //    {
+        //        var stn001 = _db.stn001.Where(x => x.station_id == sId && x.spot_floor == "").ToList();
+
+        //        List<string> cIdList = new List<string>();
+        //        foreach (var k in stn001)
+        //        {
+        //            cIdList.Add(k.chargespot_id.ToString());
+        //        }
+
+        //        //刪除已新增的stn001
+        //        if (stn001.Count() > 0)
+        //        {
+        //            foreach (var i in stn001)
+        //            {
+        //                SaveDelete(_db.stn001, i);
+        //            }
+        //        }
+
+        //        //刪除已新增的stn101
+        //        var stn101 = _db.stn101.Where(x => x.station_id == sId).ToList();
+        //        if (stn101.Count() > 0)
+        //        {
+        //            foreach (var j in stn101)
+        //            {
+        //                foreach(var k in cIdList)
+        //                {
+        //                    if(j.chargespot_id.ToString() == k)
+        //                    {
+        //                        SaveDelete(_db.stn101, j);
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //        var returnData = new
+        //        {
+        //            IsSuccess = true
+        //        };
+
+        //        return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var returnData = new
+        //        {
+        //            IsSuccess = false,
+        //            ErrorInfo = ex.Message
+        //        };
+        //        return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
+        //    }
+
+        //}
+
+        /// <summary>
         /// 檢視
         /// </summary>
         /// <param name="station_id"></param>
@@ -1326,7 +1541,7 @@ namespace YES_og.Controllers
             #endregion 
 
             //充電站網路設定檔
-            var stn102 = _db.stn102.ToList();
+            var stn102 = _db.stn102.Where(x=>x.station_id == station_id).ToList();
             ViewBag.stn102 = stn102;
 
             return View();
@@ -1489,6 +1704,7 @@ namespace YES_og.Controllers
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
 
     }
 }

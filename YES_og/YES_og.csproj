@@ -124,6 +124,7 @@
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FollowController.cs" />
+    <Compile Include="Controllers\GoogleLocationService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StationController.cs" />
     <Compile Include="Controllers\_BaseController.cs" />
