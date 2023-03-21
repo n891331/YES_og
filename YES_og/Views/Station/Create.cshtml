@@ -45,7 +45,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div> 
+                    <div class="hr-line-dashed"></div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">充電站地址<small class="text-danger">*</small></label>
                         <div class="col-sm-10">
@@ -402,7 +402,7 @@
                         <button type="button" class="btn btn-primary" id="addSpotBtn">
                             新增資料
                         </button>
-                         <small class="text-danger col-12 col-md-4">請先選擇充電樁型號，再新增充電樁資料，謝謝!</small>
+                        <small class="text-danger col-12 col-md-4">請先選擇充電樁型號，再新增充電樁資料，謝謝!</small>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover">
@@ -596,19 +596,19 @@
                                 </thead>
                                 <tbody id="netWorkModalList">
                                     @*@foreach (var i in stn102)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <input class="" type="checkbox" name="network_id" id="network_id" value="@i.network_id">
-                                            </td>
-                                            <td>@i.network_no</td>
-                                            <td>@i.network_type</td>
-                                            <td>@i.network_ip</td>
-                                            <td>@i.network_sn</td>
-                                            <td>@i.network_fee</td>
-                                            <td>@String.Format("{0:yyyy/MM/dd}", i.active_date)</td>
-                                        </tr>
-                                    }*@
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input class="" type="checkbox" name="network_id" id="network_id" value="@i.network_id">
+                                                </td>
+                                                <td>@i.network_no</td>
+                                                <td>@i.network_type</td>
+                                                <td>@i.network_ip</td>
+                                                <td>@i.network_sn</td>
+                                                <td>@i.network_fee</td>
+                                                <td>@String.Format("{0:yyyy/MM/dd}", i.active_date)</td>
+                                            </tr>
+                                        }*@
                                 </tbody>
                             </table>
                         </div>
@@ -632,7 +632,7 @@
         var spotCount = 0;
         var spotTrCount = 0;
         $(document).ready(function () {
-           
+
         });
 
         $('#networkTable').DataTable({
@@ -834,6 +834,7 @@
 
         //新增充電樁
         $('#addSpotBtn').on('click', function () {
+            debugger;
             var devId = $('#device_model').val();
             var sId = $('#station_id').val();
             $.ajax({
@@ -846,7 +847,6 @@
                 url: "/Station/GetSpotItem",
                 dataType: "json",
                 success: function (data) {
-
 
                     $('#spotList').append(GetSpotItem(data));
                     $('.date').datepicker();
@@ -1102,7 +1102,7 @@
                     debugger;
                     if (data.IsSuccess) {
                             window.location = '@Url.Action("Index", "Station")';
-                        } 
+                        }
                 }
             });
 
@@ -1150,7 +1150,7 @@
                 if (status == google.maps.GeocoderStatus.OK) {
                     document.getElementById("station_longitude").value = results[0].geometry.location.lat();
                     document.getElementById("station_latitude").value = results[0].geometry.location.lng();
-                    
+
                 } else {
                     alert("失敗, 原因: " + status);
                 }

@@ -150,10 +150,29 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    <input type="text" class="form-control" name="surveyDate" value="@Convert.ToDateTime(cnc001.survey_time).ToString("yyyy/MM/dd")">
+                                    @{
+                                        if (cnc001.survey_time != null)
+                                        {
+                                            <input type="text" class="form-control" name="surveyDate" value="@Convert.ToDateTime(cnc001.survey_time).ToString("yyyy/MM/dd")">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" name="surveyDate" value="">
+                                        }
+                                    }
                                 </div>
                                 <div class="input-group clockpicker col-6" data-autoclose="true">
-                                    <input type="text" class="form-control" name="surveyTime" value="@Convert.ToDateTime(cnc001.survey_time).ToString("hh:mm")">
+                                    @{
+                                        if (cnc001.survey_time != null)
+                                        {
+                                            <input type="text" class="form-control" name="surveyTime" value="@Convert.ToDateTime(cnc001.survey_time).ToString("hh:mm")">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" name="surveyTime" value="">
+                                        }
+                                    }
+
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>
@@ -193,10 +212,30 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </span>
-                                    <input type="text" class="form-control" name="installDate" value="@Convert.ToDateTime(cnc001.install_time).ToString("yyyy/MM/dd")">
+                                    @{
+                                        if (cnc001.install_time != null)
+                                        {
+                                            <input type="text" class="form-control" name="installDate" value="@Convert.ToDateTime(cnc001.install_time).ToString("yyyy/MM/dd")">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" name="installDate" value="">
+                                        }
+                                    }
+
                                 </div>
                                 <div class="input-group clockpicker col-6" data-autoclose="true">
-                                    <input type="text" class="form-control" name="installTime" value="@Convert.ToDateTime(cnc001.survey_time).ToString("hh:mm")">
+                                    @{
+                                        if (cnc001.install_time != null)
+                                        {
+                                            <input type="text" class="form-control" name="installTime" value="@Convert.ToDateTime(cnc001.install_time).ToString("hh:mm")">
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" name="installTime" value="">
+                                        }
+                                    }
+
                                     <span class="input-group-addon">
                                         <span class="fa fa-clock-o"></span>
                                     </span>

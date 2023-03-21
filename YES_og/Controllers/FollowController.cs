@@ -3,18 +3,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
-using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
-using System.Xml.Linq;
 using YES_og.Models;
-using static System.Net.Mime.MediaTypeNames;
-using static YES_og.Controllers.FollowController;
 
 namespace YES_og.Controllers
 {
@@ -30,7 +25,7 @@ namespace YES_og.Controllers
             List<zip000> zip000 = _db.zip000.ToList();
             ViewBag.zip000 = zip000;
 
-            var cnc000 = _db.cnc000.OrderByDescending(x=>x.crt_date);
+            var cnc000 = _db.cnc000.OrderByDescending(x => x.crt_date);
             return View(cnc000);
         }
 
@@ -42,13 +37,15 @@ namespace YES_og.Controllers
             //string followNum = string.Format("{0,1:000000000}", int.Parse("1"));
             //string cncId = int.Parse("1").ToString("000000");
             //ViewBag.followNum = followNum;
-            int cnc_id = 0;
-            List<cnc000> data = _db.cnc000.OrderByDescending(o => o.cnc_id).ToList();
-            cnc_id = data.Count == 0 ? (cnc_id + 1) : (data.FirstOrDefault().cnc_id + 1);
-            ViewBag.cnc_id = cnc_id;
-            string cncId = int.Parse(cnc_id.ToString()).ToString("000000");
-            ViewBag.cncId = cncId;
-            
+
+            //容易有問題先關閉
+            //int cnc_id = 0;
+            //List<cnc000> data = _db.cnc000.OrderByDescending(o => o.cnc_id).ToList();
+            //cnc_id = data.Count == 0 ? (cnc_id + 1) : (data.FirstOrDefault().cnc_id + 1);
+            //ViewBag.cnc_id = cnc_id;
+            //string cncId = int.Parse(cnc_id.ToString()).ToString("000000");
+            //ViewBag.cncId = cncId;
+
             #endregion
 
             #region 選單
@@ -98,13 +95,17 @@ namespace YES_og.Controllers
 
         // POST: Follow/Create
         [HttpPost]
-        public ActionResult Create(cncForm cncForm,HttpPostedFileBase[] aUpload, HttpPostedFileBase[] bUpload, HttpPostedFileBase[] cUpload, HttpPostedFileBase[] dUpload)
+        public ActionResult Create(cncForm cncForm, HttpPostedFileBase[] aUpload, HttpPostedFileBase[] bUpload, HttpPostedFileBase[] cUpload, HttpPostedFileBase[] dUpload)
         {
             if (ModelState.IsValid)
             {
                 #region cnc000
                 //cnc000
                 cnc000 cnc000 = new cnc000();
+                int Id = 0;
+                List<cnc000> cncId = _db.cnc000.OrderByDescending(o => o.cnc_id).ToList();
+                Id = cncId.Count == 0 ? (Id + 1) : (cncId.FirstOrDefault().cnc_id + 1);
+                cncForm.cnc_id = Id;
                 cnc000.cnc_id = cncForm.cnc_id;
                 cnc000.veh_brand = cncForm.veh_brand;
                 cnc000.contact_person = cncForm.contact_person;
@@ -132,19 +133,40 @@ namespace YES_og.Controllers
                 List<cnc001> data = _db.cnc001.OrderByDescending(o => o.record_id).ToList();
                 record_id = data.Count == 0 ? (record_id + 1) : (data.FirstOrDefault().record_id + 1);
                 cnc001.record_id = record_id;
-                cnc001.cnc_id = cncForm.cnc_id;
-                DateTime sDate = DateTime.ParseExact(cncForm.surveyDate+" "+cncForm.surveyTime, "yyyy/MM/dd HH:mm",
-                                       System.Globalization.CultureInfo.InvariantCulture);
-                DateTime iDate = DateTime.ParseExact(cncForm.installDate + " " + cncForm.installTime, "yyyy/MM/dd HH:mm",
-                                       System.Globalization.CultureInfo.InvariantCulture);
+                cnc001.cnc_id = Id;
+                if (cncForm.surveyDate != null && cncForm.surveyTime != null)
+                {
+                    DateTime sDate = DateTime.ParseExact(cncForm.surveyDate + " " + cncForm.surveyTime, "yyyy/MM/dd HH:mm", System.Globalization.CultureInfo.CurrentCulture);
+
+                    cnc001.survey_time = sDate;
+                }
+                else
+                {
+                    cnc001.survey_time = null;
+                }
+
+                if (cncForm.installDate != null && cncForm.installTime != null)
+                {
+                    DateTime iDate = DateTime.ParseExact(cncForm.installDate + " " + cncForm.installTime, "yyyy/MM/dd HH:mm", System.Globalization.CultureInfo.CurrentCulture);
+
+                    cnc001.install_time = iDate;
+                }
+                else
+                {
+                    cnc001.install_time = null;
+                }
+
+
                 //string[] s = new string[] { cncForm.surveyDate, cncForm.surveyTime };
                 //string survey_time = String.Join(" ", s);
                 //cnc001.survey_time = DateTime.Parse(survey_time);
                 //string[] i = new string[] { cncForm.installDate, cncForm.installTime };
                 //string install_time = String.Join(" ", i);
                 //cnc001.install_time = DateTime.Parse(install_time);
-                cnc001.survey_time = sDate;
-                cnc001.install_time = iDate;
+
+                //cnc001.survey_time = sDate;
+                //cnc001.install_time = iDate;
+
                 cnc001.note1 = cncForm.note1;
                 cnc001.cnc_status = cncForm.cnc_status;
 
@@ -158,7 +180,7 @@ namespace YES_og.Controllers
                 {
                     foreach (var item in aUpload)
                     {
-                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id,"00");
+                        fileDtail f = SaveUploadFile(item, cncForm.cnc_id, "00");
 
                         cnc002 cnc002 = new cnc002();
                         //程式給號
@@ -270,9 +292,9 @@ namespace YES_og.Controllers
             ViewBag.cnc000 = cnc000;
             cnc001 cnc001 = _db.cnc001.Where(x => x.cnc_id == id).FirstOrDefault();
             ViewBag.cnc001 = cnc001;
-            List<cnc002> cnc002s = _db.cnc002.Where(x=> x.cnc_id == id).ToList();
+            List<cnc002> cnc002s = _db.cnc002.Where(x => x.cnc_id == id).ToList();
             ViewBag.cnc002s = cnc002s;
-            var fileName = _db.cnc002.Where(x => x.cnc_id == id && x.file_status=="01").ToList().Select(a=>a.File_name);
+            var fileName = _db.cnc002.Where(x => x.cnc_id == id && x.file_status == "01").ToList().Select(a => a.File_name);
             List<string> fname = new List<string>() { };
             var fnstr = String.Join(",", fileName);
             ViewBag.fnstr = fnstr;
@@ -280,16 +302,16 @@ namespace YES_og.Controllers
             #region 選單
             //狀態
             var selectStatusList = new List<SelectListItem>();
-            var s = _db.sts000.Where(x => x.fun_id == "cnc_status" && x.prog_id == "cnc000" ).OrderBy(x => x.item_seq);
+            var s = _db.sts000.Where(x => x.fun_id == "cnc_status" && x.prog_id == "cnc000").OrderBy(x => x.item_seq);
             foreach (var item in s)
             {
-                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id});
+                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id });
             }
             ViewBag.cnc_statusList = new SelectList(selectStatusList, "Value", "Text", cnc000.cnc_status);
 
             //住宅類型
             var selectLocList = new List<SelectListItem>();
-            var L = _db.sts000.Where(x => x.fun_id == "loc_class" && x.prog_id == "cnc000" ).OrderBy(x => x.item_seq);
+            var L = _db.sts000.Where(x => x.fun_id == "loc_class" && x.prog_id == "cnc000").OrderBy(x => x.item_seq);
             foreach (var item in L)
             {
                 selectLocList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id });
@@ -353,13 +375,30 @@ namespace YES_og.Controllers
                 #region cnc001
                 //cnc001
                 var cnc001 = _db.cnc001.Where(x => x.cnc_id == cncForm.cnc_id).FirstOrDefault();
-                DateTime sDate = DateTime.ParseExact(cncForm.surveyDate + " " + cncForm.surveyTime, "yyyy/MM/dd HH:mm",
-                                       System.Globalization.CultureInfo.InvariantCulture);
-                DateTime iDate = DateTime.ParseExact(cncForm.installDate + " " + cncForm.installTime, "yyyy/MM/dd HH:mm",
-                                       System.Globalization.CultureInfo.InvariantCulture);
-                
-                cnc001.survey_time = sDate;
-                cnc001.install_time = iDate;
+                if (cncForm.surveyDate != null && cncForm.surveyTime != null)
+                {
+                    DateTime sDate = DateTime.ParseExact(cncForm.surveyDate + " " + cncForm.surveyTime, "yyyy/MM/dd HH:mm", System.Globalization.CultureInfo.CurrentCulture);
+
+                    cnc001.survey_time = sDate;
+                }
+                else
+                {
+                    cnc001.survey_time = null;
+                }
+
+                if (cncForm.installDate != null && cncForm.installTime != null)
+                {
+                    DateTime iDate = DateTime.ParseExact(cncForm.installDate + " " + cncForm.installTime, "yyyy/MM/dd HH:mm", System.Globalization.CultureInfo.CurrentCulture);
+
+                    cnc001.install_time = iDate;
+                }
+                else
+                {
+                    cnc001.install_time = null;
+                }
+
+                //cnc001.survey_time = sDate;
+                //cnc001.install_time = iDate;
                 cnc001.note1 = cncForm.note1;
                 cnc001.cnc_status = cncForm.cnc_status;
 
@@ -388,7 +427,7 @@ namespace YES_og.Controllers
                         cnc002.file_status = "01";
 
                         var newDB = new DBePowerDataContext();
-                        SaveCreate(_db.cnc002, cnc002 , false, newDB.cnc002);
+                        SaveCreate(_db.cnc002, cnc002, false, newDB.cnc002);
                     }
                 }
 
@@ -583,7 +622,7 @@ namespace YES_og.Controllers
                 return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
             }
 
-            
+
         }
 
         public class emailDetail
@@ -594,13 +633,13 @@ namespace YES_og.Controllers
             public int cnc_id { get; set; }
         }
 
-        static private fileDtail SaveEmailUploadFile(HttpPostedFileBase upfile,int cnc_id)
+        static private fileDtail SaveEmailUploadFile(HttpPostedFileBase upfile, int cnc_id)
         {
             string filePath = System.Web.HttpContext.Current.Server.MapPath("~/upfiles/emailFile/" + cnc_id + "/");
 
             //建立檔案資料夾
             string docupath = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "upfiles\\emailFile\\" +
-                              cnc_id + "\\" ;
+                              cnc_id + "\\";
             if (!Directory.Exists(docupath))
             {
                 Directory.CreateDirectory(@docupath);
@@ -772,9 +811,9 @@ namespace YES_og.Controllers
         /// <param name="upfile">HttpPostedFile 物件</param>
         /// <param name="type">上傳檔案類別</param>
         /// <returns>儲存檔名</returns>
-        static private fileDtail SaveUploadFile(HttpPostedFileBase upfile, int cnc_id,string type)
+        static private fileDtail SaveUploadFile(HttpPostedFileBase upfile, int cnc_id, string type)
         {
-            string filePath =System.Web.HttpContext.Current.Server.MapPath("~/upfiles/cncFiles/" + cnc_id + "/" + type);
+            string filePath = System.Web.HttpContext.Current.Server.MapPath("~/upfiles/cncFiles/" + cnc_id + "/" + type);
 
             //建立檔案資料夾
             string docupath = System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "upfiles\\cncFiles\\" +

@@ -58,9 +58,9 @@
                         <div class="col-sm-10">
                             <div class="d-flex mb-2">
                                 @*@Html.DropDownList("country", (IEnumerable<SelectListItem>)ViewBag.selectCountryList, new { @class = "form-control mr-2", id = "country" })
-                        <select class="form-control" name="district" id="district">
-                            <option>地區</option>
-                        </select>*@
+                                    <select class="form-control" name="district" id="district">
+                                        <option>地區</option>
+                                    </select>*@
                             </div>
                             @*<input type="text" class="form-control" name="addr" id="addr" value="@stn000.station_address">*@
                             <input type="hidden" name="station_zip" id="station_zip" value="@stn000.station_zip" />
@@ -73,8 +73,8 @@
                         <label class="col-sm-2 col-form-label">經度、緯度(充電站出入口地址)</label>
                         <div class="col-sm-10 d-flex align-items-center">
                             @*<button class="btn btn-info mr-2" style="white-space:nowrap;" id="convertBtn">
-                        地址轉換
-                    </button>*@
+                                    地址轉換
+                                </button>*@
                             <input type="button" class="btn btn-info mr-2" style="white-space:nowrap;" value="地址轉換" onClick="codeAddress()" />
                             @*<input type="button" class="btn btn-info mr-2" style="white-space:nowrap;" id="convertBtn" value="地址轉換" />*@
                             <input type="text" class="form-control mr-2" name="station_longitude" id="station_longitude" value="@stn000.station_longitude" readonly>
@@ -630,19 +630,19 @@
                                 </thead>
                                 <tbody id="netWorkModalList">
                                     @*@foreach (var i in stn102)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <input class="" type="checkbox" name="network_id" id="network_id" value="@i.network_id">
-                                            </td>
-                                            <td>@i.network_no</td>
-                                            <td>@i.network_type</td>
-                                            <td>@i.network_ip</td>
-                                            <td>@i.network_sn</td>
-                                            <td>@i.network_fee</td>
-                                            <td>@String.Format("{0:yyyy/MM/dd}", i.active_date)</td>
-                                        </tr>
-                                    }*@
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input class="" type="checkbox" name="network_id" id="network_id" value="@i.network_id">
+                                                </td>
+                                                <td>@i.network_no</td>
+                                                <td>@i.network_type</td>
+                                                <td>@i.network_ip</td>
+                                                <td>@i.network_sn</td>
+                                                <td>@i.network_fee</td>
+                                                <td>@String.Format("{0:yyyy/MM/dd}", i.active_date)</td>
+                                            </tr>
+                                        }*@
                                 </tbody>
                             </table>
                         </div>
@@ -973,7 +973,7 @@
                         $('#netWorkModalList').empty();
                         $('#netWorkModalList').append(GetnwModalList(data));
 
-                        
+
                     }
                 });
             });

@@ -9,7 +9,6 @@ using System.Web.UI;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Reflection.Emit;
-using static YES_og.Controllers.FollowController;
 using System.Web.Util;
 using System.Web.Helpers;
 using System.Security.Cryptography;
@@ -108,7 +107,7 @@ namespace YES_og.Controllers
             var s = _db.sts000.Where(x => x.fun_id == "station_status" && x.prog_id == "stn000").OrderBy(x => x.item_seq);
             foreach (var item in s)
             {
-                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id});
+                selectStatusList.Add(new SelectListItem { Text = item.item_desc, Value = item.item_id });
             }
             ViewBag.selectStatusList = selectStatusList;
 
@@ -134,7 +133,7 @@ namespace YES_og.Controllers
             //縣市
             var selectCountryList = new List<SelectListItem>();
             var co = (from a in _db.zip000
-                     select new { a.country }).ToList().Distinct();
+                      select new { a.country }).ToList().Distinct();
             selectCountryList.Add(new SelectListItem { Text = "請選擇縣市", Value = "" });
             foreach (var item in co)
             {
@@ -167,7 +166,7 @@ namespace YES_og.Controllers
             //List<stn000> data = _db.stn000.OrderByDescending(o => o.station_id).ToList();
             //station_id = data.Count == 0 ? (station_id + 1) : (data.FirstOrDefault().station_id + 1);
             int station_id = 0;
-            station_id = _db.stn000.Count() == 0? (station_id + 1) : (Convert.ToInt32(_db.stn000.Select(x=>x.station_id).Max()) + 1);
+            station_id = _db.stn000.Count() == 0 ? (station_id + 1) : (Convert.ToInt32(_db.stn000.Select(x => x.station_id).Max()) + 1);
             ViewBag.station_id = station_id;
             //string cncId = int.Parse(cnc_id.ToString()).ToString("000000");
             //ViewBag.cncId = cncId;
@@ -175,7 +174,7 @@ namespace YES_og.Controllers
             #endregion
 
             //充電站網路設定檔
-            var stn102 = _db.stn102.Where(x=>x.station_id == "").ToList();
+            var stn102 = _db.stn102.Where(x => x.station_id == "").ToList();
             ViewBag.stn102 = stn102;
 
             return View();
@@ -227,7 +226,7 @@ namespace YES_og.Controllers
 
             //生成主項目清單
             string jsonContent;
-            JObject jObjectZipId= new JObject();
+            JObject jObjectZipId = new JObject();
 
             jObjectZipId.Add(new JProperty("ZipId", data.zip_id));
 
@@ -277,7 +276,7 @@ namespace YES_og.Controllers
         {
             string[] nId = idStr.Split(',');
 
-            foreach(var i in nId)
+            foreach (var i in nId)
             {
                 var stn102 = _db.stn102.Where(x => x.network_id.ToString() == i).FirstOrDefault();
                 stn102.station_id = sId;
@@ -313,7 +312,7 @@ namespace YES_og.Controllers
             jsonContent = JsonConvert.SerializeObject(jObjectNetWorkList, Formatting.Indented);
             return new ContentResult { Content = jsonContent, ContentType = "application/json" };
         }
-        
+
         [HttpPost]
         public ActionResult DeleteNetwork(string nId)
         {
@@ -437,7 +436,7 @@ namespace YES_og.Controllers
             }
             #endregion
 
-            
+
             #endregion
 
             #region 2
@@ -461,17 +460,17 @@ namespace YES_og.Controllers
             #region 費率方案 的下拉選單
             JObject jObjectFee = new JObject();
 
-            List<stn004> sts004 = _db.stn004.ToList();
+            //List<stn004> sts004 = _db.stn004.ToList();
 
-            foreach (var e in sts004)
-            {
-                jObjectFee.Add(new JProperty(e.cal_unit, e.rate_name));
-            }
+            //foreach (var e in sts004)
+            //{
+            //    jObjectFee.Add(new JProperty(e.fee_id, e.rate_name));
+            //}
 
-            jObjectSpot.Add(new JProperty("DdlFeeList", jObjectFee));
+            //jObjectSpot.Add(new JProperty("DdlFeeList", jObjectFee));
             #endregion
 
-            JArray jArraySpot = new JArray();
+            //JArray jArraySpot = new JArray();
 
             //廠牌
             //var device_supplier = _db.sup000.Where(x => x.supplier_id == dev.device_supplier).FirstOrDefault();
@@ -480,6 +479,7 @@ namespace YES_og.Controllers
             //var datas = _db.stn001.Where(x => x.chargespot_seq == spotId && x.station_id == sId).ToList();
             if (datas.Count() > 0)
             {
+                JArray jArraySpot = new JArray();
                 foreach (var s in datas)
                 {
                     //var item = _db.stn001.Where(x => x.chargespot_id.ToString() == s).FirstOrDefault();
@@ -518,11 +518,11 @@ namespace YES_og.Controllers
         /// <param name="btnData"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteModel(string stationId, int btnData,string soptId)
+        public ActionResult DeleteModel(string stationId, int btnData, string soptId)
         {
             try
             {
-                var s001 = _db.stn001.Where(x =>x.station_id == stationId && x.chargespot_seq == btnData).ToList();
+                var s001 = _db.stn001.Where(x => x.station_id == stationId && x.chargespot_seq == btnData).ToList();
 
                 List<int> chargespotIdList = new List<int>();
 
@@ -535,7 +535,7 @@ namespace YES_og.Controllers
                     SaveDelete(_db.stn001, i);
                 }
 
-                foreach(var j in chargespotIdList)
+                foreach (var j in chargespotIdList)
                 {
                     var s101 = _db.stn101.Where(x => x.station_id == stationId && x.chargespot_id == j).FirstOrDefault();
                     SaveDelete(_db.stn101, s101);
@@ -557,13 +557,13 @@ namespace YES_og.Controllers
                 };
                 return Content(Newtonsoft.Json.JsonConvert.SerializeObject(returnData), "application/json");
             }
-            
+
         }
 
 
         // POST: Station/Create  SEstn000(站基本資料), SEstnCS(樁基資+設備檔), SEstn003(營業時間), ,stn005(圖片)
         [HttpPost]
-        public ActionResult Create(stn000 stn000,List<SEstnCS> SpotItems, SEstn003 SEstn003, HttpPostedFileBase[] rUpload, HttpPostedFileBase[] sUpload)
+        public ActionResult Create(stn000 stn000, List<SEstnCS> SpotItems, SEstn003 SEstn003, HttpPostedFileBase[] rUpload, HttpPostedFileBase[] sUpload)
         {
             if (ModelState.IsValid)
             {
@@ -606,7 +606,7 @@ namespace YES_og.Controllers
                 stn003 w1 = new stn003();
                 w1.station_id = stn000.station_id;
                 w1.week = SEstn003.week1;
-                w1.time_start = SEstn003.tStart1.Remove(2,1);
+                w1.time_start = SEstn003.tStart1.Remove(2, 1);
                 w1.time_end = SEstn003.tEnd1.Remove(2, 1);
                 SaveCreate(_db.stn003, w1);
                 #endregion
@@ -614,7 +614,7 @@ namespace YES_og.Controllers
                 #region w2
                 stn003 w2 = new stn003();
                 w2.station_id = stn000.station_id;
-                w2.week= SEstn003.week2;
+                w2.week = SEstn003.week2;
                 w2.time_start = SEstn003.tStart2.Remove(2, 1);
                 w2.time_end = SEstn003.tEnd2.Remove(2, 1);
                 SaveCreate(_db.stn003, w2);
@@ -868,7 +868,7 @@ namespace YES_og.Controllers
             ViewBag.stn000 = stn000;
 
             //stn003
-            List<stn003> stn003 = _db.stn003.Where(x=> x.station_id == station_id).ToList();
+            List<stn003> stn003 = _db.stn003.Where(x => x.station_id == station_id).ToList();
             ViewBag.stn003 = stn003;
             //stn005
             var fileName = _db.stn005.Where(x => x.station_id == station_id).ToList().Select(a => a.station_pic);
@@ -977,7 +977,7 @@ namespace YES_og.Controllers
 
             if (list.Count > 0)
             {
-                foreach(var i in list)
+                foreach (var i in list)
                 {
                     JObject jObjectSpotItem = new JObject();
                     #region stn001
@@ -1027,7 +1027,7 @@ namespace YES_og.Controllers
 
             foreach (var e in sts004)
             {
-                jObjectFee.Add(new JProperty(e.cal_unit, e.rate_name));
+                jObjectFee.Add(new JProperty(e.fee_id, e.rate_name));
             }
 
             jObjectSpotEditData.Add(new JProperty("DdlFeeList", jObjectFee));
@@ -1284,12 +1284,12 @@ namespace YES_og.Controllers
             try
             {
                 //stn000
-                var stn000 = _db.stn000.Where(x=>x.station_id == station_id).FirstOrDefault();
+                var stn000 = _db.stn000.Where(x => x.station_id == station_id).FirstOrDefault();
                 SaveDelete(_db.stn000, stn000);
 
                 //stn001
                 var stn001 = _db.stn001.Where(x => x.station_id == station_id).ToList();
-                foreach(var i in stn001)
+                foreach (var i in stn001)
                 {
                     SaveDelete(_db.stn001, i);
                 }
@@ -1353,10 +1353,10 @@ namespace YES_og.Controllers
                 //}
 
                 //刪除已新增的stn001
-                var stn001 = _db.stn001.Where(x=>x.station_id == sId).ToList();
-                if(stn001.Count() > 0)
+                var stn001 = _db.stn001.Where(x => x.station_id == sId).ToList();
+                if (stn001.Count() > 0)
                 {
-                    foreach(var i in stn001)
+                    foreach (var i in stn001)
                     {
                         SaveDelete(_db.stn001, i);
                     }
@@ -1541,7 +1541,7 @@ namespace YES_og.Controllers
             #endregion 
 
             //充電站網路設定檔
-            var stn102 = _db.stn102.Where(x=>x.station_id == station_id).ToList();
+            var stn102 = _db.stn102.Where(x => x.station_id == station_id).ToList();
             ViewBag.stn102 = stn102;
 
             return View();
