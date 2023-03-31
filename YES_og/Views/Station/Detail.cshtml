@@ -577,6 +577,7 @@
                 },
                 dataType: "json",
                 success: function (data) {
+                    //debugger;
                     spotTrCount = data.jObjectSpotList.length;
                     $('#spotList').append(GetEditSpotItem(data));
                     $('.date').datepicker();
@@ -648,7 +649,12 @@
                 sb.append('    </td>');
                 //充電槍狀態
                 sb.append('    <td>');
-                sb.append(' ' + data.jObjectSpotList[i].spot_status + '');
+                sb.append('        <select class="form-control m-b minW" name="SpotItems[' + num + '].spot_status" value="' + data.jObjectSpotList[i].spot_status + '" disabled>');
+                $.each(DdlSSList, function (index, val) {
+                    var selectedStr = data.jObjectSpotList[i].spot_status == index ? "selected" : "";
+                    sb.append('        <option value="' + index + '" ' + selectedStr + '>' + val + '</option>');
+                });
+                sb.append('        </select>');
                 sb.append('    </td>');
                 //費率方案
                 sb.append('    <td>');
@@ -704,7 +710,7 @@
         $('#stnDataForm').on('change',
             '#country',
             function () {
-                debugger;
+                //debugger;
                 var $form = $(this).closest('form');
                 $.ajax({
                     type: "POST",

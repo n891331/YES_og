@@ -20,13 +20,30 @@ namespace YES_og.Controllers
         // GET: Follow
         public ActionResult Index()
         {
-            List<sts000> sts = _db.sts000.ToList();
-            ViewBag.sts = sts;
-            List<zip000> zip000 = _db.zip000.ToList();
-            ViewBag.zip000 = zip000;
+            string cookieValue = GetCookie();
 
-            var cnc000 = _db.cnc000.OrderByDescending(x => x.crt_date);
-            return View(cnc000);
+            if(cookieValue != null)
+            {
+                List<sts000> sts = _db.sts000.ToList();
+                ViewBag.sts = sts;
+                List<zip000> zip000 = _db.zip000.ToList();
+                ViewBag.zip000 = zip000;
+
+                var cnc000 = _db.cnc000.OrderByDescending(x => x.crt_date);
+                return View(cnc000);
+            }
+            else
+            {
+                return RedirectToAction("BackLogin");
+            }
+
+
+            
+        }
+
+        public ActionResult BackLogin()
+        {
+            return Redirect("http://owner.yes-energy.com.tw/memberLogout.action");
         }
 
         // GET: Follow/Create

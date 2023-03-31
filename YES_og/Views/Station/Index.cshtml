@@ -132,7 +132,7 @@
         $("#stnBox").on("click",
             "a[name='delBtn']",
             function () {
-                debugger;
+                //debugger;
                 var msg = "您確定要刪除此筆資料嗎?";
                 if (confirm(msg) == true) {
                     var station_id = $(this).attr('btn-id');
@@ -145,7 +145,7 @@
                         },
                         dataType: "json",
                         success: function (data) {
-                            debugger;
+                            //debugger;
                             location.reload();
                         }
                     });

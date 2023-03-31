@@ -145,6 +145,18 @@ namespace YES_og.Controllers
         }
         #endregion
 
+        public static String GetCookie()
+        {
+            if (System.Web.HttpContext.Current.Request.Cookies["JSESSIONID"] == null)
+            {
+                return null;
+            }
+            else
+            {
+                return System.Web.HttpContext.Current.Request.Cookies["JSESSIONID"].Value;
+            }
+        }
+
 
         #region ViewData
 

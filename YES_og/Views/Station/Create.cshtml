@@ -809,7 +809,7 @@
         $("#netWorkList").on("click",
             "a[name='nwdBtn']",
             function () {
-                debugger;
+                //debugger;
                 var msg = "您確定要刪除此匯入站點嗎?";
                 if (confirm(msg) == true) {
                     var nId = $(this).attr('btn-id');
@@ -822,7 +822,7 @@
                         },
                         dataType: "json",
                         success: function (data) {
-                            debugger;
+                            //debugger;
                             $('#netWorkList tr[name="' + nId + '"]').remove();
                         }
                     });
@@ -834,7 +834,7 @@
 
         //新增充電樁
         $('#addSpotBtn').on('click', function () {
-            debugger;
+            //debugger;
             var devId = $('#device_model').val();
             var sId = $('#station_id').val();
             $.ajax({
@@ -1049,7 +1049,7 @@
                     //async: false,
                     datatype: 'JSON',
                     success: function (data) {
-                        debugger;
+                        //debugger;
                         if (data.IsSuccess) {
                             window.location = '@Url.Action("Index", "Station")';
                         } else {
@@ -1099,7 +1099,7 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     if (data.IsSuccess) {
                             window.location = '@Url.Action("Index", "Station")';
                         }
@@ -1112,7 +1112,7 @@
 
         //轉換地址btn :1.把zip_id值補上 2.做轉換經緯度
         $('#convertBtn').on('click', function () {
-            debugger;
+            //debugger;
             var country = $("#country").val();
             var district = $("#district").val();
             var addr = $("#addr").val();
@@ -1130,7 +1130,7 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     var zipId = data.ZipId;
                     $("#station_zip").val(zipId);
                     let str = country + district + addr;

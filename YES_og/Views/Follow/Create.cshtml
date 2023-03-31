@@ -244,7 +244,7 @@
         $.MultiUploadFile("dUploadArea", "dUploadFileList", dUpload);
 
         $('#btnSave').click(function () {
-            debugger;
+            //debugger;
             if (($('#contact_person').val()).length <= 0) {
                 alert("請填入姓名");
                 return;
@@ -305,7 +305,7 @@
                     //async: false,
                     //datatype: 'JSON',
                     success: function (data) {
-                        debugger;
+                        //debugger;
                         if (data.IsSuccess) {
                             window.location = '@Url.Action("Index", "Follow")';
                         } else {

@@ -1021,16 +1021,16 @@ namespace YES_og.Controllers
             #endregion
 
             #region 費率方案 的下拉選單
-            JObject jObjectFee = new JObject();
+            //JObject jObjectFee = new JObject();
 
-            List<stn004> sts004 = _db.stn004.ToList();
+            //List<stn004> sts004 = _db.stn004.ToList();
 
-            foreach (var e in sts004)
-            {
-                jObjectFee.Add(new JProperty(e.fee_id, e.rate_name));
-            }
+            //foreach (var e in sts004)
+            //{
+            //    jObjectFee.Add(new JProperty(e.fee_id, e.rate_name));
+            //}
 
-            jObjectSpotEditData.Add(new JProperty("DdlFeeList", jObjectFee));
+            //jObjectSpotEditData.Add(new JProperty("DdlFeeList", jObjectFee));
             #endregion
 
             jsonContent = JsonConvert.SerializeObject(jObjectSpotEditData, Formatting.Indented);

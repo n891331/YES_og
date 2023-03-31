@@ -1295,7 +1295,7 @@
                     //async: false,
                     datatype: 'JSON',
                     success: function (data) {
-                        debugger;
+                        //debugger;
                         if (data.IsSuccess) {
                             window.location = '@Url.Action("Index", "Station")';
                         } else {
@@ -1326,7 +1326,7 @@
 
         //轉換地址btn :1.把zip_id值補上 2.做轉換經緯度
         $('#convertBtn').on('click', function () {
-            debugger;
+            //debugger;
             var country = $("#country").val();
             var district = $("#district").val();
             var addr = $("#addr").val();
@@ -1344,7 +1344,7 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     var zipId = data.ZipId;
                     $("#station_zip").val(zipId);
                     let str = country + district + addr;
@@ -1372,7 +1372,7 @@
 
         //取消btn，返回index (暫時先註解掉)
        @*$('#btnBack').on('click', function () {
-            debugger;
+            //debugger;
             var sId = $("#station_id").val();
             $.ajax({
                 type: "POST",
@@ -1383,7 +1383,7 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     if (data.IsSuccess) {
                             window.location = '@Url.Action("Index", "Station")';
                         }

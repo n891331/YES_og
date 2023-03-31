@@ -180,7 +180,7 @@
                     return;
                 }
                 var formData = $('#addCarForm').serialize();
-                debugger;
+                //debugger;
                 $.ajax({
                     url: "/Car/Create",
                     type: 'POST',
@@ -188,7 +188,7 @@
                     cache: false,
                     dataType: 'json',
                     success: function (data) {
-                        debugger;
+                        //debugger;
                         if (data.IsSuccess == true) {
                             swal({
                                 title: 'SUCCESS',
