@@ -22,20 +22,28 @@ namespace YES_og.Controllers
         {
             string cookieValue = GetCookie();
 
-            if(cookieValue != null)
-            {
-                List<sts000> sts = _db.sts000.ToList();
-                ViewBag.sts = sts;
-                List<zip000> zip000 = _db.zip000.ToList();
-                ViewBag.zip000 = zip000;
+            List<sts000> sts = _db.sts000.ToList();
+            ViewBag.sts = sts;
+            List<zip000> zip000 = _db.zip000.ToList();
+            ViewBag.zip000 = zip000;
 
-                var cnc000 = _db.cnc000.OrderByDescending(x => x.crt_date);
-                return View(cnc000);
-            }
-            else
-            {
-                return RedirectToAction("BackLogin");
-            }
+            var cnc000 = _db.cnc000.OrderByDescending(x => x.crt_date);
+            return View(cnc000);
+
+            //if (cookieValue != null)
+            //{
+            //    List<sts000> sts = _db.sts000.ToList();
+            //    ViewBag.sts = sts;
+            //    List<zip000> zip000 = _db.zip000.ToList();
+            //    ViewBag.zip000 = zip000;
+
+            //    var cnc000 = _db.cnc000.OrderByDescending(x => x.crt_date);
+            //    return View(cnc000);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("BackLogin");
+            //}
 
 
             
@@ -315,6 +323,8 @@ namespace YES_og.Controllers
             List<string> fname = new List<string>() { };
             var fnstr = String.Join(",", fileName);
             ViewBag.fnstr = fnstr;
+            List<sts000> sts = _db.sts000.ToList();
+            ViewBag.sts = sts;
 
             #region 選單
             //狀態

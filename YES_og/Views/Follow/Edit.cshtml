@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     YES_og.Models.cnc000 cnc000 = ViewBag.cnc000;
     YES_og.Models.cnc001 cnc001 = ViewBag.cnc001;
+    List<YES_og.Models.sts000> sts = ViewBag.sts;
     var cnc002s = ViewBag.cnc002s;
     string fnstr = ViewBag.fnstr;
 
@@ -116,7 +117,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">目前進度</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" value="@cnc000.cnc_status" readonly>
+                            <input type="text" class="form-control" value="@sts.FirstOrDefault(x => x.item_id == cnc000.cnc_status && x.prog_id == "cnc000" && x.fun_id == "cnc_status").item_desc" readonly>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
